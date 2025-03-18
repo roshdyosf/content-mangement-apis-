@@ -3,6 +3,8 @@ const Course = require("../../models/course-model");
 const getAllCoursesService = async (limit, offset) => {
     try {
         const courses = await Course.find({ approved: true })
+            .limit(limit)
+            .skip(offset);
         if (courses.length === 0) {
             return {
                 success: true,

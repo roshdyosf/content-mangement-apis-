@@ -33,11 +33,6 @@ const examSchema = new mongoose.Schema({
         ref: 'Section',
         required: true,
     },
-    videoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Video',
-        required: true,
-    },
     title: {
         type: String,
         required: true,

@@ -1,5 +1,28 @@
 # content-mangement-apis-
 
+---
+
+---
+
+## Educator story to upload courses
+
+Step 1: Create the Course
+The educator starts by creating a new course with essential details such as the course title, description, instructor information, and the order in which the course should appear.
+
+---
+
+Step 2: Create Sections for the Course
+Once the course is created, the educator proceeds to create sections within the course. Each section will have its own title, description, course reference, and order.
+
+---
+
+Step 3: Upload Videos to Sections
+When uploading videos, the educator selects the appropriate section for each video. The video's metadata, such as the title, description, URL (from Cloudinary), duration, course reference, section reference, and order, are included.
+
+---
+
+---
+
 content mangement apis
 
 ## API Documentation

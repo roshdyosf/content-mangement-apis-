@@ -48,7 +48,20 @@ content mangement apis
 
 ---
 
-1.4 Create Course  
+1.4 Get courses like name  
+• Description: Fetches all courses similar to the entered name with pagination.  
+• URL: /api/course/get-course-like/:courseName/:limit/:offset
+• Method: GET  
+• Middleware:  
+ o authMiddleware: Ensures the user is authenticated.  
+• Response:  
+ o 200 OK: Returns the list of all courses similar to the name.  
+ o 404 Not Found: No courses found with similar name.  
+ o 500 Internal Server Error: An error occurred while fetching the courses.
+
+---
+
+1.5 Create Course  
 • Description: Creates a new course.  
 • URL: /api/course/add  
 • Method: POST  
@@ -67,7 +80,7 @@ content mangement apis
 
 ---
 
-1.5 Update Course Information  
+1.6 Update Course Information  
 • Description: Updates the information of a course.  
 • URL: /api/course/update  
 • Method: PUT  
@@ -91,7 +104,7 @@ content mangement apis
 
 ---
 
-1.6 Delete Course  
+1.7 Delete Course  
 • Description: Deletes a course.  
 • URL: /api/course/delete/:courseId  
 • Method: DELETE  
@@ -107,7 +120,7 @@ content mangement apis
 
 ---
 
-1.7 Update Course Rating  
+1.8 Update Course Rating  
 • Description: Updates the rating of a course.  
 • URL: /api/course/update-rating  
 • Method: PUT  

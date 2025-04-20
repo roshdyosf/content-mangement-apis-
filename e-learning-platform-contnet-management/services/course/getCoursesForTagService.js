@@ -4,7 +4,10 @@ const getAllCoursesForTag = async (tag) => {
     try {
         let courses;
         if (!tag) {
-            courses = await Course.find({ approved: true }).sort({ title: 1 });
+            courses = await Course.find({ approved: true })
+                .sort({ "rating.average": -1 })
+                .limit(limit)
+                .skip(offset);
             return {
                 success: true,
                 message: "No tag provided. Returning all approved courses.",

@@ -1,8 +1,11 @@
 const Course = require("../../models/course-model");
 
-const getAllCoursesForEducatorService = async (educatorId) => {
+const getAllCoursesForEducatorService = async (educatorId, limit, offset) => {
     try {
-        const courses = await Course.find({ educatorId: educatorId, approved: true });
+        const courses = await Course.find({ educatorId: educatorId, approved: true })
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .skip(offset);
         if (courses.length === 0) {
             return {
                 success: true,

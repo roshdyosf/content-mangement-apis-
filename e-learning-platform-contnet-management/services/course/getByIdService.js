@@ -2,8 +2,8 @@ const Course = require("../../models/course-model");
 
 const getCourseById = async (courseId) => {
     try {
-        const course = await Course.findById(courseId);
-        if (!course || !course.approved) {
+        const course = await Course.findOne({ _id: courseId, approved: true });
+        if (!course) {
             return {
                 success: false,
                 message: "No course found with this id.",

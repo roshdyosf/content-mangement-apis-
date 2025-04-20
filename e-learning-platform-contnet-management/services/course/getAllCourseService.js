@@ -3,6 +3,7 @@ const Course = require("../../models/course-model");
 const getAllCoursesService = async (limit, offset) => {
     try {
         const courses = await Course.find({ approved: true })
+            .sort({ "rating.average": -1 }) // Sort by rating.average in descending order
             .limit(limit)
             .skip(offset);
         if (courses.length === 0) {

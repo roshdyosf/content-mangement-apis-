@@ -6,18 +6,21 @@ const { getCoursesForEducator,
     deleteCourse,
     getAllCoursesForTag,
     getAllCourses,
-    updateCourseRating } = require('../controllers/course-controller')
+    updateCourseRating,
+    getCoursesLikeName } = require('../controllers/course-controller')
 
 const educatorRoleCheck = require('../middleware/educatorRoleMiddleware')
 const educatorIdentityCheck = require('../middleware/educatorIdentityMiddleware')
 const authMiddleware = require('../middleware/authMiddleware')
 const { validateId } = require('../middleware/validateRequest');
 
-router.get('/get-for-educator/:educatorId', authMiddleware, validateId('educatorId', 'params'), getCoursesForEducator)
+router.get('/get-for-educator/:educatorId/:limit/:offset', authMiddleware, validateId('educatorId', 'params'), getCoursesForEducator)
 
-router.get('/get-for-tag/:tag', authMiddleware, getAllCoursesForTag)
+router.get('/get-for-tag/:tag/:limit/:offset', authMiddleware, getAllCoursesForTag)
 
 router.get('/get-all/:limit/:offset', authMiddleware, getAllCourses)
+
+router.get('/get-course-like/:courseName/:limit/:offset', authMiddleware, getCoursesLikeName)
 
 router.post('/create', authMiddleware, educatorRoleCheck, validateId('educatorId', 'body'), createCourse)
 

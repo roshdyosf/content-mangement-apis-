@@ -10,15 +10,15 @@ const genericValidator = (data, validations, fieldsToValidate) => {
         }, {});
 
     // Check for extra fields not allowed
-    const extraFields = Object.keys(data).filter(
-        (key) => !Object.keys(filteredValidations).includes(key)
-    );
-    if (extraFields.length > 0) {
-        return {
-            valid: false,
-            message: `Extra fields not allowed: ${extraFields.join(', ')}`,
-        };
-    }
+    // const extraFields = Object.keys(data).filter(
+    //     (key) => !Object.keys(filteredValidations).includes(key)
+    // );
+    // if (extraFields.length > 0) {
+    //     return {
+    //         valid: false,
+    //         message: `Extra fields not allowed: ${extraFields.join(', ')}`,
+    //     };
+    // }
 
     // Check for missing required fields
     const missingFields = Object.keys(filteredValidations).filter(

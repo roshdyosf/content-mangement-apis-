@@ -29,7 +29,7 @@ const user =
 {
     id: "123",
     username: 'John',
-    role: 'educator',
+    role: 'moderator',
     password: 'password123'
 }
 const accessToken = jwt.sign({

@@ -4,6 +4,7 @@ const connectToDB = require('./database/db')
 const courseRoutes = require('./routes/course-routes')
 const sectionRoutes = require('./routes/section-routes')
 const videoRoutes = require('./routes/video-routes')
+const examRoutes = require('./routes/exam-routes')
 const moderatorRoutes = require('./routes/moderator-router')
 const jwt = require('jsonwebtoken')
 //const { rateLimit } = require('express-rate-limit');
@@ -29,7 +30,7 @@ const user =
 {
     id: "123",
     username: 'John',
-    role: 'moderator',
+    role: 'educator',
     password: 'password123'
 }
 const accessToken = jwt.sign({
@@ -49,6 +50,7 @@ console.log(accessToken);
 
 
 app.use('/api/course', courseRoutes)
+app.use('/api/exam', examRoutes)
 app.use('/api/section', sectionRoutes)
 app.use('/api/video', videoRoutes)
 

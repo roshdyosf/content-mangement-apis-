@@ -31,6 +31,7 @@ const createExamService = async (examData) => {
             statusCode: 201
         };
     } catch (error) {
+        console.error('Error creating exam:', error); // Log the error for debugging
         return {
             success: false,
             message: 'Failed to create exam. Please try again.',

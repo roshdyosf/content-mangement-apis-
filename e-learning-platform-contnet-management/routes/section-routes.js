@@ -3,7 +3,8 @@ const router = express.Router()
 const { getSections,
     createSection,
     updateSectionInfo,
-    deleteSection, } = require('../controllers/section-controller')
+    deleteSection,
+    getSectionById, } = require('../controllers/section-controller')
 const educatorRoleCheck = require('../middleware/educatorRoleMiddleware')
 const educatorIdentityCheck = require('../middleware/educatorIdentityMiddleware')
 const { validateId } = require('../middleware/validateRequest');
@@ -11,6 +12,8 @@ const { validateId } = require('../middleware/validateRequest');
 const authMiddleware = require('../middleware/authMiddleware')
 
 router.get('/get-all/:courseId', authMiddleware, validateId('courseId', 'params'), getSections)
+
+router.get('/get-section/:sectionId', authMiddleware, validateId('sectionId', 'params'), getSectionById)
 
 router.post('/add', authMiddleware, educatorRoleCheck, validateId('courseId', 'body'), createSection)
 

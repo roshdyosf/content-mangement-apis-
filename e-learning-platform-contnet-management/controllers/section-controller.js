@@ -4,6 +4,7 @@ const deleteSectionService = require('../services/section/deleteSectionService')
 const getAllSections = require('../services/section/getAllSectionsService')
 
 const handleResponse = require('../utils/errorHandler');
+const getSectionByIdService = require('../services/section/getSectionByIdServicec');
 
 
 const getSections = async (req, res) => {
@@ -30,10 +31,15 @@ const deleteSection = async (req, res) => {
     const result = await deleteSectionService(sectionId);
     handleResponse(res, result);
 };
-
+const getSectionById = async (req, res) => {
+    const sectionId = req.params.sectionId;
+    const result = await getSectionByIdService(sectionId);
+    handleResponse(res, result);
+};
 module.exports = {
     getSections,
     createSection,
     updateSectionInfo,
     deleteSection,
+    getSectionById
 };

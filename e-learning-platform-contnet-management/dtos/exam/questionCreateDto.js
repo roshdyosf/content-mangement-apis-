@@ -1,13 +1,14 @@
 class QuestionCreateDTO {
     constructor({ examId, question, courseId, choices, answer }) {
+        this.valid = false
         if (!examId || !courseId || !question || !choices || !answer) {
-            return false;
+            return;
         }
         // Validate choices as an array of strings
         if (!Array.isArray(choices) ||
             choices.length !== 4 ||
             !choices.every(choice => typeof choice === 'string')) {
-            return false;
+            return;
         }
         this.question = question;
         this.examId = examId;

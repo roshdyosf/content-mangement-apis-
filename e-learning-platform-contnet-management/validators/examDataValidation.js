@@ -7,6 +7,7 @@ const examValidation = (examData, fieldsToValidate) => {
         sectionId: 'string',
         question: 'string',
         answer: 'string',
+        choice: 'string',
         examId: 'string'
     };
     return genericValidator(examData, validations, fieldsToValidate);

@@ -4,6 +4,7 @@ const addQuestionService = require("../services/exam/addQuestionService");
 const getExamService = require('../services/exam/getExamService');
 const getExamByIdService = require('../services/exam/getExamById');
 const deleteExamService = require('../services/exam/deleteExamService');
+const updateExamService = require('../services/exam/updateExamService');
 
 
 const createExam = async (req, res) => {
@@ -27,6 +28,11 @@ const getExamById = async (req, res) => {
     handleResponse(res, result);
 };
 
+const updateExam = async (req, res) => {
+    const examData = req.body
+    const result = await updateExamService(examData)
+    handleResponse(res, result)
+}
 const deleteExam = async (req, res) => {
     const examId = req.params.examId;
     const result = await deleteExamService(examId);
@@ -37,5 +43,6 @@ module.exports = {
     addQuestion,
     getAllExams,
     getExamById,
-    deleteExam
+    updateExam,
+    deleteExam,
 }

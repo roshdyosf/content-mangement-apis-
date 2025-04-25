@@ -1,18 +1,20 @@
 class VideoCreateDTO {
     constructor({ title, description, order, courseId, sectionId }) {
+        this.valid = false
         if (!title || !description || !order || !courseId || !sectionId) {
-            return { success: false }
+            return
         }
         const orderNumber = Number(order);
         if (isNaN(orderNumber)) {
-            return false;
+            return
         }
-        this.valid = true;
+
         this.title = title;
         this.description = description;
         this.order = orderNumber;
         this.courseId = courseId;
         this.sectionId = sectionId;
+        this.valid = true;
     }
 }
 

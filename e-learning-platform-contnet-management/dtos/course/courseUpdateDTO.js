@@ -1,5 +1,6 @@
 class CourseUpdateDTO {
     constructor({ title, description, price, rating }) {
+        this.valid = false
         if (!title && !description && !price && !rating) {
             return false
         }
@@ -13,7 +14,7 @@ class CourseUpdateDTO {
             const priceNumber = Number(price);
             if (isNaN(priceNumber)) {
 
-                return false
+                return
             }
             this.price = priceNumber;
         }

@@ -1,12 +1,13 @@
 class SectionUpdateDTO {
     constructor({ title, description, order }) {
+        this.valid = false
         if (!title && !description && !order) {
-            return false
+            return
         }
         if (order !== undefined) {
             const orderNumber = Number(order);
             if (isNaN(orderNumber)) {
-                return false
+                return
             }
             this.order = orderNumber;
         }

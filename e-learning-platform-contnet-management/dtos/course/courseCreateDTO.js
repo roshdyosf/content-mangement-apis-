@@ -1,17 +1,18 @@
 class CourseCreateDTO {
     constructor({ title, description, price, educatorId, educator, tags }) {
+        this.valid = false
         if (!title || !description || !price || !educatorId || !educator) {
-            return false;
+            return;
         }
-        const priceNumber = Number(price);
 
+        const priceNumber = Number(price);
         if (isNaN(priceNumber)) {
-            return false;
+            return;
         }
 
         // Validate tags as an array of strings
         if (!Array.isArray(tags) || !tags.every(tag => typeof tag === 'string')) {
-            return false;
+            return;
         }
 
         this.title = title;

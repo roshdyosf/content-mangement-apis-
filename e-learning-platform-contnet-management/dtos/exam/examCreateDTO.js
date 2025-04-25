@@ -1,7 +1,8 @@
 class ExamCreateDTO {
     constructor({ title, sectionId, courseId, educatorId }) {
+        this.valid = false
         if (!title || !sectionId || !courseId || !educatorId) {
-            return false;
+            return;
         }
 
         this.title = title;

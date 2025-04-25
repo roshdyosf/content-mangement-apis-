@@ -1,12 +1,13 @@
 class SectionCreateDTO {
     constructor({ title, description, order, courseId }) {
+        this.valid = false
         if (!title || !description || !order || !courseId) {
-            return false
+            return
         }
         const orderNumber = Number(order);
 
         if (isNaN(orderNumber)) {
-            return false
+            return
         }
         this.valid = true;
         this.title = title;

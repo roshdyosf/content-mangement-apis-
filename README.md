@@ -1,6 +1,6 @@
 # Content Management APIs
 
-A Node.js RESTful API for managing e-learning platform content, including courses, sections, and videos, with educator and moderator roles. Built with Express.js and MongoDB, supporting file uploads (Cloudinary), authentication, and role-based access control.
+A Node.js RESTful API for managing e-learning platform content, including courses, sections, videos, and exams, with educator and moderator roles. Built with Express.js and MongoDB, supporting file uploads (Cloudinary), authentication, and role-based access control.
 
 ---
 
@@ -8,6 +8,7 @@ A Node.js RESTful API for managing e-learning platform content, including course
 
 - Educator and moderator roles with authentication
 - Course, section, and video CRUD operations
+- Exam management (create, update, delete, add questions, get exams)
 - File upload support for videos (Cloudinary)
 - Approval workflow for moderators
 - Request validation and error handling

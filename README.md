@@ -1,33 +1,89 @@
-# content-mangement-apis-
+# Content Management APIs
+
+A Node.js RESTful API for managing e-learning platform content, including courses, sections, and videos, with educator and moderator roles. Built with Express.js and MongoDB, supporting file uploads (Cloudinary), authentication, and role-based access control.
 
 ---
 
----
+## Features
 
-## Educator story to upload courses
-
-Step 1: Create the Course
-The educator starts by creating a new course with essential details such as the course title, description, instructor information, and the order in which the course should appear.
-
----
-
-Step 2: Create Sections for the Course
-Once the course is created, the educator proceeds to create sections within the course. Each section will have its own title, description, course reference, and order.
+- Educator and moderator roles with authentication
+- Course, section, and video CRUD operations
+- File upload support for videos (Cloudinary)
+- Approval workflow for moderators
+- Request validation and error handling
+- Modular service/controller structure
 
 ---
 
-Step 3: Upload Videos to Sections
-When uploading videos, the educator selects the appropriate section for each video. The video's metadata, such as the title, description, URL (from Cloudinary), duration, course reference, section reference, and order, are included.
+## Table of Contents
+
+- [Project Overview](#content-management-apis)
+- [Features](#features)
+- [Setup & Installation](#setup--installation)
+- [Environment Variables](#environment-variables)
+- [Running the Server](#running-the-server)
+- [Authentication & Roles](#authentication--roles)
+- [API Documentation](#api-documentation)
+- [Contribution](#contribution)
+- [License](#license)
+- [Contact](#contact)
 
 ---
 
+## Setup & Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   cd content-mangement-apis-
+   ```
+2. Install dependencies:
+   ```bash
+   cd e-learning-platform-contnet-management
+   npm install
+   ```
+3. Set up environment variables (see below).
+4. Start the server:
+   ```bash
+   npm start
+   ```
+
 ---
 
-content mangement apis
+## Environment Variables
+
+Create a `.env` file in `e-learning-platform-contnet-management/` with the following:
+
+```
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+JWT_SECRET=your_jwt_secret
+```
+
+---
+
+## Running the Server
+
+- Development: `npm run dev`
+- Production: `npm start`
+
+---
+
+## Authentication & Roles
+
+- JWT-based authentication is required for all endpoints.
+- Roles:
+  - **Educator**: Can create, update, and delete their own courses, sections, and videos.
+  - **Moderator**: Can approve or reject courses, sections, and videos.
+- Use the `/login` and `/register` endpoints (not shown here) to obtain a JWT token.
+- Pass the token in the `Authorization: Bearer <token>` header.
+
+---
 
 ## API Documentation
-
----
 
 1. Course Management API
 
@@ -162,80 +218,43 @@ content mangement apis
 
 ---
 
-2. Section Management API
+2. Section Management API (Updated)
 
-2.1 Get Sections for Course  
-• Description: Fetches all sections for a specific course.  
-• URL: /api/section/get-all/:courseId  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o validateId('courseId', 'params'): Validates the courseId in the URL parameters.  
-• Response:  
- o 200 OK: Returns the list of sections for the course.  
- o 404 Not Found: No sections found for the course.  
- o 500 Internal Server Error: An error occurred while fetching the sections.
+- **Get All Sections for a Course**
 
----
+  - URL: `/api/section/get-all/:courseId`
+  - Method: GET
+  - Middleware: `authMiddleware`, `validateId('courseId', 'params')`
+  - Response: 200 OK (sections array), 404 Not Found, 500 Internal Server Error
 
-2.2 Create Section  
-• Description: Creates a new section for a course.  
-• URL: /api/section/add  
-• Method: POST  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o validateId('courseId', 'body'): Validates the courseId in the request body.  
-• Request Body:  
-{
-"title": "Introduction",
-"description": "Introductory section.",
-"courseId": "123"
-}  
-• Response:  
- o 201 Created: The section was created successfully.  
- o 400 Bad Request: Invalid section data.  
- o 500 Internal Server Error: An error occurred while creating the section.
+- **Get Section by ID**
 
----
+  - URL: `/api/section/get-section/:sectionId`
+  - Method: GET
+  - Middleware: `authMiddleware`, `validateId('sectionId', 'params')`
+  - Response: 200 OK (section object), 404 Not Found, 500 Internal Server Error
 
-2.3 Update Section Information  
-• Description: Updates the information of a section.  
-• URL: /api/section/update  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the section.  
- o validateId('sectionId', 'body'): Validates the sectionId in the request body.  
-• Request Body:  
-{
-"sectionId": "456",
-"title": "Updated Section Title",
-"description": "Updated section description."
-}  
-• Response:  
- o 200 OK: The section was updated successfully.  
- o 400 Bad Request: Invalid section data.  
- o 404 Not Found: The section ID is incorrect.  
- o 500 Internal Server Error: An error occurred while updating the section.  
-• Note: You should always provide the following five fields: { courseId, sectionId, order, title, description } even if only one field is being updated.
+- **Create Section**
 
----
+  - URL: `/api/section/add`
+  - Method: POST
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`
+  - Body: `{ "title": "Section Title", "description": "Section description", "order": 1, "courseId": "..." }`
+  - Response: 201 Created (section object), 400 Bad Request, 500 Internal Server Error
 
-2.4 Delete Section  
-• Description: Deletes a section.  
-• URL: /api/section/delete/:sectionId  
-• Method: DELETE  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the section.  
- o validateId('sectionId', 'params'): Validates the sectionId in the URL parameters.  
-• Response:  
- o 200 OK: The section was deleted successfully.  
- o 404 Not Found: The section ID is incorrect.  
- o 500 Internal Server Error: An error occurred while deleting the section.
+- **Update Section**
+
+  - URL: `/api/section/update`
+  - Method: PUT
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'body')`
+  - Body: `{ "sectionId": "...", "title": "...", "description": "...", "order": 2 }`
+  - Response: 200 OK (updated section), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+
+- **Delete Section**
+  - URL: `/api/section/delete/:sectionId`
+  - Method: DELETE
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'params')`
+  - Response: 200 OK (deleted section), 404 Not Found, 500 Internal Server Error
 
 ---
 
@@ -429,7 +448,77 @@ content mangement apis
 
 ---
 
-5. Standard Response Format
+5. Exam Management API (New)
+
+- **Create Exam**
+
+  - URL: `/api/exam/create`
+  - Method: POST
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
+  - Body: `{ "title": "Exam Title", "sectionId": "...", "courseId": "...", "educatorId": "..." }`
+  - Response: 201 Created (exam object), 400 Bad Request, 500 Internal Server Error
+
+- **Add Question to Exam**
+
+  - URL: `/api/exam/add-question`
+  - Method: PUT
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+  - Body: `{ "examId": "...", "question": "...", "choices": ["A", "B", "C", "D"], "answer": "A" }`
+  - Response: 200 OK, 400 Bad Request, 500 Internal Server Error
+
+- **Update Exam**
+
+  - URL: `/api/exam/update-exam`
+  - Method: PUT
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+  - Body: Update exam title, question, choice, or answer (see code for options)
+  - Response: 200 OK (updated exam), 400 Bad Request, 500 Internal Server Error
+
+- **Get All Exams for Section**
+
+  - URL: `/api/exam/get-all-exams/:sectionId`
+  - Method: GET
+  - Middleware: `authMiddleware`, `validateId('sectionId', 'params')`
+  - Response: 200 OK (exams array), 404 Not Found, 500 Internal Server Error
+
+- **Get Exam by ID**
+
+  - URL: `/api/exam/get-exam/:examId`
+  - Method: GET
+  - Middleware: `authMiddleware`, `validateId('examId', 'params')`
+  - Response: 200 OK (exam object), 404 Not Found, 500 Internal Server Error
+
+- **Delete Exam**
+  - URL: `/api/exam/delete-exam`
+  - Method: DELETE
+  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+  - Body: `{ "examId": "..." }`
+  - Response: 200 OK (deleted exam), 404 Not Found, 500 Internal Server Error
+
+---
+
+## Example Exam Object
+
+```json
+{
+  "_id": "...",
+  "educatorId": "...",
+  "courseId": "...",
+  "sectionId": "...",
+  "title": "Exam Title",
+  "mcq": [
+    {
+      "question": "What is 2+2?",
+      "choices": ["1", "2", "3", "4"],
+      "answer": "4"
+    }
+  ]
+}
+```
+
+---
+
+## Standard Response Format
 
 Success Response  
 • Status Code: 200 OK, 201 Created, etc.  
@@ -446,3 +535,58 @@ Error Response
  o message: Error message.  
  o status: Status code.  
  o data: null.
+
+---
+
+## Educator Workflow
+
+1. **Create Course**: Add a new course with title, description, educator info, and tags.
+2. **Create Sections**: Add sections to the course, each with its own title and description.
+3. **Upload Videos**: Upload videos to sections, with metadata and file upload (Cloudinary).
+
+---
+
+## Error Handling
+
+All responses follow a standard format:
+
+- **Success**:
+  ```json
+  {
+    "success": true,
+    "message": "Success message.",
+    "status": 200,
+    "data": { ... }
+  }
+  ```
+- **Error**:
+  ```json
+  {
+    "success": false,
+    "message": "Error message.",
+    "status": 400,
+    "data": null
+  }
+  ```
+
+---
+
+## Contribution
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a pull request.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Contact
+
+For questions or support, contact [Your Name] at [your.email@example.com].

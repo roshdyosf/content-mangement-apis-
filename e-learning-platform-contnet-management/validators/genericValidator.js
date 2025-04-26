@@ -21,15 +21,15 @@ const genericValidator = (data, validations, fieldsToValidate) => {
     // }
 
     // Check for missing required fields
-    const missingFields = Object.keys(filteredValidations).filter(
-        (key) => !Object.keys(data).includes(key)
-    );
-    if (missingFields.length > 0) {
-        return {
-            valid: false,
-            message: `Missing required fields: ${missingFields.join(', ')}`,
-        };
-    }
+    // const missingFields = Object.keys(filteredValidations).filter(
+    //     (key) => !Object.keys(data).includes(key)
+    // );
+    // if (missingFields.length > 0) {
+    //     return {
+    //         valid: false,
+    //         message: `Missing required fields: ${missingFields.join(', ')}`,
+    //     };
+    // }
 
     // Validate allowed fields
     const invalidField = Object.keys(data).find((field) => {

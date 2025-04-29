@@ -61,14 +61,14 @@ MONGODB_URI=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-JWT_SECRET=your_jwt_secret
+JWT_SECRET_KEY=your_jwt_secret
 ```
 
 ---
 
 ## Running the Server
 
-- Development: `npm run dev`
+- Development: `npm run dev` (if you add a dev script)
 - Production: `npm start`
 
 ---
@@ -86,415 +86,220 @@ JWT_SECRET=your_jwt_secret
 
 ## API Documentation
 
-1. Course Management API
+### Course Management
 
-1.1 Get Courses for Educator  
-• Description: Fetches all courses for a specific educator.  
-• URL: /api/course/get-for-educator/:educatorId  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o validateId('educatorId', 'params'): Validates the educatorId in the URL parameters.  
-• Response:  
- o 200 OK: Returns the list of courses for the educator.  
- o 404 Not Found: No courses found for the educator.  
- o 500 Internal Server Error: An error occurred while fetching the courses.
+#### Get Courses for Educator
 
----
+- **GET** `/api/course/get-for-educator/:educatorId/:limit/:offset`
+- **Middleware:** `authMiddleware`, `validateId('educatorId', 'params')`
+- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
 
-1.2 Get Courses for Tag  
-• Description: Fetches all courses for a specific tag.  
-• URL: /api/course/get-for-tag/:tag  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
-• Response:  
- o 200 OK: Returns the list of courses for the tag.  
- o 404 Not Found: No courses found for the tag.  
- o 500 Internal Server Error: An error occurred while fetching the courses.
+#### Get Courses for Tag
 
----
+- **GET** `/api/course/get-for-tag/:tag/:limit/:offset`
+- **Middleware:** `authMiddleware`
+- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
 
-1.3 Get All Courses  
-• Description: Fetches all courses with pagination.  
-• URL: /api/course/get-all/:limit/offset  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
-• Response:  
- o 200 OK: Returns the list of all courses.  
- o 404 Not Found: No courses found.  
- o 500 Internal Server Error: An error occurred while fetching the courses.
+#### Get All Courses
 
----
+- **GET** `/api/course/get-all/:limit/:offset`
+- **Middleware:** `authMiddleware`
+- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
 
-1.4 Get courses like name  
-• Description: Fetches all courses similar to the entered name with pagination.  
-• URL: /api/course/get-course-like/:courseName/:limit/:offset
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
-• Response:  
- o 200 OK: Returns the list of all courses similar to the name.  
- o 404 Not Found: No courses found with similar name.  
- o 500 Internal Server Error: An error occurred while fetching the courses.
+#### Get Courses Like Name
 
----
+- **GET** `/api/course/get-course-like/:courseName/:limit/:offset`
+- **Middleware:** `authMiddleware`
+- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
 
-1.5 Create Course  
-• Description: Creates a new course.  
-• URL: /api/course/add  
-• Method: POST  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o validateId('educatorId', 'body'): Validates the educatorId in the request body.  
-• Request Body:  
-{
-"title": "Data Structures",
-"description": "Learn about data structures.",
-"educator": "John Doe",
-"educatorId": "123",
-"tags": ["programming", "algorithms"]
-}
+#### Create Course
+
+- **POST** `/api/course/create`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
+- **Body:** `{ "title": "...", "description": "...", "educator": "...", "educatorId": "...", "tags": ["..."] }`
+- **Response:** 201 Created (course object), 400 Bad Request, 500 Internal Server Error
+
+#### Update Course Information
+
+- **PUT** `/api/course/update/`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('courseId', 'body')`
+- **Body:** `{ "courseId": "...", "title": "...", "description": "...", "price": 0, "rating": 0 }`
+- **Response:** 200 OK (updated course), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+
+#### Delete Course
+
+- **DELETE** `/api/course/delete/:courseId`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('courseId', 'params')`
+- **Response:** 200 OK (deleted course), 404 Not Found, 500 Internal Server Error
+
+#### Update Course Rating
+
+- **PUT** `/api/course/update-rating/`
+- **Middleware:** `authMiddleware`, `validateId('courseId', 'body')`
+- **Body:** `{ "courseId": "...", "rating": 4.5 }`
+- **Response:** 200 OK (updated course), 404 Not Found, 500 Internal Server Error
 
 ---
 
-1.6 Update Course Information  
-• Description: Updates the information of a course.  
-• URL: /api/course/update  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the course.  
- o validateId('courseId', 'body'): Validates the courseId in the request body.  
-• Request Body:  
-{
-"courseId": "456",
-"title": "Updated Course Title",
-"description": "Updated course description."
-}  
-• Response:  
- o 200 OK: The course was updated successfully.  
- o 400 Bad Request: Invalid course data.  
- o 404 Not Found: The course ID is incorrect.  
- o 500 Internal Server Error: An error occurred while updating the course.  
-• Note: You should always provide the following three fields: { courseId, title, description } even if only one field is being updated.
+### Section Management
+
+#### Get All Sections for a Course
+
+- **GET** `/api/section/get-all/:courseId`
+- **Middleware:** `authMiddleware`, `validateId('courseId', 'params')`
+- **Response:** 200 OK (sections array), 404 Not Found, 500 Internal Server Error
+
+#### Get Section by ID
+
+- **GET** `/api/section/get-section/:sectionId`
+- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
+- **Response:** 200 OK (section object), 404 Not Found, 500 Internal Server Error
+
+#### Create Section
+
+- **POST** `/api/section/add`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`
+- **Body:** `{ "title": "...", "description": "...", "order": 1, "courseId": "..." }`
+- **Response:** 201 Created (section object), 400 Bad Request, 500 Internal Server Error
+
+#### Update Section
+
+- **PUT** `/api/section/update`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'body')`
+- **Body:** `{ "sectionId": "...", "title": "...", "description": "...", "order": 2, "courseId": "..." }`
+- **Response:** 200 OK (updated section), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+
+#### Delete Section
+
+- **DELETE** `/api/section/delete/:sectionId`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'params')`
+- **Body:** `{ "courseId": "..." }`
+- **Response:** 200 OK (deleted section), 404 Not Found, 500 Internal Server Error
 
 ---
 
-1.7 Delete Course  
-• Description: Deletes a course.  
-• URL: /api/course/delete/:courseId  
-• Method: DELETE  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the course.  
- o validateId('courseId', 'params'): Validates the courseId in the URL parameters.  
-• Response:  
- o 200 OK: The course was deleted successfully.  
- o 404 Not Found: The course ID is incorrect.  
- o 500 Internal Server Error: An error occurred while deleting the course.
+### Video Management
+
+#### Get Videos for Section
+
+- **GET** `/api/video/get-all/:sectionId`
+- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
+- **Response:** 200 OK (videos array), 404 Not Found, 500 Internal Server Error
+
+#### Get Single Video
+
+- **GET** `/api/video/get-video/:videoId`
+- **Middleware:** `authMiddleware`, `validateId('videoId', 'params')`
+- **Response:** 200 OK (video object), 404 Not Found, 500 Internal Server Error
+
+#### Create Video
+
+- **POST** `/api/video/add`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `uploadMiddleware.single('video')`, `validateId('sectionId', 'body')`, `validateId('courseId', 'body')`
+- **Body:** `{ "title": "...", "description": "...", "courseId": "...", "sectionId": "..." }`
+- **File Upload:** Key: `video` (multipart/form-data)
+- **Response:** 201 Created (video object), 400 Bad Request, 500 Internal Server Error
+
+#### Update Video Information
+
+- **PUT** `/api/video/update`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`, `educatorIdentityCheck`, `validateId('videoId', 'body')`
+- **Body:** `{ "videoId": "...", "title": "...", "description": "...", "order": 1, "courseId": "..." }`
+- **Response:** 200 OK (updated video), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+
+#### Delete Video
+
+- **DELETE** `/api/video/delete/:videoId`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('videoId', 'params')`
+- **Body:** `{ "courseId": "..." }`
+- **Response:** 200 OK (deleted video), 404 Not Found, 500 Internal Server Error
 
 ---
 
-1.8 Update Course Rating  
-• Description: Updates the rating of a course.  
-• URL: /api/course/update-rating  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o validateId('courseId', 'body'): Validates the courseId in the request body.  
-• Request Body:  
-{
-"courseId": "456",
-"rating": 4.5
-}  
-• Response:  
- o 200 OK: The course rating was updated successfully.  
- o 404 Not Found: The course was not found.  
- o 500 Internal Server Error: An error occurred while updating the course rating.
+### Moderator Management
+
+#### Approve Course
+
+- **PUT** `/api/moderator/approve-course`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('courseId', 'body')`
+- **Body:** `{ "courseId": "...", "approval": true }`
+- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+
+#### Approve Section
+
+- **PUT** `/api/moderator/approve-section`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('sectionId', 'body')`
+- **Body:** `{ "sectionId": "...", "approval": true }`
+- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+
+#### Approve Video
+
+- **PUT** `/api/moderator/approve-video`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('videoId', 'body')`
+- **Body:** `{ "videoId": "...", "approval": true }`
+- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+
+#### Get Unapproved Courses
+
+- **GET** `/api/moderator/get-unapproved-course`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`
+- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+
+#### Get Unapproved Sections
+
+- **GET** `/api/moderator/get-unapproved-section`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`
+- **Response:** 200 OK (sections array), 404 Not Found, 500 Internal Server Error
+
+#### Get Unapproved Videos
+
+- **GET** `/api/moderator/get-unapproved-video`
+- **Middleware:** `authMiddleware`, `moderatorMiddleware`
+- **Response:** 200 OK (videos array), 404 Not Found, 500 Internal Server Error
 
 ---
 
-2. Section Management API (Updated)
+### Exam Management
 
-- **Get All Sections for a Course**
+#### Create Exam
 
-  - URL: `/api/section/get-all/:courseId`
-  - Method: GET
-  - Middleware: `authMiddleware`, `validateId('courseId', 'params')`
-  - Response: 200 OK (sections array), 404 Not Found, 500 Internal Server Error
+- **POST** `/api/exam/create`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
+- **Body:** `{ "title": "...", "sectionId": "...", "courseId": "...", "educatorId": "..." }`
+- **Response:** 201 Created (exam object), 400 Bad Request, 500 Internal Server Error
 
-- **Get Section by ID**
+#### Add Question to Exam
 
-  - URL: `/api/section/get-section/:sectionId`
-  - Method: GET
-  - Middleware: `authMiddleware`, `validateId('sectionId', 'params')`
-  - Response: 200 OK (section object), 404 Not Found, 500 Internal Server Error
+- **PUT** `/api/exam/add-question`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+- **Body:** `{ "examId": "...", "question": "...", "choices": ["A", "B", "C", "D"], "answer": "A" }`
+- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
 
-- **Create Section**
+#### Update Exam
 
-  - URL: `/api/section/add`
-  - Method: POST
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`
-  - Body: `{ "title": "Section Title", "description": "Section description", "order": 1, "courseId": "..." }`
-  - Response: 201 Created (section object), 400 Bad Request, 500 Internal Server Error
+- **PUT** `/api/exam/update-exam`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+- **Body:** Update exam title, question, choice, or answer (see code for options)
+- **Response:** 200 OK (updated exam), 400 Bad Request, 500 Internal Server Error
 
-- **Update Section**
+#### Get All Exams for Section
 
-  - URL: `/api/section/update`
-  - Method: PUT
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'body')`
-  - Body: `{ "sectionId": "...", "title": "...", "description": "...", "order": 2 }`
-  - Response: 200 OK (updated section), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+- **GET** `/api/exam/get-all-exams/:sectionId`
+- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
+- **Response:** 200 OK (exams array), 404 Not Found, 500 Internal Server Error
 
-- **Delete Section**
-  - URL: `/api/section/delete/:sectionId`
-  - Method: DELETE
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'params')`
-  - Response: 200 OK (deleted section), 404 Not Found, 500 Internal Server Error
+#### Get Exam by ID
 
----
+- **GET** `/api/exam/get-exam/:examId`
+- **Middleware:** `authMiddleware`, `validateId('examId', 'params')`
+- **Response:** 200 OK (exam object), 404 Not Found, 500 Internal Server Error
 
-3. Video Management API
+#### Delete Exam
 
-3.1 Get Videos for Section  
-• Description: Fetches all videos for a specific section.  
-• URL: /api/video/get-all/:sectionId  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o validateId('sectionId', 'params'): Validates the sectionId in the URL parameters.  
-• Response:  
- o 200 OK: Returns the list of videos for the section.  
- o 404 Not Found: No videos found for the section.  
- o 500 Internal Server Error: An error occurred while fetching the videos.
-
----
-
-3.2 Create Video  
-• Description: Creates a new video for a section.  
-• URL: /api/video/add  
-• Method: POST  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o validateId('sectionId', 'body'): Validates the sectionId in the request body.  
- o validateId('courseId', 'body'): Validates the courseId in the request body.  
- o uploadMiddleware.single("video"): Handles video file upload.  
-• Request Body:  
-{
-"title": "Lecture 1",
-"description": "First lecture of the course.",
-"courseId": "123",
-"sectionId": "456"
-}  
-• File Upload:  
- o Key: video  
- o Type: Video file (multipart form-data).  
-• Response:  
- o 201 Created: The video was created successfully.  
- o 400 Bad Request: No video file uploaded or invalid video data.  
- o 500 Internal Server Error: An error occurred while creating the video.
-
----
-
-3.3 Update Video Information  
-• Description: Updates the information of a video.  
-• URL: /api/video/update  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the video.  
- o validateId('videoId', 'body'): Validates the videoId in the request body.  
-• Request Body:  
-{
-"videoId": "789",
-"title": "Updated Lecture Title",
-"description": "Updated lecture description."
-}  
-• Response:  
- o 200 OK: The video was updated successfully.  
- o 400 Bad Request: Invalid video data.  
- o 404 Not Found: The video ID is incorrect.  
- o 500 Internal Server Error: An error occurred while updating the video.  
-• Note: You should always provide the following five fields: { courseId, sectionId, videoId, order, title, description } even if only one field is being updated.
-
----
-
-3.4 Delete Video  
-• Description: Deletes a video.  
-• URL: /api/video/delete/:videoId  
-• Method: DELETE  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o educatorRoleCheck: Ensures the user has the educator role.  
- o educatorIdentityCheck: Ensures the user owns the video.  
- o validateId('videoId', 'params'): Validates the videoId in the URL parameters.  
-• Response:  
- o 200 OK: The video was deleted successfully.  
- o 404 Not Found: The video ID is incorrect.  
- o 500 Internal Server Error: An error occurred while deleting the video.
-
----
-
-4. Moderator Management API
-
-4.1 Approve Course  
-• Description: Approves or disapproves a course.  
-• URL: /api/moderator/approve-course  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
- o validateApproval: Validates the approval field in the request body.  
- o validateId('courseId', 'body'): Validates the courseId in the request body.  
-• Request Body:  
-{
-"courseId": "123",
-"approval": true
-}  
-• Response:  
- o 200 OK: The course approval status was updated successfully.  
- o 400 Bad Request: Missing or invalid courseId or approval.  
- o 500 Internal Server Error: An error occurred while updating the course approval.
-
----
-
-4.2 Approve Section  
-• Description: Approves or disapproves a section.  
-• URL: /api/moderator/approve-section  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
- o validateApproval: Validates the approval field in the request body.  
- o validateId('sectionId', 'body'): Validates the sectionId in the request body.  
-• Request Body:  
-{
-"sectionId": "456",
-"approval": true
-}  
-• Response:  
- o 200 OK: The section approval status was updated successfully.  
- o 400 Bad Request: Missing or invalid sectionId or approval.  
- o 500 Internal Server Error: An error occurred while updating the section approval.
-
----
-
-4.3 Approve Video  
-• Description: Approves or disapproves a video.  
-• URL: /api/moderator/approve-video  
-• Method: PUT  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
- o validateApproval: Validates the approval field in the request body.  
- o validateId('videoId', 'body'): Validates the videoId in the request body.  
-• Request Body:  
-{
-"videoId": "789",
-"approval": true
-}  
-• Response:  
- o 200 OK: The video approval status was updated successfully.  
- o 400 Bad Request: Missing or invalid videoId or approval.  
- o 500 Internal Server Error: An error occurred while updating the video approval.
-
----
-
-4.4 Get Unapproved Courses  
-• Description: Fetches all unapproved courses.  
-• URL: /api/moderator/get-unapproved-course  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
-• Response:  
- o 200 OK: Returns the list of unapproved courses.  
- o 404 Not Found: No unapproved courses found.  
- o 500 Internal Server Error: An error occurred while fetching the courses.
-
----
-
-4.5 Get Unapproved Sections  
-• Description: Fetches all unapproved sections.  
-• URL: /api/moderator/get-unapproved-section  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
-• Response:  
- o 200 OK: Returns the list of unapproved sections.  
- o 404 Not Found: No unapproved sections found.  
- o 500 Internal Server Error: An error occurred while fetching the sections.
-
----
-
-4.6 Get Unapproved Videos  
-• Description: Fetches all unapproved videos.  
-• URL: /api/moderator/get-unapproved-video  
-• Method: GET  
-• Middleware:  
- o authMiddleware: Ensures the user is authenticated.  
- o moderatorMiddleware: Ensures the user has the moderator role.  
-• Response:  
- o 200 OK: Returns the list of unapproved videos.  
- o 404 Not Found: No unapproved videos found.  
- o 500 Internal Server Error: An error occurred while fetching the videos.
-
----
-
-5. Exam Management API (New)
-
-- **Create Exam**
-
-  - URL: `/api/exam/create`
-  - Method: POST
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
-  - Body: `{ "title": "Exam Title", "sectionId": "...", "courseId": "...", "educatorId": "..." }`
-  - Response: 201 Created (exam object), 400 Bad Request, 500 Internal Server Error
-
-- **Add Question to Exam**
-
-  - URL: `/api/exam/add-question`
-  - Method: PUT
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-  - Body: `{ "examId": "...", "question": "...", "choices": ["A", "B", "C", "D"], "answer": "A" }`
-  - Response: 200 OK, 400 Bad Request, 500 Internal Server Error
-
-- **Update Exam**
-
-  - URL: `/api/exam/update-exam`
-  - Method: PUT
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-  - Body: Update exam title, question, choice, or answer (see code for options)
-  - Response: 200 OK (updated exam), 400 Bad Request, 500 Internal Server Error
-
-- **Get All Exams for Section**
-
-  - URL: `/api/exam/get-all-exams/:sectionId`
-  - Method: GET
-  - Middleware: `authMiddleware`, `validateId('sectionId', 'params')`
-  - Response: 200 OK (exams array), 404 Not Found, 500 Internal Server Error
-
-- **Get Exam by ID**
-
-  - URL: `/api/exam/get-exam/:examId`
-  - Method: GET
-  - Middleware: `authMiddleware`, `validateId('examId', 'params')`
-  - Response: 200 OK (exam object), 404 Not Found, 500 Internal Server Error
-
-- **Delete Exam**
-  - URL: `/api/exam/delete-exam`
-  - Method: DELETE
-  - Middleware: `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-  - Body: `{ "examId": "..." }`
-  - Response: 200 OK (deleted exam), 404 Not Found, 500 Internal Server Error
+- **DELETE** `/api/exam/delete-exam`
+- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
+- **Body:** `{ "examId": "...", "courseId": "..." }`
+- **Response:** 200 OK (deleted exam), 404 Not Found, 500 Internal Server Error
 
 ---
 
@@ -521,21 +326,24 @@ JWT_SECRET=your_jwt_secret
 
 ## Standard Response Format
 
-Success Response  
-• Status Code: 200 OK, 201 Created, etc.  
-• Response:  
- o success: true  
- o message: Success message.  
- o status: Status code.  
- o data: Response data (if applicable).
-
-Error Response  
-• Status Code: 400 Bad Request, 404 Not Found, 500 Internal Server Error, etc.  
-• Response:  
- o success: false  
- o message: Error message.  
- o status: Status code.  
- o data: null.
+- **Success:**
+  ```json
+  {
+    "success": true,
+    "message": "Success message.",
+    "status": 200,
+    "data": { ... }
+  }
+  ```
+- **Error:**
+  ```json
+  {
+    "success": false,
+    "message": "Error message.",
+    "status": 400,
+    "data": null
+  }
+  ```
 
 ---
 
@@ -549,25 +357,6 @@ Error Response
 
 ## Error Handling
 
-All responses follow a standard format:
-
-- **Success**:
-  ```json
-  {
-    "success": true,
-    "message": "Success message.",
-    "status": 200,
-    "data": { ... }
-  }
-  ```
-- **Error**:
-  ```json
-  {
-    "success": false,
-    "message": "Error message.",
-    "status": 400,
-    "data": null
-  }
-  ```
+All responses follow a standard format as shown above.
 
 ---

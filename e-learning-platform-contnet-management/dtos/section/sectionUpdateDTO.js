@@ -1,7 +1,7 @@
 class SectionUpdateDTO {
     constructor({ title, description, order }) {
         this.valid = false
-        if (!title && !description && !order) {
+        if (!title && !description && order === undefined) {
             return
         }
         if (order !== undefined) {

@@ -2,7 +2,7 @@ const ExamUpdateDTO = require("../../dtos/exam/examUpdateDTO")
 const Exam = require("../../models/exam-model")
 const examValidation = require("../../validators/examDataValidation")
 
-const updateExamService = async (examUpdatedData) => {
+const updateExamService = async (examUpdatedData, courseId) => {
     try {
         const examUpdateDTO = new ExamUpdateDTO(examUpdatedData)
         const { valid, ...dto } = examUpdateDTO
@@ -27,7 +27,13 @@ const updateExamService = async (examUpdatedData) => {
 
         const exam = await Exam.findById(dto.examId);
         if (!exam) throw new Error("Exam not found");
-
+        if (courseId.toString() !== exam.courseId.toString()) {
+            return {
+                success: false,
+                message: 'please don`t hack us.',
+                statusCode: 400
+            };
+        }
         switch (dto.option) {
             case "question":
                 if (!exam.mcq[dto.questionIndex]) throw new Error("Question index out of range");

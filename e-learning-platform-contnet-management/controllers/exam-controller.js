@@ -30,12 +30,14 @@ const getExamById = async (req, res) => {
 
 const updateExam = async (req, res) => {
     const examData = req.body
-    const result = await updateExamService(examData)
+    const courseId = req.body.courseId;
+    const result = await updateExamService(examData, courseId)
     handleResponse(res, result)
 }
 const deleteExam = async (req, res) => {
     const examId = req.params.examId;
-    const result = await deleteExamService(examId);
+    const courseId = req.body.courseId;
+    const result = await deleteExamService(examId, courseId);
     handleResponse(res, result);
 };
 module.exports = {

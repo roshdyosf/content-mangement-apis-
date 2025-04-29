@@ -8,6 +8,14 @@ const VideoCreateDTO = require('../../dtos/video/videoCreateDTO')
 const createVideoService = async (videoData, filePath) => {
     try {
 
+        if (!filePath) {
+            return {
+                success: false,
+                message: "No video file uploaded.",
+                statusCode: 400
+            };
+        }
+
         const videoCreateDTO = new VideoCreateDTO(videoData);
 
         const { valid, ...dtoWithoutSuccess } = videoCreateDTO;
@@ -63,11 +71,11 @@ const createVideoService = async (videoData, filePath) => {
         };
     } finally {
         // Always delete the local file
-        fs.unlink(filePath, (err) => {
-            if (err) {
-                console.error('Error deleting local file:', err);
-            }
-        });
+        try {
+            await fs.promises.unlink(filePath);
+        } catch (err) {
+            console.error('Error deleting local file:', err);
+        }
     }
 };
 module.exports = createVideoService

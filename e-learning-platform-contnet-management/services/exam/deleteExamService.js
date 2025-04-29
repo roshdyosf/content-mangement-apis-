@@ -1,8 +1,8 @@
 const Exam = require("../../models/exam-model")
-const deleteExamService = async (examId) => {
+const deleteExamService = async (examId, courseId) => {
 
     try {
-        const exam = await Exam.findByIdAndDelete(examId)
+        const exam = await Exam.findById(examId);
         if (!exam) {
             return {
                 success: false,
@@ -10,6 +10,14 @@ const deleteExamService = async (examId) => {
                 statusCode: 404
             };
         }
+        if (courseId.toString() !== exam.courseId.toString()) {
+            return {
+                success: false,
+                message: 'please don`t hack us.',
+                statusCode: 400
+            };
+        }
+        await Exam.findByIdAndDelete(examId);
         return {
             success: true,
             message: "exam deleted successfully.",

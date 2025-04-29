@@ -1,7 +1,7 @@
 class CourseUpdateDTO {
     constructor({ title, description, price, rating }) {
         this.valid = false
-        if (!title && !description && !price && !rating) {
+        if (!title && !description && price === undefined && rating === undefined) {
             return false
         }
         if (title) {
@@ -10,15 +10,14 @@ class CourseUpdateDTO {
         if (description) {
             this.description = description;
         }
-        if (price) {
+        if (price !== undefined) {
             const priceNumber = Number(price);
             if (isNaN(priceNumber)) {
-
                 return
             }
             this.price = priceNumber;
         }
-        if (rating) {
+        if (rating !== undefined) {
             this.rating = rating;
         }
         this.valid = true;

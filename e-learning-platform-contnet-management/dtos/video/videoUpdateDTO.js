@@ -1,12 +1,12 @@
 class VideoUpdateDTO {
     constructor({ title, description, order }) {
         this.valid = false
-        if (!title && !description && !order) {
+        if (!title && !description && order === undefined) {
             return
         }
         if (order !== undefined) {
             const orderNumber = Number(order);
-            if (isNaN(priceNumber)) {
+            if (isNaN(orderNumber)) {
                 return
             }
             this.order = orderNumber;

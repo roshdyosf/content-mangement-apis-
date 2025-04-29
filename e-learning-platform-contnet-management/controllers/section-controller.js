@@ -22,13 +22,15 @@ const createSection = async (req, res) => {
 const updateSectionInfo = async (req, res) => {
     const sectionId = req.body.sectionId;
     const sectionData = req.body;
-    const result = await updateSectionService(sectionId, sectionData);
+    const courseId = req.body.courseId;
+    const result = await updateSectionService(sectionId, sectionData, courseId);
     handleResponse(res, result);
 };
 
 const deleteSection = async (req, res) => {
     const sectionId = req.params.sectionId;
-    const result = await deleteSectionService(sectionId);
+    const courseId = req.body.courseId;
+    const result = await deleteSectionService(sectionId, courseId);
     handleResponse(res, result);
 };
 const getSectionById = async (req, res) => {

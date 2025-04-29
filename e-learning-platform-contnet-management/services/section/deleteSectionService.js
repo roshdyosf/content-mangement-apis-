@@ -4,9 +4,9 @@ const Course = require('../../models/course-model');
 
 const deleteVideoService = require('../video/deleteVideoService')
 
-const deleteSection = async (sectionId) => {
+const deleteSection = async (sectionId, courseId) => {
     try {
-        const section = await Section.findByIdAndDelete(sectionId);
+        const section = await Section.findById(sectionId);
         if (!section) {
             return {
                 success: false,
@@ -14,9 +14,17 @@ const deleteSection = async (sectionId) => {
                 statusCode: 404
             };
         }
+        if (courseId.toString() !== section.courseId.toString()) {
+            return {
+                success: false,
+                message: 'please don`t hack us.',
+                statusCode: 400
+            };
+        }
+        await Section.findByIdAndDelete(sectionId);
         await Course.findByIdAndUpdate(section.courseId, { $pull: { sections: section._id } });
         await Promise.all(
-            section.videos.map(videoId => deleteVideoService(videoId))
+            section.videos.map(videoId => deleteVideoService(videoId, courseId))
         );
         return {
             success: true,

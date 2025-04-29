@@ -2,7 +2,7 @@ const Video = require('../../models/video-model')
 const videoValidation = require('../../validators/videoDataValidation')
 const VideoUpdateDTO = require('../../dtos/video/videoUpdateDTO')
 
-const updateVideoService = async (videoId, videoData) => {
+const updateVideoService = async (videoId, videoData, courseId) => {
     const videoUpdateDTO = new VideoUpdateDTO(videoData);
     const { valid, ...dtoWithoutSuccess } = videoUpdateDTO;
 
@@ -14,8 +14,6 @@ const updateVideoService = async (videoId, videoData) => {
         };
     }
     try {
-        // Create a DTO instance
-
         // Extract field names from the DTO
         const fieldsToValidate = Object.keys(dtoWithoutSuccess);
 
@@ -31,7 +29,8 @@ const updateVideoService = async (videoId, videoData) => {
             };
         }
 
-        const video = await Video.findByIdAndUpdate(videoId, dtoWithoutSuccess, { new: true });
+        // Find the video first to check courseId
+        const video = await Video.findById(videoId);
         if (!video) {
             return {
                 success: false,
@@ -39,10 +38,22 @@ const updateVideoService = async (videoId, videoData) => {
                 statusCode: 404
             };
         }
+        if (courseId !== video.courseId) {
+            return {
+                success: false,
+                message: 'please don`t hack us.',
+                statusCode: 400
+            };
+        }
+        const updatedVideo = await Video.findByIdAndUpdate(
+            videoId,
+            { $set: dtoWithoutSuccess },
+            { new: true }
+        );
         return {
             success: true,
             message: 'Video updated successfully',
-            data: video,
+            data: updatedVideo,
             statusCode: 200
         };
     } catch (error) {

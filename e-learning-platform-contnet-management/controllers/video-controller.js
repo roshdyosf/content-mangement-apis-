@@ -26,13 +26,15 @@ const getSingleVideo = async (req, res) => {
 const updateVideoInfo = async (req, res) => {
     const videoData = req.body;
     const videoId = req.body.videoId;
-    const result = await updateVideoService(videoId, videoData);
+    const courseId = req.body.courseId;
+    const result = await updateVideoService(videoId, videoData, courseId);
     handleResponse(res, result);
 };
 
 const deleteVideo = async (req, res) => {
     const videoId = req.params.videoId;
-    const result = await deleteVideoService(videoId);
+    const courseId = req.body.courseId;
+    const result = await deleteVideoService(videoId, courseId);
     handleResponse(res, result);
 };
 

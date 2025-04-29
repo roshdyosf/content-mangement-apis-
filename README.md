@@ -57,7 +57,7 @@ Create a `.env` file in `e-learning-platform-contnet-management/` with the follo
 
 ```
 PORT=5000
-MONGODB_URI=your_mongodb_connection_string
+CONNECTION_STRING=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret

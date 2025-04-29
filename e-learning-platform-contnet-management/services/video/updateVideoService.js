@@ -47,7 +47,7 @@ const updateVideoService = async (videoId, videoData, courseId) => {
         }
         const updatedVideo = await Video.findByIdAndUpdate(
             videoId,
-            { $set: dtoWithoutSuccess },
+            { ...dtoWithoutSuccess, approved: false },
             { new: true }
         );
         return {

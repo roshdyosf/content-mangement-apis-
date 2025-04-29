@@ -1,6 +1,6 @@
 const Course = require("../../models/course-model");
 
-const getAllCoursesForTag = async (tag, limit = 20, offset = 0) => {
+const getAllCoursesForTag = async (tag, limit, offset) => {
     try {
         let courses;
         if (!tag) {

@@ -27,7 +27,7 @@ const getAllCoursesForTag = async (req, res) => {
     const tag = req.params.tag;
     const limit = parseInt(req.params.limit) || 20;
     const offset = parseInt(req.params.offset) || 0;
-    const result = await getAllCoursesForTagService(tag);
+    const result = await getAllCoursesForTagService(tag, limit, offset);
     handleResponse(res, result);
 };
 

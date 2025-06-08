@@ -31,7 +31,6 @@ const user =
     id: "123",
     username: 'John',
     role: 'educator',
-    password: 'password123'
 }
 const accessToken = jwt.sign({
 
@@ -53,7 +52,6 @@ app.use('/api/course', courseRoutes)
 app.use('/api/exam', examRoutes)
 app.use('/api/section', sectionRoutes)
 app.use('/api/video', videoRoutes)
-
 app.use('/api/moderator', moderatorRoutes)
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}!`))

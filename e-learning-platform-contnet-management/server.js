@@ -47,11 +47,11 @@ app.get('/users', (req, res) => {
 });
 console.log(accessToken);
 
-
-app.use('/api/course', courseRoutes)
-app.use('/api/exam', examRoutes)
-app.use('/api/section', sectionRoutes)
-app.use('/api/video', videoRoutes)
-app.use('/api/moderator', moderatorRoutes)
+//cms
+app.use('/CMS/api/course', courseRoutes)
+app.use('/CMS/api/exam', examRoutes)
+app.use('/CMS/api/section', sectionRoutes)
+app.use('/CMS/api/video', videoRoutes)
+app.use('/CMS/api/moderator', moderatorRoutes)
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}!`))

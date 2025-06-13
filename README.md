@@ -90,7 +90,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Courses for Educator
 
-- **GET** `/api/course/get-for-educator/:educatorId/:limit/:offset`
+- **GET** `/api/v1/cms/course/get-for-educator/:educatorId/:limit/:offset`
 - **Request Params:** `educatorId` (string), `limit` (number), `offset` (number)
 - **Response:**
   ```json
@@ -104,7 +104,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Courses for Tag
 
-- **GET** `/api/course/get-for-tag/:tag/:limit/:offset`
+- **GET** `/api/v1/cms/course/get-for-tag/:tag/:limit/:offset`
 - **Request Params:** `tag` (string), `limit` (number), `offset` (number)
 - **Response:**
   ```json
@@ -118,7 +118,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get All Courses
 
-- **GET** `/api/course/get-all/:limit/:offset`
+- **GET** `/api/v1/cms/course/get-all/:limit/:offset`
 - **Request Params:** `limit` (number), `offset` (number)
 - **Response:**
   ```json
@@ -132,7 +132,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Courses Like Name
 
-- **GET** `/api/course/get-course-like/:courseName/:limit/:offset`
+- **GET** `/api/v1/cms/course/get-course-like/:courseName/:limit/:offset`
 - **Request Params:** `courseName` (string), `limit` (number), `offset` (number)
 - **Response:**
   ```json
@@ -144,9 +144,23 @@ JWT_SECRET_KEY=your_jwt_secret
   }
   ```
 
+#### Get Course by ID
+
+- **GET** `/api/v1/cms/course/get-course/:courseId`
+- **Request Params:** `courseId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course fetched successfully.",
+    "status": 200,
+    "data": { ...courseObject }
+  }
+  ```
+
 #### Create Course
 
-- **POST** `/api/course/create`
+- **POST** `/api/v1/cms/course/create`
 - **Body:**
   ```json
   {
@@ -171,7 +185,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Update Course Information
 
-- **PUT** `/api/course/update`
+- **PUT** `/api/v1/cms/course/update`
 - **Body:**
   ```json
   {
@@ -192,9 +206,29 @@ JWT_SECRET_KEY=your_jwt_secret
   }
   ```
 
+#### Update Course Enrollment Count (Notifications)
+
+- **PUT** `/api/v1/cms/course/notifications`
+- **Body:**
+  ```json
+  {
+    "courseId": "...",
+    "key": "..." // (if required by your logic)
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course enrollment count updated successfully.",
+    "status": 200,
+    "data": { ...updatedCourseObject }
+  }
+  ```
+
 #### Delete Course
 
-- **DELETE** `/api/course/delete/:courseId`
+- **DELETE** `/api/v1/cms/course/delete/:courseId`
 - **Request Params:** `courseId` (string)
 - **Response:**
   ```json
@@ -208,7 +242,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Update Course Rating
 
-- **PUT** `/api/course/update-rating`
+- **PUT** `/api/v1/cms/course/update-rating`
 - **Body:**
   ```json
   {
@@ -232,7 +266,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get All Sections for a Course
 
-- **GET** `/api/section/get-all/:courseId`
+- **GET** `/api/v1/cms/section/get-all/:courseId`
 - **Request Params:** `courseId` (string)
 - **Response:**
   ```json
@@ -246,7 +280,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Section by ID
 
-- **GET** `/api/section/get-section/:sectionId`
+- **GET** `/api/v1/cms/section/get-section/:sectionId`
 - **Request Params:** `sectionId` (string)
 - **Response:**
   ```json
@@ -260,7 +294,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Create Section
 
-- **POST** `/api/section/add`
+- **POST** `/api/v1/cms/section/add`
 - **Body:**
   ```json
   {
@@ -282,7 +316,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Update Section
 
-- **PUT** `/api/section/update`
+- **PUT** `/api/v1/cms/section/update`
 - **Body:**
   ```json
   {
@@ -305,7 +339,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Delete Section
 
-- **DELETE** `/api/section/delete/:sectionId`
+- **DELETE** `/api/v1/cms/section/delete/:sectionId`
 - **Request Params:** `sectionId` (string)
 - **Body:**
   ```json
@@ -329,7 +363,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Videos for Section
 
-- **GET** `/api/video/get-all/:sectionId`
+- **GET** `/api/v1/cms/video/get-all/:sectionId`
 - **Request Params:** `sectionId` (string)
 - **Response:**
   ```json
@@ -343,7 +377,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Single Video
 
-- **GET** `/api/video/get-video/:videoId`
+- **GET** `/api/v1/cms/video/get-video/:videoId`
 - **Request Params:** `videoId` (string)
 - **Response:**
   ```json
@@ -357,7 +391,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Create Video
 
-- **POST** `/api/video/add`
+- **POST** `/api/v1/cms/video/add`
 - **Body:**
   ```json
   {
@@ -381,7 +415,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Update Video Information
 
-- **PUT** `/api/video/update`
+- **PUT** `/api/v1/cms/video/update`
 - **Body:**
   ```json
   {
@@ -404,7 +438,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Delete Video
 
-- **DELETE** `/api/video/delete/:videoId`
+- **DELETE** `/api/v1/cms/video/delete/:videoId`
 - **Request Params:** `videoId` (string)
 - **Body:**
   ```json
@@ -428,7 +462,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Approve Course
 
-- **PUT** `/api/moderator/approve-course`
+- **PUT** `/api/v1/cms/moderator/approve-course`
 - **Body:**
   ```json
   {
@@ -447,7 +481,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Approve Section
 
-- **PUT** `/api/moderator/approve-section`
+- **PUT** `/api/v1/cms/moderator/approve-section`
 - **Body:**
   ```json
   {
@@ -466,7 +500,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Approve Video
 
-- **PUT** `/api/moderator/approve-video`
+- **PUT** `/api/v1/cms/moderator/approve-video`
 - **Body:**
   ```json
   {
@@ -485,7 +519,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Unapproved Courses
 
-- **GET** `/api/moderator/get-unapproved-course`
+- **GET** `/api/v1/cms/moderator/get-unapproved-course`
 - **Response:**
   ```json
   {
@@ -498,7 +532,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Unapproved Sections
 
-- **GET** `/api/moderator/get-unapproved-section`
+- **GET** `/api/v1/cms/moderator/get-unapproved-section`
 - **Response:**
   ```json
   {
@@ -511,7 +545,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Unapproved Videos
 
-- **GET** `/api/moderator/get-unapproved-video`
+- **GET** `/api/v1/cms/moderator/get-unapproved-video`
 - **Response:**
   ```json
   {
@@ -528,7 +562,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Create Exam
 
-- **POST** `/api/exam/create`
+- **POST** `/api/v1/cms/exam/create`
 - **Body:**
   ```json
   {
@@ -550,7 +584,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Add Question to Exam
 
-- **PUT** `/api/exam/add-question`
+- **PUT** `/api/v1/cms/exam/add-question`
 - **Body:**
   ```json
   {
@@ -571,7 +605,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Update Exam
 
-- **PUT** `/api/exam/update-exam`
+- **PUT** `/api/v1/cms/exam/update-exam`
 - **Body:**
   ```json
   {
@@ -594,7 +628,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get All Exams for Section
 
-- **GET** `/api/exam/get-all-exams/:sectionId`
+- **GET** `/api/v1/cms/exam/get-all-exams/:sectionId`
 - **Request Params:** `sectionId` (string)
 - **Response:**
   ```json
@@ -608,7 +642,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Get Exam by ID
 
-- **GET** `/api/exam/get-exam/:examId`
+- **GET** `/api/v1/cms/exam/get-exam/:examId`
 - **Request Params:** `examId` (string)
 - **Response:**
   ```json
@@ -622,7 +656,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 #### Delete Exam
 
-- **DELETE** `/api/exam/delete-exam`
+- **DELETE** `/api/v1/cms/exam/delete-exam`
 - **Body:**
   ```json
   {

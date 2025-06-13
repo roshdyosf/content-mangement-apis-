@@ -98,7 +98,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Courses fetched successfully.",
     "status": 200,
-    "data": [ { ...courseObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
   }
   ```
 
@@ -112,7 +112,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Courses fetched successfully.",
     "status": 200,
-    "data": [ { ...courseObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
   }
   ```
 
@@ -126,7 +126,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Courses fetched successfully.",
     "status": 200,
-    "data": [ { ...courseObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
   }
   ```
 
@@ -140,7 +140,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Courses fetched successfully.",
     "status": 200,
-    "data": [ { ...courseObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
   }
   ```
 
@@ -154,7 +154,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course fetched successfully.",
     "status": 200,
-    "data": { ...courseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -179,7 +179,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course created successfully.",
     "status": 201,
-    "data": { ...courseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -202,7 +202,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course updated successfully.",
     "status": 200,
-    "data": { ...updatedCourseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -222,7 +222,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course enrollment count updated successfully.",
     "status": 200,
-    "data": { ...updatedCourseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -236,7 +236,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course deleted successfully.",
     "status": 200,
-    "data": { ...deletedCourseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -256,7 +256,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Course rating updated successfully.",
     "status": 200,
-    "data": { ...updatedCourseObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
   }
   ```
 
@@ -274,7 +274,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Sections fetched successfully.",
     "status": 200,
-    "data": [ { ...sectionObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" } ]
   }
   ```
 
@@ -288,7 +288,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Section fetched successfully.",
     "status": 200,
-    "data": { ...sectionObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
   }
   ```
 
@@ -310,7 +310,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Section created successfully.",
     "status": 201,
-    "data": { ...sectionObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
   }
   ```
 
@@ -333,7 +333,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Section updated successfully.",
     "status": 200,
-    "data": { ...updatedSectionObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
   }
   ```
 
@@ -353,7 +353,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Section deleted successfully.",
     "status": 200,
-    "data": { ...deletedSectionObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
   }
   ```
 
@@ -371,7 +371,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Videos fetched successfully.",
     "status": 200,
-    "data": [ { ...videoObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" } ]
   }
   ```
 
@@ -385,7 +385,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Video fetched successfully.",
     "status": 200,
-    "data": { ...videoObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
   }
   ```
 
@@ -409,7 +409,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Video created successfully.",
     "status": 201,
-    "data": { ...videoObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
   }
   ```
 
@@ -432,7 +432,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Video updated successfully.",
     "status": 200,
-    "data": { ...updatedVideoObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
   }
   ```
 
@@ -452,7 +452,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Video deleted successfully.",
     "status": 200,
-    "data": { ...deletedVideoObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
   }
   ```
 
@@ -526,7 +526,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Unapproved courses fetched successfully.",
     "status": 200,
-    "data": [ { ...courseObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
   }
   ```
 
@@ -539,7 +539,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Unapproved sections fetched successfully.",
     "status": 200,
-    "data": [ { ...sectionObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" } ]
   }
   ```
 
@@ -552,7 +552,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Unapproved videos fetched successfully.",
     "status": 200,
-    "data": [ { ...videoObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" } ]
   }
   ```
 
@@ -578,7 +578,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Exam created successfully.",
     "status": 201,
-    "data": { ...examObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
   }
   ```
 
@@ -622,7 +622,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Exam updated successfully.",
     "status": 200,
-    "data": { ...updatedExamObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
   }
   ```
 
@@ -636,7 +636,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Exams fetched successfully.",
     "status": 200,
-    "data": [ { ...examObject } ]
+    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] } ]
   }
   ```
 
@@ -650,7 +650,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Exam fetched successfully.",
     "status": 200,
-    "data": { ...examObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
   }
   ```
 
@@ -670,21 +670,73 @@ JWT_SECRET_KEY=your_jwt_secret
     "success": true,
     "message": "Exam deleted successfully.",
     "status": 200,
-    "data": { ...deletedExamObject }
+    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
   }
   ```
 
 ---
 
-## Example Exam Object
+## Example Data Objects
 
+### Course Object
 ```json
 {
-  "_id": "...",
-  "educatorId": "...",
-  "courseId": "...",
-  "sectionId": "...",
-  "title": "Exam Title",
+  "_id": "664f1e2b8c1a2b001f7e4a1a",
+  "title": "JavaScript Basics",
+  "description": "Learn the basics of JavaScript programming.",
+  "price": 100,
+  "educatorId": "664f1e2b8c1a2b001f7e4a1b",
+  "educator": "John Doe",
+  "tags": ["javascript", "programming"],
+  "level": "Beginner",
+  "rating": 4.5,
+  "enrollmentCount": 120,
+  "sections": [
+    {
+      "_id": "664f1e2b8c1a2b001f7e4a1c",
+      "title": "Introduction",
+      "description": "Course introduction section.",
+      "order": 1
+    }
+  ],
+  "approved": true,
+  "createdAt": "2025-06-14T12:00:00.000Z",
+  "updatedAt": "2025-06-14T12:00:00.000Z"
+}
+```
+
+### Section Object
+```json
+{
+  "_id": "664f1e2b8c1a2b001f7e4a1c",
+  "title": "Introduction",
+  "description": "Course introduction section.",
+  "order": 1,
+  "courseId": "664f1e2b8c1a2b001f7e4a1a"
+}
+```
+
+### Video Object
+```json
+{
+  "_id": "664f1e2b8c1a2b001f7e4a1d",
+  "title": "Welcome Video",
+  "description": "Welcome to the course!",
+  "order": 1,
+  "courseId": "664f1e2b8c1a2b001f7e4a1a",
+  "sectionId": "664f1e2b8c1a2b001f7e4a1c",
+  "videoUrl": "https://cloudinary.com/video.mp4"
+}
+```
+
+### Exam Object
+```json
+{
+  "_id": "664f1e2b8c1a2b001f7e4a1e",
+  "educatorId": "664f1e2b8c1a2b001f7e4a1b",
+  "courseId": "664f1e2b8c1a2b001f7e4a1a",
+  "sectionId": "664f1e2b8c1a2b001f7e4a1c",
+  "title": "Final Exam",
   "mcq": [
     {
       "question": "What is 2+2?",

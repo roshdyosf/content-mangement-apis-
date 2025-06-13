@@ -17,24 +17,23 @@ const validateToken = async (req, res, next) => {
         // Typically, we would validate the token against the user service
         try {
             const userServiceUrl =
-                process.env.USER_SERVICE_URL || "http://localhost:5003";
+                process.env.USER_SERVICE_URL || "http://localhost:5003/api/v1/ums";
             const response = await axios.post(
-                `${userServiceUrl}/api/v1/ums/auth/validate`,
+                `${userServiceUrl}/auth/validate`,
                 { token },
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        "X-Service-Key":
-                            process.env.INTERNAL_API_KEY,
+                        "X-Service-Key": process.env.INTERNAL_API_KEY,
                     },
                     timeout: 5000,
                 }
             );
 
             if (!response.data.valid) {
-                throw new AppError("Invalid or expired token", 401);
+                return next(new AppError("Invalid or expired token", 401));
             }
-
+            response.data.user.id = response.data.user.id.toString();
             // Attach user info to request
             req.userInfo = response.data.user;
             next();
@@ -44,6 +43,11 @@ const validateToken = async (req, res, next) => {
             if (!axiosError.response) {
                 console.error(`Auth service unavailable: ${axiosError.message}`);
                 return next(new AppError("Authentication service unavailable", 503));
+            } else if (!axiosError.message.includes("Invalid or expired token")) {
+                // log the device ip for this request
+                console.error(`Auth service error: ${axiosError.message}`);
+                console.error(`Request IP: ${req.ip}`);
+                return next(new AppError("Invalid Token", 401));
             }
 
             // Handle error response from auth service
@@ -66,9 +70,6 @@ const validateToken = async (req, res, next) => {
     }
 };
 
-/**
- * Check if user has required role
- */
 const requireRole = (roles) => {
     return (req, res, next) => {
         // Ensure roles is an array
@@ -89,7 +90,7 @@ const requireRole = (roles) => {
 /**
  * Create middleware for testing without actual authentication
  */
-const mockAuthMiddleware = (role = "ADMIN", id = "edu_123", name = "E mock user") => {
+const mockAuthMiddleware = (role = "Educator", id = "edu_123", name = "E mock user") => {
     return (req, res, next) => {
         req.userInfo = {
             id: id,
@@ -101,19 +102,10 @@ const mockAuthMiddleware = (role = "ADMIN", id = "edu_123", name = "E mock user"
     };
 };
 
-const mockEducatorAuthMiddleware = (req, res, next) => {
-    req.userInfo = {
-        id: "edu_123",
-        email: "mock@example.com",
-        role: "EDUCATOR",
-        name: "Mock Educator",
-    };
-    next();
-};
+
 
 module.exports = {
     validateToken,
     requireRole,
     mockAuthMiddleware,
-    mockEducatorAuthMiddleware,
 };

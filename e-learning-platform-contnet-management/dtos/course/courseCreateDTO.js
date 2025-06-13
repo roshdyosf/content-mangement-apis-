@@ -1,7 +1,7 @@
 class CourseCreateDTO {
-    constructor({ title, description, price, educatorId, educator, tags }) {
+    constructor({ title, description, price, educatorId, educator, tags, level }) {
         this.valid = false
-        if (!title || !description || !price || !educatorId || !educator) {
+        if (!title || !description || !price || !educatorId || !educator || !level) {
             return;
         }
 
@@ -21,6 +21,7 @@ class CourseCreateDTO {
         this.educatorId = educatorId;
         this.educator = educator;
         this.tags = tags;
+        this.level = level;
         this.valid = true;
     }
 }

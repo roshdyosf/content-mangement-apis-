@@ -5,20 +5,36 @@ const { getSections,
     updateSectionInfo,
     deleteSection,
     getSectionById, } = require('../controllers/section-controller')
-const educatorRoleCheck = require('../middleware/educatorRoleMiddleware')
+
 const educatorIdentityCheck = require('../middleware/educatorIdentityMiddleware')
+
 const { validateId } = require('../middleware/validateRequest');
 
-const authMiddleware = require('../middleware/authMiddleware')
+const { mockAuthMiddleware, validateToken, requireRole } = require('../middleware/authMiddleware')
 
-router.get('/get-all/:courseId', authMiddleware, validateId('courseId', 'params'), getSections)
 
-router.get('/get-section/:sectionId', authMiddleware, validateId('sectionId', 'params'), getSectionById)
+if (process.env.NODE_ENV === 'development') {
+    console.log("Development mode: Using mock authentication middleware")
+    router.use(mockAuthMiddleware(role = "Educator"))
+} else {
+    console.log("Production mode: Using real authentication middleware")
+    router.use(validateToken)
+}
 
-router.post('/add', authMiddleware, educatorRoleCheck, validateId('courseId', 'body'), createSection)
 
-router.put('/update', authMiddleware, educatorRoleCheck, educatorIdentityCheck, validateId('sectionId', 'body'), updateSectionInfo)
+router.get('/get-all/:courseId',
+    validateId('courseId', 'params'), getSections)
 
-router.delete('/delete/:sectionId', authMiddleware, educatorRoleCheck, educatorIdentityCheck, validateId('sectionId', 'params'), deleteSection)
+router.get('/get-section/:sectionId',
+    validateId('sectionId', 'params'), getSectionById)
+
+router.post('/add',
+    requireRole("Educator"), validateId('courseId', 'body'), createSection)
+
+router.put('/update',
+    requireRole("Educator"), educatorIdentityCheck, validateId('sectionId', 'body'), updateSectionInfo)
+
+router.delete('/delete/:sectionId',
+    requireRole("Educator"), educatorIdentityCheck, validateId('sectionId', 'params'), deleteSection)
 
 module.exports = router

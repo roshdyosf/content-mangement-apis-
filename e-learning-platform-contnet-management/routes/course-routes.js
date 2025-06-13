@@ -1,5 +1,7 @@
 const express = require('express')
+
 const router = express.Router()
+
 const { getCoursesForEducator,
     createCourse,
     updateCourseInfo,
@@ -7,30 +9,59 @@ const { getCoursesForEducator,
     getAllCoursesForTag,
     getAllCourses,
     updateCourseRating,
-    getCoursesLikeName } = require('../controllers/course-controller')
+    getCoursesLikeName,
+    enrollmentCountUpdate,
+    getCoursesById
+} = require('../controllers/course-controller')
 
-const educatorRoleCheck = require('../middleware/educatorRoleMiddleware')
 const educatorIdentityCheck = require('../middleware/educatorIdentityMiddleware')
-const { } = require('../middleware/authMiddleware')
+
+const { mockAuthMiddleware, validateToken, requireRole } = require('../middleware/authMiddleware')
+
 const { validateId } = require('../middleware/validateRequest');
+
 const keyCheck = require('../middleware/keyCheckMiddleware')
 
-router.get('/get-for-educator/:educatorId/:limit/:offset', authMiddleware, validateId('educatorId', 'params'), getCoursesForEducator)
+if (process.env.NODE_ENV === 'development') {
+    console.log("Development mode: Using mock authentication middleware")
+    router.use(mockAuthMiddleware(role = "Educator"))
+} else {
+    console.log("Production mode: Using real authentication middleware")
+    router.use(validateToken)
+}
 
-router.get('/get-for-tag/:tag/:limit/:offset', authMiddleware, getAllCoursesForTag)
 
-router.get('/get-all/:limit/:offset', authMiddleware, getAllCourses)
 
-router.get('/get-course-like/:courseName/:limit/:offset', authMiddleware, getCoursesLikeName)
 
-router.post('/create', authMiddleware, educatorRoleCheck, validateId('educatorId', 'body'), createCourse)
 
-router.put('/update', authMiddleware, educatorRoleCheck, educatorIdentityCheck, validateId('courseId', 'body'), updateCourseInfo)
+router.get('/get-for-educator/:educatorId/:limit/:offset',
+    validateId('educatorId', 'params'), getCoursesForEducator)
 
-router.put('/notifications', keyCheck, validateId('courseId', 'body'),)
+router.get('/get-for-tag/:tag/:limit/:offset',
+    getAllCoursesForTag)
 
-router.put('/update-rating', authMiddleware, validateId('courseId', 'body'), updateCourseRating)
+router.get('/get-all/:limit/:offset',
+    getAllCourses)
 
-router.delete('/delete/:courseId', authMiddleware, educatorRoleCheck, educatorIdentityCheck, validateId('courseId', 'params'), deleteCourse)
+router.get('/get-course-like/:courseName/:limit/:offset',
+    getCoursesLikeName)
+
+router.get('/get-course/:courseId',
+    validateId('courseId', 'params'), getCoursesById)
+
+router.post('/create',
+    requireRole("Educator"), validateId('educatorId', 'body'), createCourse)
+
+router.put('/update',
+    requireRole("Educator"), educatorIdentityCheck, validateId('courseId', 'body'), updateCourseInfo)
+
+router.put('/notifications',
+    validateId('courseId', 'body'), keyCheck, enrollmentCountUpdate)
+
+router.put('/update-rating',
+    validateId('courseId', 'body'), updateCourseRating)
+
+router.delete('/delete/:courseId',
+    requireRole("Educator"), educatorIdentityCheck, validateId('courseId', 'params'), deleteCourse)
 
 module.exports = router

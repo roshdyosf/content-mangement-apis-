@@ -1,6 +1,9 @@
 const authMiddleware = require('../middleware/authMiddleware')
-const moderatorMiddleware = require('../middleware/moderatorRoleMiddleware')
+
 const express = require('express')
+
+const router = express.Router()
+
 const { approveCourse,
     approveSection,
     approveVideo,
@@ -8,29 +11,43 @@ const { approveCourse,
     fetchPendingSections,
     fetchPendingVideos, } = require('../controllers/moderator-controller')
 
+const { mockAuthMiddleware, validateToken, requireRole } = require('../middleware/authMiddleware')
+
 const { validateApproval, validateId } = require('../middleware/validateRequest');
 
 
-const router = express.Router()
+
+
+
+if (process.env.NODE_ENV === 'development') {
+    // In development mode, use mock authentication middleware
+    console.log("Development mode: Using mock authentication middleware")
+    router.use(mockAuthMiddleware(role = "Moderator"))
+} else {
+    // In production mode, use real authentication middleware
+    console.log("Production mode: Using real authentication middleware")
+    router.use(validateToken)
+}
+
 
 router.put('/approve-course',
-    authMiddleware, moderatorMiddleware, validateApproval, validateId('courseId', 'body'), approveCourse)
+    requireRole("Moderator"), validateApproval, validateId('courseId', 'body'), approveCourse)
 
 router.put('/approve-section',
-    authMiddleware, moderatorMiddleware, validateApproval, validateId('sectionId', 'body'), approveSection)
+    requireRole("Moderator"), validateApproval, validateId('sectionId', 'body'), approveSection)
 
 router.put('/approve-video',
-    authMiddleware, moderatorMiddleware, validateApproval, validateId('videoId', 'body'), approveVideo)
+    requireRole("Moderator"), validateApproval, validateId('videoId', 'body'), approveVideo)
 
 
 router.get('/get-unapproved-course',
-    authMiddleware, moderatorMiddleware, fetchPendingCourses)
+    requireRole("Moderator"), fetchPendingCourses)
 
 router.get('/get-unapproved-section',
-    authMiddleware, moderatorMiddleware, fetchPendingSections)
+    requireRole("Moderator"), fetchPendingSections)
 
 router.get('/get-unapproved-video',
-    authMiddleware, moderatorMiddleware, fetchPendingVideos)
+    requireRole("Moderator"), fetchPendingVideos)
 
 
 

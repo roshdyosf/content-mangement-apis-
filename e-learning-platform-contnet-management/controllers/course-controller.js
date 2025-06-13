@@ -5,10 +5,12 @@ const deleteCourseService = require('../services/course/deleteCourseService');
 const getAllCoursesService = require('../services/course/getAllCourseService');
 const getAllCoursesForTagService = require('../services/course/getCoursesForTagService');
 const updateCourseRatingService = require('../services/course/updateCourseRatingService');
-const getCoursesLikeNameService = require('../services/course/getCoursesLikeName')
+const getCoursesLikeNameService = require('../services/course/getCoursesLikeName');
+const getCourseByIdService = require('../services/course/getByIdService');
 const handleResponse = require('../utils/errorHandler');
 
 const courseEnrollmentCountUpdate = require('../services/course/courseInrollmentService');
+
 const getCoursesForEducator = async (req, res) => {
     const educatorId = req.params.educatorId
     const offset = parseInt(req.params.offset) || 0;
@@ -21,6 +23,13 @@ const getCoursesLikeName = async (req, res) => {
     const courseName = req.params.courseName
     const limit = parseInt(req.params.limit) || 20;
     const result = await getCoursesLikeNameService(courseName, limit)
+    handleResponse(res, result);
+
+}
+const getCoursesById = async (req, res) => {
+
+    const courseId = req.params.courseId;
+    const result = await getCourseByIdService(courseId)
     handleResponse(res, result);
 
 }
@@ -80,5 +89,6 @@ module.exports = {
     getAllCoursesForTag,
     updateCourseRating,
     getCoursesLikeName,
-    enrollmentCountUpdate
+    enrollmentCountUpdate,
+    getCoursesById
 };

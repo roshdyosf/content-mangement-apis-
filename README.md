@@ -56,7 +56,7 @@ A Node.js RESTful API for managing e-learning platform content, including course
 Create a `.env` file in `e-learning-platform-contnet-management/` with the following:
 
 ```
-PORT=5000
+PORT=5008
 CONNECTION_STRING=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key

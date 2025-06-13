@@ -91,53 +91,140 @@ JWT_SECRET_KEY=your_jwt_secret
 #### Get Courses for Educator
 
 - **GET** `/api/course/get-for-educator/:educatorId/:limit/:offset`
-- **Middleware:** `authMiddleware`, `validateId('educatorId', 'params')`
-- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `educatorId` (string), `limit` (number), `offset` (number)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Courses fetched successfully.",
+    "status": 200,
+    "data": [ { ...courseObject } ]
+  }
+  ```
 
 #### Get Courses for Tag
 
 - **GET** `/api/course/get-for-tag/:tag/:limit/:offset`
-- **Middleware:** `authMiddleware`
-- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `tag` (string), `limit` (number), `offset` (number)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Courses fetched successfully.",
+    "status": 200,
+    "data": [ { ...courseObject } ]
+  }
+  ```
 
 #### Get All Courses
 
 - **GET** `/api/course/get-all/:limit/:offset`
-- **Middleware:** `authMiddleware`
-- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `limit` (number), `offset` (number)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Courses fetched successfully.",
+    "status": 200,
+    "data": [ { ...courseObject } ]
+  }
+  ```
 
 #### Get Courses Like Name
 
 - **GET** `/api/course/get-course-like/:courseName/:limit/:offset`
-- **Middleware:** `authMiddleware`
-- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `courseName` (string), `limit` (number), `offset` (number)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Courses fetched successfully.",
+    "status": 200,
+    "data": [ { ...courseObject } ]
+  }
+  ```
 
 #### Create Course
 
 - **POST** `/api/course/create`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
-- **Body:** `{ "title": "...", "description": "...", "educator": "...", "educatorId": "...", "tags": ["..."] }`
-- **Response:** 201 Created (course object), 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "title": "...",
+    "description": "...",
+    "price": 0,
+    "educatorId": "...",
+    "educator": "...",
+    "tags": ["..."],
+    "level": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course created successfully.",
+    "status": 201,
+    "data": { ...courseObject }
+  }
+  ```
 
 #### Update Course Information
 
-- **PUT** `/api/course/update/`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('courseId', 'body')`
-- **Body:** `{ "courseId": "...", "title": "...", "description": "...", "price": 0, "rating": 0 }`
-- **Response:** 200 OK (updated course), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+- **PUT** `/api/course/update`
+- **Body:**
+  ```json
+  {
+    "courseId": "...",
+    "title": "...",
+    "description": "...",
+    "price": 0,
+    "rating": 0
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course updated successfully.",
+    "status": 200,
+    "data": { ...updatedCourseObject }
+  }
+  ```
 
 #### Delete Course
 
 - **DELETE** `/api/course/delete/:courseId`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('courseId', 'params')`
-- **Response:** 200 OK (deleted course), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `courseId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course deleted successfully.",
+    "status": 200,
+    "data": { ...deletedCourseObject }
+  }
+  ```
 
 #### Update Course Rating
 
-- **PUT** `/api/course/update-rating/`
-- **Middleware:** `authMiddleware`, `validateId('courseId', 'body')`
-- **Body:** `{ "courseId": "...", "rating": 4.5 }`
-- **Response:** 200 OK (updated course), 404 Not Found, 500 Internal Server Error
+- **PUT** `/api/course/update-rating`
+- **Body:**
+  ```json
+  {
+    "courseId": "...",
+    "rating": 4.5
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course rating updated successfully.",
+    "status": 200,
+    "data": { ...updatedCourseObject }
+  }
+  ```
 
 ---
 
@@ -146,35 +233,95 @@ JWT_SECRET_KEY=your_jwt_secret
 #### Get All Sections for a Course
 
 - **GET** `/api/section/get-all/:courseId`
-- **Middleware:** `authMiddleware`, `validateId('courseId', 'params')`
-- **Response:** 200 OK (sections array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `courseId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Sections fetched successfully.",
+    "status": 200,
+    "data": [ { ...sectionObject } ]
+  }
+  ```
 
 #### Get Section by ID
 
 - **GET** `/api/section/get-section/:sectionId`
-- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
-- **Response:** 200 OK (section object), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `sectionId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Section fetched successfully.",
+    "status": 200,
+    "data": { ...sectionObject }
+  }
+  ```
 
 #### Create Section
 
 - **POST** `/api/section/add`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`
-- **Body:** `{ "title": "...", "description": "...", "order": 1, "courseId": "..." }`
-- **Response:** 201 Created (section object), 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "title": "...",
+    "description": "...",
+    "order": 1,
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Section created successfully.",
+    "status": 201,
+    "data": { ...sectionObject }
+  }
+  ```
 
 #### Update Section
 
 - **PUT** `/api/section/update`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'body')`
-- **Body:** `{ "sectionId": "...", "title": "...", "description": "...", "order": 2, "courseId": "..." }`
-- **Response:** 200 OK (updated section), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "sectionId": "...",
+    "title": "...",
+    "description": "...",
+    "order": 2,
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Section updated successfully.",
+    "status": 200,
+    "data": { ...updatedSectionObject }
+  }
+  ```
 
 #### Delete Section
 
 - **DELETE** `/api/section/delete/:sectionId`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('sectionId', 'params')`
-- **Body:** `{ "courseId": "..." }`
-- **Response:** 200 OK (deleted section), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `sectionId` (string)
+- **Body:**
+  ```json
+  {
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Section deleted successfully.",
+    "status": 200,
+    "data": { ...deletedSectionObject }
+  }
+  ```
 
 ---
 
@@ -183,36 +330,97 @@ JWT_SECRET_KEY=your_jwt_secret
 #### Get Videos for Section
 
 - **GET** `/api/video/get-all/:sectionId`
-- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
-- **Response:** 200 OK (videos array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `sectionId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Videos fetched successfully.",
+    "status": 200,
+    "data": [ { ...videoObject } ]
+  }
+  ```
 
 #### Get Single Video
 
 - **GET** `/api/video/get-video/:videoId`
-- **Middleware:** `authMiddleware`, `validateId('videoId', 'params')`
-- **Response:** 200 OK (video object), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `videoId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Video fetched successfully.",
+    "status": 200,
+    "data": { ...videoObject }
+  }
+  ```
 
 #### Create Video
 
 - **POST** `/api/video/add`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `uploadMiddleware.single('video')`, `validateId('sectionId', 'body')`, `validateId('courseId', 'body')`
-- **Body:** `{ "title": "...", "description": "...", "courseId": "...", "sectionId": "..." }`
+- **Body:**
+  ```json
+  {
+    "title": "...",
+    "description": "...",
+    "order": 1,
+    "courseId": "...",
+    "sectionId": "..."
+  }
+  ```
 - **File Upload:** Key: `video` (multipart/form-data)
-- **Response:** 201 Created (video object), 400 Bad Request, 500 Internal Server Error
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Video created successfully.",
+    "status": 201,
+    "data": { ...videoObject }
+  }
+  ```
 
 #### Update Video Information
 
 - **PUT** `/api/video/update`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('courseId', 'body')`, `educatorIdentityCheck`, `validateId('videoId', 'body')`
-- **Body:** `{ "videoId": "...", "title": "...", "description": "...", "order": 1, "courseId": "..." }`
-- **Response:** 200 OK (updated video), 400 Bad Request, 404 Not Found, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "videoId": "...",
+    "title": "...",
+    "description": "...",
+    "order": 1,
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Video updated successfully.",
+    "status": 200,
+    "data": { ...updatedVideoObject }
+  }
+  ```
 
 #### Delete Video
 
 - **DELETE** `/api/video/delete/:videoId`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('videoId', 'params')`
-- **Body:** `{ "courseId": "..." }`
-- **Response:** 200 OK (deleted video), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `videoId` (string)
+- **Body:**
+  ```json
+  {
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Video deleted successfully.",
+    "status": 200,
+    "data": { ...deletedVideoObject }
+  }
+  ```
 
 ---
 
@@ -221,41 +429,98 @@ JWT_SECRET_KEY=your_jwt_secret
 #### Approve Course
 
 - **PUT** `/api/moderator/approve-course`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('courseId', 'body')`
-- **Body:** `{ "courseId": "...", "approval": true }`
-- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "courseId": "...",
+    "approval": true
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Course approved successfully.",
+    "status": 200
+  }
+  ```
 
 #### Approve Section
 
 - **PUT** `/api/moderator/approve-section`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('sectionId', 'body')`
-- **Body:** `{ "sectionId": "...", "approval": true }`
-- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "sectionId": "...",
+    "approval": true
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Section approved successfully.",
+    "status": 200
+  }
+  ```
 
 #### Approve Video
 
 - **PUT** `/api/moderator/approve-video`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`, `validateApproval`, `validateId('videoId', 'body')`
-- **Body:** `{ "videoId": "...", "approval": true }`
-- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "videoId": "...",
+    "approval": true
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Video approved successfully.",
+    "status": 200
+  }
+  ```
 
 #### Get Unapproved Courses
 
 - **GET** `/api/moderator/get-unapproved-course`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`
-- **Response:** 200 OK (courses array), 404 Not Found, 500 Internal Server Error
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Unapproved courses fetched successfully.",
+    "status": 200,
+    "data": [ { ...courseObject } ]
+  }
+  ```
 
 #### Get Unapproved Sections
 
 - **GET** `/api/moderator/get-unapproved-section`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`
-- **Response:** 200 OK (sections array), 404 Not Found, 500 Internal Server Error
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Unapproved sections fetched successfully.",
+    "status": 200,
+    "data": [ { ...sectionObject } ]
+  }
+  ```
 
 #### Get Unapproved Videos
 
 - **GET** `/api/moderator/get-unapproved-video`
-- **Middleware:** `authMiddleware`, `moderatorMiddleware`
-- **Response:** 200 OK (videos array), 404 Not Found, 500 Internal Server Error
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Unapproved videos fetched successfully.",
+    "status": 200,
+    "data": [ { ...videoObject } ]
+  }
+  ```
 
 ---
 
@@ -264,42 +529,116 @@ JWT_SECRET_KEY=your_jwt_secret
 #### Create Exam
 
 - **POST** `/api/exam/create`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `validateId('educatorId', 'body')`
-- **Body:** `{ "title": "...", "sectionId": "...", "courseId": "...", "educatorId": "..." }`
-- **Response:** 201 Created (exam object), 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "title": "...",
+    "sectionId": "...",
+    "courseId": "...",
+    "educatorId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Exam created successfully.",
+    "status": 201,
+    "data": { ...examObject }
+  }
+  ```
 
 #### Add Question to Exam
 
 - **PUT** `/api/exam/add-question`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-- **Body:** `{ "examId": "...", "question": "...", "choices": ["A", "B", "C", "D"], "answer": "A" }`
-- **Response:** 200 OK, 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "examId": "...",
+    "question": "...",
+    "choices": ["A", "B", "C", "D"],
+    "answer": "A"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Question added successfully.",
+    "status": 200
+  }
+  ```
 
 #### Update Exam
 
 - **PUT** `/api/exam/update-exam`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-- **Body:** Update exam title, question, choice, or answer (see code for options)
-- **Response:** 200 OK (updated exam), 400 Bad Request, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "examId": "...",
+    "title": "...", // or
+    "question": "...", "questionIndex": 0, // or
+    "choice": "...", "questionIndex": 0, "choiceIndex": 0, // or
+    "answer": "...", "questionIndex": 0
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Exam updated successfully.",
+    "status": 200,
+    "data": { ...updatedExamObject }
+  }
+  ```
 
 #### Get All Exams for Section
 
 - **GET** `/api/exam/get-all-exams/:sectionId`
-- **Middleware:** `authMiddleware`, `validateId('sectionId', 'params')`
-- **Response:** 200 OK (exams array), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `sectionId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Exams fetched successfully.",
+    "status": 200,
+    "data": [ { ...examObject } ]
+  }
+  ```
 
 #### Get Exam by ID
 
 - **GET** `/api/exam/get-exam/:examId`
-- **Middleware:** `authMiddleware`, `validateId('examId', 'params')`
-- **Response:** 200 OK (exam object), 404 Not Found, 500 Internal Server Error
+- **Request Params:** `examId` (string)
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Exam fetched successfully.",
+    "status": 200,
+    "data": { ...examObject }
+  }
+  ```
 
 #### Delete Exam
 
 - **DELETE** `/api/exam/delete-exam`
-- **Middleware:** `authMiddleware`, `educatorRoleCheck`, `educatorIdentityCheck`, `validateId('examId', 'body')`
-- **Body:** `{ "examId": "...", "courseId": "..." }`
-- **Response:** 200 OK (deleted exam), 404 Not Found, 500 Internal Server Error
+- **Body:**
+  ```json
+  {
+    "examId": "...",
+    "courseId": "..."
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "success": true,
+    "message": "Exam deleted successfully.",
+    "status": 200,
+    "data": { ...deletedExamObject }
+  }
+  ```
 
 ---
 

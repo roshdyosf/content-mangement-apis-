@@ -1,4 +1,4 @@
-const Course = require('../../models/courseModel');
+const Course = require('../../models/course-model');
 const enrollmentCountUpdate = async (courseId, action) => {
     try {
         const course = await Course.findById(courseId);

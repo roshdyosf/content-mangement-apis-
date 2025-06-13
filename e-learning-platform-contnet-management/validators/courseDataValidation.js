@@ -6,8 +6,10 @@ const courseValidation = (courseData, fieldsToValidate) => {
         description: 'string',
         educatorId: 'string',
         price: 'number',
-        rating: 'number'
+        rating: 'number',
+        level: 'string',
     };
+
     return genericValidator(courseData, validations, fieldsToValidate);
 
 };

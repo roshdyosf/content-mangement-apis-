@@ -1,23 +1,119 @@
-const jwt = require('jsonwebtoken')
+const axios = require("axios");
+const { AppError } = require("./errorHandler");
 
-const authMiddleware = (req, res, next) => {
-
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (!token) return res.status(401).json({
-        success: false,
-        message: 'access denied no token provided. please login to continue'
-    })
+/**
+ * Validate the authentication token
+ */
+const validateToken = async (req, res, next) => {
     try {
-        const decodedTokenInfo = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        req.userInfo = decodedTokenInfo
-        next()
-    } catch (e) {
-        return res.status(401).json({
-            success: false,
-            message: 'Access denied. Invalid token. Please login to continue.'
-        })
-    }
+        const authHeader = req.headers.authorization;
 
-}
-module.exports = authMiddleware
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            throw new AppError("Authentication token is missing", 401);
+        }
+
+        const token = authHeader.split(" ")[1];
+
+        // Typically, we would validate the token against the user service
+        try {
+            const userServiceUrl =
+                process.env.USER_SERVICE_URL || "http://localhost:5003";
+            const response = await axios.post(
+                `${userServiceUrl}/api/v1/ums/auth/validate`,
+                { token },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Service-Key":
+                            process.env.INTERNAL_API_KEY,
+                    },
+                    timeout: 5000,
+                }
+            );
+
+            if (!response.data.valid) {
+                throw new AppError("Invalid or expired token", 401);
+            }
+
+            // Attach user info to request
+            req.userInfo = response.data.user;
+            next();
+
+        } catch (axiosError) {
+            // Handle network errors or service unavailable scenarios
+            if (!axiosError.response) {
+                console.error(`Auth service unavailable: ${axiosError.message}`);
+                return next(new AppError("Authentication service unavailable", 503));
+            }
+
+            // Handle error response from auth service
+            console.error(
+                `Auth validation error: ${axiosError.response.data?.message || axiosError.message
+                }`
+            );
+            return next(
+                new AppError("Authentication failed", axiosError.response.status || 401)
+            );
+        }
+    } catch (error) {
+        if (error instanceof AppError) {
+            next(error);
+        } else {
+            // Network error or internal error
+            console.error(`Auth middleware error: ${error.message}`);
+            next(new AppError("Authentication failed due to server issue", 500));
+        }
+    }
+};
+
+/**
+ * Check if user has required role
+ */
+const requireRole = (roles) => {
+    return (req, res, next) => {
+        // Ensure roles is an array
+        const requiredRoles = Array.isArray(roles) ? roles : [roles];
+
+        if (!req.userInfo) {
+            return next(new AppError("User not authenticated", 401));
+        }
+
+        if (!requiredRoles.includes(req.userInfo.role)) {
+            return next(new AppError("Access denied: insufficient permissions", 403));
+        }
+
+        next();
+    };
+};
+
+/**
+ * Create middleware for testing without actual authentication
+ */
+const mockAuthMiddleware = (role = "ADMIN", id = "edu_123", name = "E mock user") => {
+    return (req, res, next) => {
+        req.userInfo = {
+            id: id,
+            email: "mock@example.com",
+            name: name,
+            role: role,
+        };
+        next();
+    };
+};
+
+const mockEducatorAuthMiddleware = (req, res, next) => {
+    req.userInfo = {
+        id: "edu_123",
+        email: "mock@example.com",
+        role: "EDUCATOR",
+        name: "Mock Educator",
+    };
+    next();
+};
+
+module.exports = {
+    validateToken,
+    requireRole,
+    mockAuthMiddleware,
+    mockEducatorAuthMiddleware,
+};

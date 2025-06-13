@@ -26,32 +26,32 @@ app.use(express.json())
 // app.use(limiter);
 
 
-const user =
-{
-    id: "123",
-    username: 'John',
-    role: 'educator',
-}
-const accessToken = jwt.sign({
+// const user =
+// {
+//     id: "123",
+//     username: 'John',
+//     role: 'educator',
+// }
+// const accessToken = jwt.sign({
 
-    userId: user.id,
-    username: user.username,
-    role: user.role
+//     userId: user.id,
+//     username: user.username,
+//     role: user.role
 
-}, process.env.JWT_SECRET_KEY, {
-    expiresIn: "1y"
-})
+// }, process.env.JWT_SECRET_KEY, {
+//     expiresIn: "1y"
+// })
 
-app.get('/users', (req, res) => {
-    res.json(accessToken);
-});
-console.log(accessToken);
+// app.get('/users', (req, res) => {
+//     res.json(accessToken);
+// });
+// console.log(accessToken);
 
 //cms
-app.use('/CMS/api/course', courseRoutes)
-app.use('/CMS/api/exam', examRoutes)
-app.use('/CMS/api/section', sectionRoutes)
-app.use('/CMS/api/video', videoRoutes)
-app.use('/CMS/api/moderator', moderatorRoutes)
+app.use('/api/v1/cms/course', courseRoutes)
+app.use('/api/v1/cms/exam', examRoutes)
+app.use('/api/v1/cms/section', sectionRoutes)
+app.use('/api/v1/cms/video', videoRoutes)
+app.use('/api/v1/cms/moderator', moderatorRoutes)
 
 app.listen(PORT, () => console.log(`app listening on port: ${PORT}!`))

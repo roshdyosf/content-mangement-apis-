@@ -38,6 +38,11 @@ const courseSchema = new mongoose.Schema({
         max: 1000
     }
     ,
+    enrollmentCount: {
+        type: Number,
+        default: 0
+    }
+    ,
     approved: {
         type: Boolean,
         default: false,

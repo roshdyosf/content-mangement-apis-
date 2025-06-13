@@ -8,6 +8,7 @@ const updateCourseRatingService = require('../services/course/updateCourseRating
 const getCoursesLikeNameService = require('../services/course/getCoursesLikeName')
 const handleResponse = require('../utils/errorHandler');
 
+const courseEnrollmentCountUpdate = require('../services/course/courseInrollmentService');
 const getCoursesForEducator = async (req, res) => {
     const educatorId = req.params.educatorId
     const offset = parseInt(req.params.offset) || 0;
@@ -64,6 +65,12 @@ const updateCourseRating = async (req, res) => {
     handleResponse(res, result);
 };
 
+const enrollmentCountUpdate = async (req, res) => {
+    const courseId = req.body.data.courseId;
+    const action = req.body.data.action;
+    const result = await courseEnrollmentCountUpdate(courseId, action);
+    handleResponse(res, result);
+}
 module.exports = {
     getCoursesForEducator,
     createCourse,
@@ -72,5 +79,6 @@ module.exports = {
     getAllCourses,
     getAllCoursesForTag,
     updateCourseRating,
-    getCoursesLikeName
+    getCoursesLikeName,
+    enrollmentCountUpdate
 };

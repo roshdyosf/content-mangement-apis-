@@ -1,1 +1,42 @@
+name: Deploy to EC2
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Set up timestamp
+        run: echo "TIMESTAMP=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
+      - name: Build and push with timestamp
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest -t ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:${{ env.TIMESTAMP }} --build-arg DATABASE_URI="${{ secrets.DB_URL }}" .
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/content-managment
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest
+            sudo docker stop $(sudo docker container ls -q --filter "name=content-managment") || true
+            sudo docker container prune --force
+            sudo docker image prune --force
+            sudo docker run -d -p 3001:3000 --name content-managment ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest
+            sudo docker logs $(sudo docker container ls -q --filter "name=content-managment") || true
+            exit

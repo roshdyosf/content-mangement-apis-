@@ -34,17 +34,22 @@ A Node.js RESTful API for managing e-learning platform content, including course
 ## Setup & Installation
 
 1. Clone the repository:
+
    ```bash
    git clone <repo-url>
    cd content-mangement-apis-
    ```
+
 2. Install dependencies:
+
    ```bash
    cd e-learning-platform-contnet-management
    npm install
    ```
+
 3. Set up environment variables (see below).
 4. Start the server:
+
    ```bash
    npm start
    ```
@@ -55,7 +60,7 @@ A Node.js RESTful API for managing e-learning platform content, including course
 
 Create a `.env` file in `e-learning-platform-contnet-management/` with the following:
 
-```
+```env
 PORT=5008
 CONNECTION_STRING=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
@@ -122,6 +127,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **POST** `/api/v1/cms/course/create`
 - **Body:**
+
   ```json
   {
     "title": "...",
@@ -133,12 +139,14 @@ JWT_SECRET_KEY=your_jwt_secret
     "level": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Update Course Information
 
 - **PUT** `/api/v1/cms/course/update`
 - **Body:**
+
   ```json
   {
     "courseId": "...",
@@ -148,18 +156,21 @@ JWT_SECRET_KEY=your_jwt_secret
     "rating": 0
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Update Course Enrollment Count (Notifications)
 
 - **PUT** `/api/v1/cms/course/notifications`
 - **Body:**
+
   ```json
   {
     "courseId": "...",
     "key": "..." // (if required by your logic)
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Course
@@ -172,12 +183,14 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **PUT** `/api/v1/cms/course/update-rating`
 - **Body:**
+
   ```json
   {
     "courseId": "...",
     "rating": 4.5
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 ---
@@ -200,6 +213,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **POST** `/api/v1/cms/section/add`
 - **Body:**
+
   ```json
   {
     "title": "...",
@@ -208,12 +222,14 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Update Section
 
 - **PUT** `/api/v1/cms/section/update`
 - **Body:**
+
   ```json
   {
     "sectionId": "...",
@@ -223,6 +239,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Section
@@ -230,11 +247,13 @@ JWT_SECRET_KEY=your_jwt_secret
 - **DELETE** `/api/v1/cms/section/delete/:sectionId`
 - **Request Params:** `sectionId` (string)
 - **Body:**
+
   ```json
   {
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 ---
@@ -257,6 +276,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **POST** `/api/v1/cms/video/add`
 - **Body:**
+
   ```json
   {
     "title": "...",
@@ -266,6 +286,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "sectionId": "..."
   }
   ```
+
 - **File Upload:** Key: `video` (multipart/form-data)
 - **Response:** See [API Response Format](#api-response-format)
 
@@ -273,6 +294,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **PUT** `/api/v1/cms/video/update`
 - **Body:**
+
   ```json
   {
     "videoId": "...",
@@ -282,6 +304,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Video
@@ -289,11 +312,13 @@ JWT_SECRET_KEY=your_jwt_secret
 - **DELETE** `/api/v1/cms/video/delete/:videoId`
 - **Request Params:** `videoId` (string)
 - **Body:**
+
   ```json
   {
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 ---
@@ -304,36 +329,42 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **PUT** `/api/v1/cms/moderator/approve-course`
 - **Body:**
+
   ```json
   {
     "courseId": "...",
     "approval": true
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Approve Section
 
 - **PUT** `/api/v1/cms/moderator/approve-section`
 - **Body:**
+
   ```json
   {
     "sectionId": "...",
     "approval": true
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Approve Video
 
 - **PUT** `/api/v1/cms/moderator/approve-video`
 - **Body:**
+
   ```json
   {
     "videoId": "...",
     "approval": true
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Get Unapproved Courses
@@ -359,6 +390,7 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **POST** `/api/v1/cms/exam/create`
 - **Body:**
+
   ```json
   {
     "title": "...",
@@ -367,12 +399,14 @@ JWT_SECRET_KEY=your_jwt_secret
     "educatorId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Add Question to Exam
 
 - **PUT** `/api/v1/cms/exam/add-question`
 - **Body:**
+
   ```json
   {
     "examId": "...",
@@ -381,12 +415,14 @@ JWT_SECRET_KEY=your_jwt_secret
     "answer": "A"
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Update Exam
 
 - **PUT** `/api/v1/cms/exam/update-exam`
 - **Body:**
+
   ```json
   {
     "examId": "...",
@@ -396,6 +432,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "answer": "...", "questionIndex": 0
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 #### Get All Exams for Section
@@ -414,12 +451,14 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **DELETE** `/api/v1/cms/exam/delete-exam`
 - **Body:**
+
   ```json
   {
     "examId": "...",
     "courseId": "..."
   }
   ```
+
 - **Response:** See [API Response Format](#api-response-format)
 
 ---
@@ -451,6 +490,7 @@ All API endpoints return a standard response structure:
 ## Example Data Objects
 
 ### Course Object
+
 ```json
 {
   "_id": "664f1e2b8c1a2b001f7e4a1a",
@@ -460,14 +500,13 @@ All API endpoints return a standard response structure:
   "educatorId": "664f1e2b8c1a2b001f7e4a1b",
   "educator": "John Doe",
   "tags": ["javascript", "programming"],
-  "level": "Beginner",
-  "rating": 4.5,
+  "imageUrl": "https://cloudinary.com/image.jpg",
+  "imagePublicId": "cloudinary-public-id",
   "enrollmentCount": 120,
   "sections": [
     {
       "_id": "664f1e2b8c1a2b001f7e4a1c",
       "title": "Introduction",
-      "description": "Course introduction section.",
       "order": 1
     }
   ],
@@ -478,30 +517,93 @@ All API endpoints return a standard response structure:
 ```
 
 ### Section Object
+
 ```json
 {
-  "_id": "664f1e2b8c1a2b001f7e4a1c",
-  "title": "Introduction",
-  "description": "Course introduction section.",
-  "order": 1,
-  "courseId": "664f1e2b8c1a2b001f7e4a1a"
+  "success": true,
+  "message": "section fetched successfully.",
+  "status": 200,
+  "data": {
+    "_id": "684e58154dce7bfbd397cfcd",
+    "title": "secion1",
+    "description": "section1 discrption",
+    "courseId": "684e57274dce7bfbd397cfca",
+    "videos": [
+      {
+        "_id": "684e585b4dce7bfbd397cfd0",
+        "title": "new video1",
+        "order": 1,
+        "approved": false,
+        "createdAt": "2025-06-15T05:21:31.580Z",
+        "updatedAt": "2025-06-15T05:21:31.580Z"
+      },
+      {
+        "_id": "684e5a0e4dce7bfbd397cfd5",
+        "title": "vid2",
+        "order": 2,
+        "approved": false,
+        "createdAt": "2025-06-15T05:28:46.341Z",
+        "updatedAt": "2025-06-15T05:28:46.341Z"
+      },
+      {
+        "_id": "684e5f8714220258d8a3b8c3",
+        "title": "vid3",
+        "order": 3,
+        "approved": false,
+        "createdAt": "2025-06-15T05:52:07.843Z",
+        "updatedAt": "2025-06-15T05:52:07.843Z"
+      },
+      {
+        "_id": "684e604414220258d8a3b8ce",
+        "title": "vid4",
+        "order": 4,
+        "approved": false,
+        "createdAt": "2025-06-15T05:55:16.021Z",
+        "updatedAt": "2025-06-15T05:55:16.021Z"
+      },
+    ],
+    "order": 1,
+    "approved": true,
+    "createdAt": "2025-06-15T05:20:21.892Z",
+    "updatedAt": "2025-06-15T09:47:02.114Z",
+    "__v": 0,
+    "exams": [
+      {
+        "_id": "684e83b4b2b07d0bc66af41d",
+        "title": "exam1 name",
+        "createdAt": "2025-06-15T08:26:28.239Z",
+        "updatedAt": "2025-06-15T09:03:11.058Z"
+      },
+      {
+        "_id": "684e853db2b07d0bc66af425",
+        "title": "exam1 name",
+        "createdAt": "2025-06-15T08:33:01.632Z",
+        "updatedAt": "2025-06-15T08:33:01.632Z"
+      }
+    ]
+  }
 }
 ```
 
 ### Video Object
+
 ```json
 {
   "_id": "664f1e2b8c1a2b001f7e4a1d",
   "title": "Welcome Video",
-  "description": "Welcome to the course!",
+  "url": "https://cloudinary.com/video.mp4",
+  "publicId": "cloudinary-public-id",
   "order": 1,
   "courseId": "664f1e2b8c1a2b001f7e4a1a",
   "sectionId": "664f1e2b8c1a2b001f7e4a1c",
-  "videoUrl": "https://cloudinary.com/video.mp4"
+  "approved": false,
+  "createdAt": "2025-06-14T12:00:00.000Z",
+  "updatedAt": "2025-06-14T12:00:00.000Z"
 }
 ```
 
 ### Exam Object
+
 ```json
 {
   "_id": "664f1e2b8c1a2b001f7e4a1e",
@@ -524,6 +626,7 @@ All API endpoints return a standard response structure:
 ## Standard Response Format
 
 - **Success:**
+
   ```json
   {
     "success": true,
@@ -532,7 +635,9 @@ All API endpoints return a standard response structure:
     "data": { ... }
   }
   ```
+
 - **Error:**
+
   ```json
   {
     "success": false,

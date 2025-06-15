@@ -34,7 +34,7 @@ router.get('/get-video/:videoId',
     validateId('videoId', "params"), getSingleVideo)
 
 router.post('/add',
-    requireRole("Educator"), uploadMiddleware.single("video"), validateId('sectionId', "body"), validateId('courseId', "body"), createVideo)
+    requireRole("Educator"), uploadMiddleware('video').single("video"), validateId('sectionId', "body"), validateId('courseId', "body"), createVideo)
 
 router.put('/update',
     requireRole("Educator"), validateId('courseId', "body"), educatorIdentityCheck, validateId('videoId', "body"), updateVideoInfo)

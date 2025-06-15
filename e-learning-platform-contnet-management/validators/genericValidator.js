@@ -9,32 +9,12 @@ const genericValidator = (data, validations, fieldsToValidate) => {
             return obj;
         }, {});
 
-    // Check for extra fields not allowed
-    // const extraFields = Object.keys(data).filter(
-    //     (key) => !Object.keys(filteredValidations).includes(key)
-    // );
-    // if (extraFields.length > 0) {
-    //     return {
-    //         valid: false,
-    //         message: `Extra fields not allowed: ${extraFields.join(', ')}`,
-    //     };
-    // }
-
-    // Check for missing required fields
-    // const missingFields = Object.keys(filteredValidations).filter(
-    //     (key) => !Object.keys(data).includes(key)
-    // );
-    // if (missingFields.length > 0) {
-    //     return {
-    //         valid: false,
-    //         message: `Missing required fields: ${missingFields.join(', ')}`,
-    //     };
-    // }
-
-    // Validate allowed fields
     const invalidField = Object.keys(data).find((field) => {
         if (filteredValidations[field]) {
             if (!isValidField(data[field], filteredValidations[field])) {
+                console.error(
+                    `Invalid field: ${field}, expected type: ${filteredValidations[field]}, received value: ${data[field]}`
+                );
                 return true;
             }
         }
@@ -42,6 +22,9 @@ const genericValidator = (data, validations, fieldsToValidate) => {
     });
 
     if (invalidField) {
+        console.error(
+            `Invalid field: ${invalidField}, expected type: ${filteredValidations[invalidField]}, received value: ${data[invalidField]}`
+        );
         return {
             valid: false,
             invalidField,

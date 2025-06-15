@@ -50,7 +50,7 @@ const getAllCourses = async (req, res) => {
 
 const createCourse = async (req, res) => {
     const courseData = req.body;
-    const result = await createCourseService(courseData);
+    const result = await createCourseService(courseData, req.file.path);
     handleResponse(res, result);
 };
 

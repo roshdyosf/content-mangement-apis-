@@ -18,6 +18,8 @@ const educatorIdentityCheck = require('../middleware/educatorIdentityMiddleware'
 
 const { mockAuthMiddleware, validateToken, requireRole } = require('../middleware/authMiddleware')
 
+const uploadMiddleware = require('../middleware/uploadMiddleware')
+
 const { validateId } = require('../middleware/validateRequest');
 
 const keyCheck = require('../middleware/keyCheckMiddleware')
@@ -50,7 +52,7 @@ router.get('/get-course/:courseId',
     validateId('courseId', 'params'), getCoursesById)
 
 router.post('/create',
-    requireRole("Educator"), validateId('educatorId', 'body'), createCourse)
+    requireRole("Educator"), uploadMiddleware('image').single("image"), validateId('educatorId', 'body'), createCourse)
 
 router.put('/update',
     requireRole("Educator"), educatorIdentityCheck, validateId('courseId', 'body'), updateCourseInfo)

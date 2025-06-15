@@ -27,7 +27,17 @@ const courseSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    imageUrl: {
+        type: String,
+        required: true,
+        trim: true
+    },
 
+    imagePublicId: {
+        type: String,
+        required: true,
+        trim: true
+    },
     sections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Section' }],
 
     tags: [{ type: String }],

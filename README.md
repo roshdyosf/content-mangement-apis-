@@ -92,71 +92,31 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **GET** `/api/v1/cms/course/get-for-educator/:educatorId/:limit/:offset`
 - **Request Params:** `educatorId` (string), `limit` (number), `offset` (number)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Courses fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Courses for Tag
 
 - **GET** `/api/v1/cms/course/get-for-tag/:tag/:limit/:offset`
 - **Request Params:** `tag` (string), `limit` (number), `offset` (number)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Courses fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get All Courses
 
 - **GET** `/api/v1/cms/course/get-all/:limit/:offset`
 - **Request Params:** `limit` (number), `offset` (number)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Courses fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Courses Like Name
 
 - **GET** `/api/v1/cms/course/get-course-like/:courseName/:limit/:offset`
 - **Request Params:** `courseName` (string), `limit` (number), `offset` (number)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Courses fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Course by ID
 
 - **GET** `/api/v1/cms/course/get-course/:courseId`
 - **Request Params:** `courseId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course fetched successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Create Course
 
@@ -173,15 +133,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "level": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course created successfully.",
-    "status": 201,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Course Information
 
@@ -196,15 +148,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "rating": 0
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Course Enrollment Count (Notifications)
 
@@ -216,29 +160,13 @@ JWT_SECRET_KEY=your_jwt_secret
     "key": "..." // (if required by your logic)
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course enrollment count updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Course
 
 - **DELETE** `/api/v1/cms/course/delete/:courseId`
 - **Request Params:** `courseId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course deleted successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Course Rating
 
@@ -250,15 +178,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "rating": 4.5
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course rating updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 ---
 
@@ -268,29 +188,13 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **GET** `/api/v1/cms/section/get-all/:courseId`
 - **Request Params:** `courseId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Sections fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Section by ID
 
 - **GET** `/api/v1/cms/section/get-section/:sectionId`
 - **Request Params:** `sectionId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Section fetched successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Create Section
 
@@ -304,15 +208,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Section created successfully.",
-    "status": 201,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Section
 
@@ -327,15 +223,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Section updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Section
 
@@ -347,15 +235,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Section deleted successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 ---
 
@@ -365,29 +245,13 @@ JWT_SECRET_KEY=your_jwt_secret
 
 - **GET** `/api/v1/cms/video/get-all/:sectionId`
 - **Request Params:** `sectionId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Videos fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Single Video
 
 - **GET** `/api/v1/cms/video/get-video/:videoId`
 - **Request Params:** `videoId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Video fetched successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Create Video
 
@@ -403,15 +267,7 @@ JWT_SECRET_KEY=your_jwt_secret
   }
   ```
 - **File Upload:** Key: `video` (multipart/form-data)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Video created successfully.",
-    "status": 201,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Video Information
 
@@ -426,15 +282,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Video updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Video
 
@@ -446,15 +294,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Video deleted successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 ---
 
@@ -470,14 +310,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "approval": true
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Course approved successfully.",
-    "status": 200
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Approve Section
 
@@ -489,14 +322,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "approval": true
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Section approved successfully.",
-    "status": 200
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Approve Video
 
@@ -508,53 +334,22 @@ JWT_SECRET_KEY=your_jwt_secret
     "approval": true
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Video approved successfully.",
-    "status": 200
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Unapproved Courses
 
 - **GET** `/api/v1/cms/moderator/get-unapproved-course`
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Unapproved courses fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1a", "title": "JavaScript Basics", "description": "Learn the basics of JavaScript programming.", "price": 100, "educatorId": "664f1e2b8c1a2b001f7e4a1b", "educator": "John Doe", "tags": ["javascript", "programming"], "level": "Beginner", "rating": 4.5, "enrollmentCount": 120, "sections": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1 } ], "approved": true, "createdAt": "2025-06-14T12:00:00.000Z", "updatedAt": "2025-06-14T12:00:00.000Z" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Unapproved Sections
 
 - **GET** `/api/v1/cms/moderator/get-unapproved-section`
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Unapproved sections fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1c", "title": "Introduction", "description": "Course introduction section.", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Unapproved Videos
 
 - **GET** `/api/v1/cms/moderator/get-unapproved-video`
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Unapproved videos fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1d", "title": "Welcome Video", "description": "Welcome to the course!", "order": 1, "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "videoUrl": "https://cloudinary.com/video.mp4" } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 ---
 
@@ -572,15 +367,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "educatorId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Exam created successfully.",
-    "status": 201,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Add Question to Exam
 
@@ -594,14 +381,7 @@ JWT_SECRET_KEY=your_jwt_secret
     "answer": "A"
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Question added successfully.",
-    "status": 200
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Update Exam
 
@@ -616,43 +396,19 @@ JWT_SECRET_KEY=your_jwt_secret
     "answer": "...", "questionIndex": 0
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Exam updated successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get All Exams for Section
 
 - **GET** `/api/v1/cms/exam/get-all-exams/:sectionId`
 - **Request Params:** `sectionId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Exams fetched successfully.",
-    "status": 200,
-    "data": [ { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] } ]
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Get Exam by ID
 
 - **GET** `/api/v1/cms/exam/get-exam/:examId`
 - **Request Params:** `examId` (string)
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Exam fetched successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
 
 #### Delete Exam
 
@@ -664,15 +420,31 @@ JWT_SECRET_KEY=your_jwt_secret
     "courseId": "..."
   }
   ```
-- **Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Exam deleted successfully.",
-    "status": 200,
-    "data": { "_id": "664f1e2b8c1a2b001f7e4a1e", "educatorId": "664f1e2b8c1a2b001f7e4a1b", "courseId": "664f1e2b8c1a2b001f7e4a1a", "sectionId": "664f1e2b8c1a2b001f7e4a1c", "title": "Final Exam", "mcq": [ { "question": "What is 2+2?", "choices": ["1", "2", "3", "4"], "answer": "4" } ] }
-  }
-  ```
+- **Response:** See [API Response Format](#api-response-format)
+
+---
+
+## API Response Format
+
+All API endpoints return a standard response structure:
+
+```json
+{
+  "success": true | false,
+  "message": "A message describing the result.",
+  "status": 200, // or other HTTP status code
+  "data": { ... } // The relevant data for the request, or null on error
+}
+```
+
+- On success, `data` contains the created, updated, fetched, or deleted resource(s).
+- On error, `data` is `null` or may contain validation details.
+- All endpoints now enforce existence checks for parent resources (e.g., course for section, section for video, etc.) and cascade deletes for related resources.
+
+**Note:**
+- For file uploads, send files as `multipart/form-data` with the correct field name (e.g., `image` for course images, `video` for videos).
+- Arrays (like `tags`) should be sent as repeated fields in form data.
+- All create/update/delete operations now ensure data integrity and proper cleanup of related resources.
 
 ---
 

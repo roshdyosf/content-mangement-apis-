@@ -2,7 +2,13 @@ const Course = require("../../models/course-model");
 
 const getCourseById = async (courseId) => {
     try {
-        const course = await Course.findOne({ _id: courseId, approved: true });
+        // Populate sections and return their info
+        const course = await Course.findOne({ _id: courseId, approved: true })
+            .populate({
+                path: 'sections',
+                select: 'title order approved createdAt updatedAt',
+            });
+
         if (!course) {
             return {
                 success: false,

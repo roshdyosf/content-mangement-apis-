@@ -28,6 +28,15 @@ const createSection = async (sectionData) => {
         };
     }
     try {
+        // Check if course exists before creating the section
+        const course = await Course.findById(dtoWithoutSuccess.courseId);
+        if (!course) {
+            return {
+                success: false,
+                message: 'Course not found. Cannot create section.',
+                statusCode: 404
+            };
+        }
         const newSection = new Section(dtoWithoutSuccess);
         const savedSection = await newSection.save();
         await Course.findByIdAndUpdate(dtoWithoutSuccess.courseId, { $push: { sections: savedSection._id } });

@@ -1,4 +1,5 @@
 const Exam = require('../../models/exam-model')
+const Section = require('../../models/section-model')
 const ExamCreateDTO = require('../../dtos/exam/examCreateDTO')
 const examValidation = require('../../validators/examDataValidation')
 const createExamService = async (examData) => {
@@ -22,8 +23,19 @@ const createExamService = async (examData) => {
         };
     }
     try {
+        // Check if section exists before creating the exam
+        const section = await Section.findById(dtoWithoutSuccess.sectionId);
+        if (!section) {
+            return {
+                success: false,
+                message: 'Section not found. Cannot create exam.',
+                statusCode: 404
+            };
+        }
         const newExam = new Exam(dtoWithoutSuccess)
         const savedExam = await newExam.save()
+        // Update the section to include the new exam
+        await Section.findByIdAndUpdate(dtoWithoutSuccess.sectionId, { $push: { exams: savedExam._id } });
         return {
             success: true,
             message: 'Exam created successfully',

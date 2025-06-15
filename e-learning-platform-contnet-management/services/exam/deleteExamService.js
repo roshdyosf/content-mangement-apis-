@@ -1,4 +1,5 @@
 const Exam = require("../../models/exam-model")
+const Section = require("../../models/section-model");
 const deleteExamService = async (examId, courseId) => {
 
     try {
@@ -18,6 +19,11 @@ const deleteExamService = async (examId, courseId) => {
             };
         }
         await Exam.findByIdAndDelete(examId);
+
+        // Remove the exam from the section's exams array
+
+        await Section.findByIdAndUpdate(exam.sectionId, { $pull: { exams: examId } });
+
         return {
             success: true,
             message: "exam deleted successfully.",

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Video = require('../../models/video-model');
 const Section = require('../../models/section-model');
+const Course = require('../../models/course-model');
 const videoValidation = require('../../validators/videoDataValidation');
 const { uploadToCloudinary } = require('../../helpers/cloudinaryHelper');
 const VideoCreateDTO = require('../../dtos/video/videoCreateDTO')
@@ -42,12 +43,41 @@ const createVideoService = async (videoData, filePath) => {
             };
         }
 
+        // Check if section exists before creating the video
+        const section = await Section.findById(dtoWithoutSuccess.sectionId);
+        if (!section) {
+            return {
+                success: false,
+                message: 'Section not found. Cannot create video.',
+                statusCode: 404
+            };
+        }
+
+
+        // Check if course exists before creating the video
+        const course = await Course.findById(dtoWithoutSuccess.courseId);
+        if (!course) {
+            return {
+                success: false,
+                message: 'Course not found. Cannot create video.',
+                statusCode: 404
+            };
+        }
+
+        if (course._id.toString() !== section.courseId.toString()) {
+            return {
+                success: false,
+                message: 'Section does not belong to the specified course.',
+                statusCode: 400
+            };
+        }
+
         // Upload the video file to Cloudinary.
-        const result = await uploadToCloudinary(filePath);
+        const result = await uploadToCloudinary(filePath, 'video');
 
         // Create a new Video document with the Cloudinary result.
         const newVideo = new Video({
-            ...videoData,
+            ...dtoWithoutSuccess,
             url: result.url,
             publicId: result.publicId
         });

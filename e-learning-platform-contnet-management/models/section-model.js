@@ -31,7 +31,10 @@ const sectionSchema = new mongoose.Schema({
         min: 0,
         max: 100
     },
-
+    exams: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exam'
+    }],
     approved: {
         type: Boolean,
         default: false,

@@ -6,7 +6,7 @@ const getAllCoursesService = async (limit, offset) => {
             .sort({ "rating.average": -1 }) // Sort by rating.average in descending order
             .limit(limit)
             .skip(offset);
-        if (courses.length === 0) {
+        if (courses.length === 0 || courses === null) {
             return {
                 success: true,
                 message: "No courses found.",

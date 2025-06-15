@@ -8,12 +8,6 @@ const videoSchema = new mongoose.Schema({
         max: 20
     },
 
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-
     url: {
         type: String,
         required: true,

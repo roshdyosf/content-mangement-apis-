@@ -1,7 +1,7 @@
 class SectionCreateDTO {
-    constructor({ title, description, order, courseId }) {
+    constructor({ title, order, courseId }) {
         this.valid = false
-        if (!title || !description || !order || !courseId) {
+        if (!title || !order || !courseId) {
             return
         }
         const orderNumber = Number(order);
@@ -11,7 +11,6 @@ class SectionCreateDTO {
         }
         this.valid = true;
         this.title = title;
-        this.description = description;
         this.order = orderNumber;
         this.courseId = courseId;
 

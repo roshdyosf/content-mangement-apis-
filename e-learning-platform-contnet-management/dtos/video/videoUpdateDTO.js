@@ -1,7 +1,7 @@
 class VideoUpdateDTO {
-    constructor({ title, description, order }) {
+    constructor({ title, order }) {
         this.valid = false
-        if (!title && !description && order === undefined) {
+        if (!title && order === undefined) {
             return
         }
         if (order !== undefined) {
@@ -14,9 +14,7 @@ class VideoUpdateDTO {
         if (title) {
             this.title = title;
         }
-        if (description) {
-            this.description = description;
-        }
+
         this.valid = true;
     }
 }

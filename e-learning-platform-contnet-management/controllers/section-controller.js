@@ -14,8 +14,9 @@ const getSections = async (req, res) => {
 };
 
 const createSection = async (req, res) => {
+    const educatorId = req.userInfo.userId;
     const sectionData = req.body;
-    const result = await createSectionService(sectionData);
+    const result = await createSectionService(sectionData, educatorId);
     handleResponse(res, result);
 };
 

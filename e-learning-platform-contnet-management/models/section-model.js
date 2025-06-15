@@ -8,12 +8,6 @@ const sectionSchema = new mongoose.Schema({
         max: 20
     },
 
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',

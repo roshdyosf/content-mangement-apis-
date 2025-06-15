@@ -93,7 +93,7 @@ const requireRole = (roles) => {
 const mockAuthMiddleware = (role = "Educator", id = "edu_123", name = "E mock user") => {
     return (req, res, next) => {
         req.userInfo = {
-            id: id,
+            userId: id,
             email: "mock@example.com",
             name: name,
             role: role,

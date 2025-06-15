@@ -7,7 +7,8 @@ const handleResponse = require('../utils/errorHandler');
 
 const createVideo = async (req, res) => {
     const videoData = req.body;
-    const result = await createVideoService(videoData, req.file.path);
+    const educatorId = req.userInfo.userId;
+    const result = await createVideoService(videoData, educatorId, req.file.path);
     handleResponse(res, result);
 };
 

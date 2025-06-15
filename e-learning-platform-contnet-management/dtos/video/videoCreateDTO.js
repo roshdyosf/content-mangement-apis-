@@ -1,7 +1,7 @@
 class VideoCreateDTO {
-    constructor({ title, description, order, courseId, sectionId }) {
+    constructor({ title, order, courseId, sectionId }) {
         this.valid = false
-        if (!title || !description || !order || !courseId || !sectionId) {
+        if (!title || !order || !courseId || !sectionId) {
             return
         }
         const orderNumber = Number(order);
@@ -10,7 +10,6 @@ class VideoCreateDTO {
         }
 
         this.title = title;
-        this.description = description;
         this.order = orderNumber;
         this.courseId = courseId;
         this.sectionId = sectionId;

@@ -6,7 +6,7 @@ const videoValidation = require('../../validators/videoDataValidation');
 const { uploadToCloudinary } = require('../../helpers/cloudinaryHelper');
 const VideoCreateDTO = require('../../dtos/video/videoCreateDTO')
 
-const createVideoService = async (videoData, filePath) => {
+const createVideoService = async (videoData, educatorId, filePath) => {
     try {
 
         if (!filePath) {
@@ -43,32 +43,24 @@ const createVideoService = async (videoData, filePath) => {
             };
         }
 
-        // Check if section exists before creating the video
-        const section = await Section.findById(dtoWithoutSuccess.sectionId);
+        // Fetch section with its courseId populated, and check _id in query
+        const section = await Section.findOne({
+            _id: dtoWithoutSuccess.sectionId,
+            courseId: dtoWithoutSuccess.courseId
+        }).populate('courseId').lean();
         if (!section) {
             return {
                 success: false,
-                message: 'Section not found. Cannot create video.',
+                message: 'Section not found or does not belong to the specified course. Cannot create video.',
                 statusCode: 404
             };
         }
-
-
-        // Check if course exists before creating the video
-        const course = await Course.findById(dtoWithoutSuccess.courseId);
-        if (!course) {
+        // Check if educator matches
+        if (section.courseId.educatorId.toString() !== educatorId.toString()) {
             return {
                 success: false,
-                message: 'Course not found. Cannot create video.',
-                statusCode: 404
-            };
-        }
-
-        if (course._id.toString() !== section.courseId.toString()) {
-            return {
-                success: false,
-                message: 'Section does not belong to the specified course.',
-                statusCode: 400
+                message: 'Educator does not match the course educator.',
+                statusCode: 403
             };
         }
 

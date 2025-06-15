@@ -2,8 +2,9 @@ const Section = require("../../models/section-model");
 const Course = require('../../models/course-model')
 const sectionDataValidation = require('../../validators/sectionDataValidation');
 const SectionCreateDTO = require('../../dtos/section/SectionCreateDTO')
-const createSection = async (sectionData) => {
 
+// Accept educatorId as a parameter
+const createSection = async (sectionData, educatorId) => {
     const sectionCreateDTO = new SectionCreateDTO(sectionData)
     const { valid, ...dtoWithoutSuccess } = sectionCreateDTO;
 
@@ -28,12 +29,15 @@ const createSection = async (sectionData) => {
         };
     }
     try {
-        // Check if course exists before creating the section
-        const course = await Course.findById(dtoWithoutSuccess.courseId);
+        // Check if course exists and educator matches in one query
+        const course = await Course.findOne({
+            _id: dtoWithoutSuccess.courseId,
+            educatorId: educatorId
+        });
         if (!course) {
             return {
                 success: false,
-                message: 'Course not found. Cannot create section.',
+                message: 'Course not found or educator mismatch. Cannot create section.',
                 statusCode: 404
             };
         }

@@ -1,8 +1,18 @@
+const Exam = require("../../models/exam-model");
 const Section = require("../../models/section-model")
 const getSectionByIdService = async (SectionId) => {
 
     try {
-        const section = await Section.findById(SectionId)
+        // Query for section by id and approved only
+        const section = await Section.findOne({ _id: SectionId, approved: true })
+            .populate({
+                path: 'videos',
+                select: 'title order approved createdAt updatedAt',
+            })
+            .populate({
+                path: 'exams',
+                select: 'title order approved createdAt updatedAt'
+            });
         if (!section) {
             return {
                 success: false,

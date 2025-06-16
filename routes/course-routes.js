@@ -46,7 +46,10 @@ if (process.env.NODE_ENV === "development") {
   router.use(mockAuthMiddleware((role = "Educator")));
 } else {
   console.log("Production mode: Using real authentication middleware");
-  console.log(`Request received: ${req.method} ${req.originalUrl}`);
+  router.use((req, res, next) => {
+    console.log(`Request received: ${req.method} ${req.originalUrl}`);
+    next();
+  });
   router.use(validateToken);
 }
 

@@ -6,8 +6,8 @@ const sectionRoutes = require('./routes/section-routes')
 const videoRoutes = require('./routes/video-routes')
 const examRoutes = require('./routes/exam-routes')
 const moderatorRoutes = require('./routes/moderator-router')
-const jwt = require('jsonwebtoken')
 //const { rateLimit } = require('express-rate-limit');
+
 
 
 const app = express()
@@ -17,6 +17,14 @@ const PORT = process.env.PORT
 connectToDB()
 
 app.use(express.json())
+
+
+
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json')
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Uncomment the following lines to enable rate limiting
 
 // const limiter = rateLimit({
 //     windowMs: 15 * 60 * 1000,

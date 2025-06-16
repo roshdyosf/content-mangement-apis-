@@ -526,7 +526,6 @@ All API endpoints return a standard response structure:
   "data": {
     "_id": "684e58154dce7bfbd397cfcd",
     "title": "secion1",
-    "description": "section1 discrption",
     "courseId": "684e57274dce7bfbd397cfca",
     "videos": [
       {

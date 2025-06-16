@@ -24,9 +24,9 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/elearning_backend:latest \
-                       -t ${{ secrets.DOCKERHUB_USERNAME }}/elearning_backend:${{ env.TIMESTAMP }} .
-          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/elearning_backend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cms:latest \
+                       -t ${{ secrets.DOCKERHUB_USERNAME }}/cms:${{ env.TIMESTAMP }} .
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/cms
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3

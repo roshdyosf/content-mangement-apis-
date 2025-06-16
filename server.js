@@ -23,7 +23,7 @@ app.use(express.json())
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json')
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/v1/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Uncomment the following lines to enable rate limiting
 
 // const limiter = rateLimit({

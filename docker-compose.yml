@@ -4,7 +4,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "5008:5008"
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/elearning
       - NODE_ENV=production

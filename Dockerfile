@@ -22,7 +22,7 @@ ENV NODE_ENV=production
 ENV PORT=5008
 
 # Expose the app's port
-EXPOSE 5002
+EXPOSE 5008
 
 # Start the application
 CMD ["npm", "run", "start"]

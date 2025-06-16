@@ -9,7 +9,7 @@ const validateToken = async (req, res, next) => {
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            throw new AppError("Authentication token is missing", 401);
+            return next(new AppError("Authorization header missing or invalid", 401));
         }
 
         const token = authHeader.split(" ")[1];

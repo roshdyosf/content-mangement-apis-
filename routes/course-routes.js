@@ -24,6 +24,18 @@ const { validateId } = require('../middleware/validateRequest');
 
 const keyCheck = require('../middleware/keyCheckMiddleware')
 
+router.get('/get-for-educator/:educatorId/:limit/:offset',
+    validateId('educatorId', 'params'), getCoursesForEducator)
+
+router.get('/get-for-tag/:tag/:limit/:offset',
+    getAllCoursesForTag)
+
+router.get('/get-all/:limit/:offset',
+    getAllCourses)
+
+router.get('/get-course-like/:courseName/:limit/:offset',
+    getCoursesLikeName)
+
 if (process.env.NODE_ENV === 'development') {
     console.log("Development mode: Using mock authentication middleware")
     router.use(mockAuthMiddleware(role = "Educator"))
@@ -36,17 +48,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 
-router.get('/get-for-educator/:educatorId/:limit/:offset',
-    validateId('educatorId', 'params'), getCoursesForEducator)
 
-router.get('/get-for-tag/:tag/:limit/:offset',
-    getAllCoursesForTag)
-
-router.get('/get-all/:limit/:offset',
-    getAllCourses)
-
-router.get('/get-course-like/:courseName/:limit/:offset',
-    getCoursesLikeName)
 
 router.get('/get-course/:courseId',
     validateId('courseId', 'params'), getCoursesById)

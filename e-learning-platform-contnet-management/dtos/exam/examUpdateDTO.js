@@ -1,42 +1,58 @@
 class ExamUpdateDTO {
-    constructor({ examId, title, question, questionIndex, choice, choiceIndex, answer }) {
-        this.valid = false;
-        if (!examId) return;
-        this.examId = examId;
-
-        // Only one update per request
-        if (question !== undefined && questionIndex !== undefined) {
-            this.option = "question";
-            this.questionIndex = Number(questionIndex);
-            if (isNaN(this.questionIndex)) return;
-            this.question = question;
-            this.valid = true;
-            return;
+    constructor({ examId, title, question, qIndex, choice, cIndex, answer }) {
+        this.valid = true;
+        if (!examId) {
+            this.valid = false;
+            this.error = 'examId is required';
+        } else {
+            this.examId = examId;
         }
 
-        if (choice !== undefined && questionIndex !== undefined && choiceIndex !== undefined) {
-            this.option = "choice";
-            this.questionIndex = Number(questionIndex);
-            this.choiceIndex = Number(choiceIndex);
-            if (isNaN(this.questionIndex) || isNaN(this.choiceIndex)) return;
-            this.choice = choice;
-            this.valid = true;
-            return;
-        }
+        // Track if at least one field is being updated
+        let hasUpdate = false;
 
-        if (answer !== undefined && questionIndex !== undefined) {
-            this.option = "answer";
-            this.questionIndex = Number(questionIndex);
-            if (isNaN(this.questionIndex)) return;
-            this.answer = answer;
-            this.valid = true;
-            return;
-        }
         if (title !== undefined) {
-            this.option = "title";
             this.title = title;
-            this.valid = true;
-            return;
+            hasUpdate = true;
+        }
+
+        if (question !== undefined) {
+            if (qIndex === undefined || isNaN(Number(qIndex))) {
+                this.valid = false;
+                this.error = 'Valid qIndex is required for question update';
+            } else {
+                this.qIndex = Number(qIndex);
+                this.question = question;
+                hasUpdate = true;
+            }
+        }
+
+        if (choice !== undefined) {
+            if (qIndex === undefined || isNaN(Number(qIndex)) || cIndex === undefined || isNaN(Number(cIndex))) {
+                this.valid = false;
+                this.error = 'Valid qIndex and cIndex are required for choice update';
+            } else {
+                this.qIndex = Number(qIndex);
+                this.cIndex = Number(cIndex);
+                this.choice = choice;
+                hasUpdate = true;
+            }
+        }
+
+        if (answer !== undefined) {
+            if (qIndex === undefined || isNaN(Number(qIndex))) {
+                this.valid = false;
+                this.error = 'Valid qIndex is required for answer update';
+            } else {
+                this.qIndex = Number(qIndex);
+                this.answer = answer;
+                hasUpdate = true;
+            }
+        }
+
+        if (!hasUpdate) {
+            this.valid = false;
+            this.error = 'No update fields provided';
         }
     }
 }

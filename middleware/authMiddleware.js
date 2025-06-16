@@ -29,7 +29,7 @@ const validateToken = async (req, res, next) => {
                     timeout: 5000,
                 }
             );
-
+            console.log(`Auth service response: ${JSON.stringify(response.data)}`);
             if (!response.data.valid) {
                 return next(new AppError("Invalid or expired token", 401));
             }

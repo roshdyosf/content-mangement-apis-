@@ -23,6 +23,7 @@ ENV PORT=5008
 
 # Expose the app's port
 EXPOSE 5008
-
+# Generate Swagger JSON before starting the app
+RUN node swagger.js
 # Start the application
 CMD ["npm", "run", "start"]

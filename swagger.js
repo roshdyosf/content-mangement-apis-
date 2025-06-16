@@ -6,7 +6,7 @@ const doc = {
         title: 'E-Learning Platform Content Management API',
         description: 'API documentation for the E-Learning Platform Content Management system'
     },
-    host: 'localhost:5008',
+    host: 'http://http://3.70.227.2:5008',
     schemes: ['http'],
 };
 

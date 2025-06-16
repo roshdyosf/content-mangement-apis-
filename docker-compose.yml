@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   cms-api:
-    build: 
-     context: ./cms
+    build: .
     ports:
       - "5008:5008"
     environment:

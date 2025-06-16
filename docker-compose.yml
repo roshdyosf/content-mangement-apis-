@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/elearning
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+    volumes:
+      - ./uploads:/usr/src/app/uploads
+    networks:
+      - e-learning-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - e-learning-network
+
+networks:
+  e-learning-network:
+    external: true
+
+volumes:
+  mongodb_data:

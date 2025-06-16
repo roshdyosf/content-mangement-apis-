@@ -17,7 +17,7 @@ const validateToken = async (req, res, next) => {
         // Typically, we would validate the token against the user service
         try {
             const userServiceUrl =
-                process.env.USER_SERVICE_URL || "http://172.19.0.3:5003/api/v1/ums";
+                process.env.USER_SERVICE_URL || "http://127.0.0.1/api/v1/ums";
             const response = await axios.post(
                 `${userServiceUrl}/auth/validate`,
                 { token },

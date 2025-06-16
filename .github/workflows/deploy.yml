@@ -37,5 +37,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/ubuntu/elearning-backend/CMS
-            chmod +x deploy.sh
+            chmod +x deploy2.sh
             ./deploy2.sh

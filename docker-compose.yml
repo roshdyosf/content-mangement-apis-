@@ -29,4 +29,4 @@ volumes:
 
 networks:
   e-learning-network:
-    driver: bridge
+    external: true

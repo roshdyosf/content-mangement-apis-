@@ -24,9 +24,9 @@ services:
     networks:
       - e-learning-network
 
-networks:
-  e-learning-network:
-    external: true
-
 volumes:
   mongodb_data:
+
+networks:
+  e-learning-network:
+    driver: bridge

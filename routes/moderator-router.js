@@ -15,7 +15,13 @@ const { mockAuthMiddleware, validateToken, requireRole } = require('../middlewar
 
 const { validateApproval, validateId } = require('../middleware/validateRequest');
 
-
+// Logging middleware to log service calls
+function logService(serviceName) {
+  return (req, res, next) => {
+    console.log(`Service ${serviceName} invoked: ${req.method} ${req.originalUrl}`);
+    next();
+  };
+}
 
 
 
@@ -31,22 +37,28 @@ if (process.env.NODE_ENV === 'development') {
 
 
 router.put('/approve-course',
+    logService("approveCourse"),
     requireRole("Moderator"), validateApproval, validateId('courseId', 'body'), approveCourse)
 
 router.put('/approve-section',
+    logService("approveSection"),
     requireRole("Moderator"), validateApproval, validateId('sectionId', 'body'), approveSection)
 
 router.put('/approve-video',
+    logService("approveVideo"),
     requireRole("Moderator"), validateApproval, validateId('videoId', 'body'), approveVideo)
 
 
 router.get('/get-unapproved-course',
+    logService("fetchPendingCourses"),
     requireRole("Moderator"), fetchPendingCourses)
 
 router.get('/get-unapproved-section',
+    logService("fetchPendingSections"),
     requireRole("Moderator"), fetchPendingSections)
 
 router.get('/get-unapproved-video',
+    logService("fetchPendingVideos"),
     requireRole("Moderator"), fetchPendingVideos)
 
 

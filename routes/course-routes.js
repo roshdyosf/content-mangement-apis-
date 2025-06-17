@@ -29,17 +29,39 @@ const { validateId } = require("../middleware/validateRequest");
 
 const keyCheck = require("../middleware/keyCheckMiddleware");
 
+// Logging middleware to log service calls
+function logService(serviceName) {
+  return (req, res, next) => {
+    console.log(`Service ${serviceName} invoked: ${req.method} ${req.originalUrl}`);
+    next();
+  };
+}
+
+// Updated route for getting courses for an educator with logging
 router.get(
   "/get-for-educator/:educatorId/:limit/:offset",
   validateId("educatorId", "params"),
+  logService("getCoursesForEducator"),
   getCoursesForEducator
 );
 
-router.get("/get-for-tag/:tag/:limit/:offset", getAllCoursesForTag);
+router.get(
+  "/get-for-tag/:tag/:limit/:offset",
+  logService("getAllCoursesForTag"),
+  getAllCoursesForTag
+);
 
-router.get("/get-all/:limit/:offset", getAllCourses);
+router.get(
+  "/get-all/:limit/:offset",
+  logService("getAllCourses"),
+  getAllCourses
+);
 
-router.get("/get-course-like/:courseName/:limit/:offset", getCoursesLikeName);
+router.get(
+  "/get-course-like/:courseName/:limit/:offset",
+  logService("getCoursesLikeName"),
+  getCoursesLikeName
+);
 
 if (process.env.NODE_ENV === "development") {
   console.log("Development mode: Using mock authentication middleware");
@@ -56,6 +78,7 @@ if (process.env.NODE_ENV === "development") {
 router.get(
   "/get-course/:courseId",
   validateId("courseId", "params"),
+  logService("getCoursesById"),
   getCoursesById
 );
 
@@ -63,6 +86,7 @@ router.post(
   "/create",
   requireRole("Educator"),
   uploadMiddleware("image").single("image"),
+  logService("createCourse"),
   createCourse
 );
 
@@ -71,6 +95,7 @@ router.put(
   requireRole("Educator"),
   educatorIdentityCheck,
   validateId("courseId", "body"),
+  logService("updateCourseInfo"),
   updateCourseInfo
 );
 
@@ -78,12 +103,14 @@ router.put(
   "/notifications",
   validateId("courseId", "body"),
   keyCheck,
+  logService("enrollmentCountUpdate"),
   enrollmentCountUpdate
 );
 
 router.put(
   "/update-rating",
   validateId("courseId", "body"),
+  logService("updateCourseRating"),
   updateCourseRating
 );
 
@@ -92,6 +119,7 @@ router.delete(
   requireRole("Educator"),
   educatorIdentityCheck,
   validateId("courseId", "params"),
+  logService("deleteCourse"),
   deleteCourse
 );
 

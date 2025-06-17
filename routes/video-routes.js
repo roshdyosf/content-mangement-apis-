@@ -24,22 +24,33 @@ if (process.env.NODE_ENV === 'development') {
     router.use(validateToken)
 }
 
-
+// Logging middleware to log service calls
+function logService(serviceName) {
+  return (req, res, next) => {
+    console.log(`Service ${serviceName} invoked: ${req.method} ${req.originalUrl}`);
+    next();
+  };
+}
 
 
 router.get('/get-all/:sectionId',
+    logService("getVideos"),
     validateId('sectionId', "params"), getVideos)
 
 router.get('/get-video/:videoId',
+    logService("getSingleVideo"),
     validateId('videoId', "params"), getSingleVideo)
 
 router.post('/add',
+    logService("createVideo"),
     requireRole("Educator"), uploadMiddleware('video').single("video"), validateId('sectionId', "body"), validateId('courseId', "body"), createVideo)
 
 router.put('/update',
+    logService("updateVideoInfo"),
     requireRole("Educator"), validateId('courseId', "body"), educatorIdentityCheck, validateId('videoId', "body"), updateVideoInfo)
 
 router.delete('/delete/:videoId',
+    logService("deleteVideo"),
     requireRole("Educator"), educatorIdentityCheck, validateId('videoId', "params"), deleteVideo)
 
 module.exports = router

@@ -6,7 +6,7 @@ const sectionRoutes = require("./routes/section-routes");
 const videoRoutes = require("./routes/video-routes");
 const examRoutes = require("./routes/exam-routes");
 const moderatorRoutes = require("./routes/moderator-router");
-const errorHandler = require("./middleware/errorHandler");
+const {errorHandler} = require("./middleware/errorHandler");
 //const { rateLimit } = require('express-rate-limit');
 
 const app = express();

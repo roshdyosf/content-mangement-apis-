@@ -50,6 +50,31 @@ const handleDatabaseError = (err) => {
 };
 
 /**
+ * Handle authentication and authorization specific errors
+ */
+const handleAuthError = (err) => {
+    if (err.message.includes('Authorization header missing')) {
+        return {
+            statusCode: 401,
+            message: 'Authorization header missing or invalid'
+        };
+    }
+    if (err.message.includes('Authentication service unavailable')) {
+        return {
+            statusCode: 503,
+            message: 'Authentication service is temporarily unavailable'
+        };
+    }
+    if (err.message.includes('Access denied')) {
+        return {
+            statusCode: 403,
+            message: 'Access denied: insufficient permissions'
+        };
+    }
+    return null;
+};
+
+/**
  * Global error handling middleware
  */
 const errorHandler = (err, req, res, next) => {
@@ -58,7 +83,8 @@ const errorHandler = (err, req, res, next) => {
         console.error('Error details:', {
             name: err.name,
             message: err.message,
-            stack: err.stack
+            stack: err.stack,
+            ...(err.response && { responseData: err.response.data })
         });
     }
 
@@ -67,33 +93,34 @@ const errorHandler = (err, req, res, next) => {
     let message = err.message || 'Something went wrong';
     let errors = null;
 
-    // Handle specific error types
-    if (err.name === 'ValidationError') {
+    // Handle authentication errors
+    const authError = handleAuthError(err);
+    if (authError) {
+        statusCode = authError.statusCode;
+        message = authError.message;
+    }
+    // Handle axios errors (for auth service communication)
+    else if (err.isAxiosError) {
+        statusCode = err.response?.status || 500;
+        message = err.response?.data?.message || 'Authentication service error';
+        if (!err.response) {
+            statusCode = 503;
+            message = 'Authentication service is unavailable';
+        }
+    }
+    // Handle validation errors
+    else if (err.name === 'ValidationError') {
         statusCode = 400;
         message = 'Validation Error';
         errors = formatValidationError(err);
-    } else if (err.name === 'JsonWebTokenError' || err.name === 'NotAuthorizedError') {
-        statusCode = 401;
-        message = 'Invalid token. Please log in again.';
-    } else if (err.name === 'TokenExpiredError') {
-        statusCode = 401;
-        message = 'Your token has expired. Please log in again.';
-    } else if (err.name === 'MulterError') {
-        statusCode = 400;
-        message = 'File upload error';
-        if (err.code === 'LIMIT_FILE_SIZE') {
-            message = 'File is too large. Maximum size is 5MB';
-        }
-    } else if (err.name === 'RateLimitExceeded') {
-        statusCode = 429;
-        message = 'Too many requests. Please try again later.';
     }
-
     // Handle database errors
-    const dbError = handleDatabaseError(err);
-    if (dbError) {
-        statusCode = dbError.statusCode;
-        message = dbError.message;
+    else {
+        const dbError = handleDatabaseError(err);
+        if (dbError) {
+            statusCode = dbError.statusCode;
+            message = dbError.message;
+        }
     }
 
     // Prepare response object
@@ -105,7 +132,7 @@ const errorHandler = (err, req, res, next) => {
         ...(process.env.NODE_ENV === 'development' && {
             stack: err.stack,
             error: err.name,
-            details: err
+            ...(err.response && { responseData: err.response.data })
         })
     };
 

@@ -50,7 +50,17 @@ const getAllCourses = async (req, res) => {
 
 const createCourse = async (req, res) => {
     const courseData = req.body;
-    const educatorId = req.params.userInfo.id;
+
+    if (!req.userInfo || !req.userInfo.id) {
+        return handleResponse(res, {
+            success: false,
+            message: "Unauthorized: Valid user information is required",
+            statusCode: 401
+        });
+    }
+
+    // Convert the id to string to ensure consistency
+    const educatorId = req.userInfo.id.toString();
     const result = await createCourseService(courseData, educatorId, req.file.path);
     handleResponse(res, result);
 };

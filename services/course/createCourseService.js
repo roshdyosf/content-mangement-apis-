@@ -4,12 +4,6 @@ const CourseCreateDTO = require('../../dtos/course/courseCreateDTO')
 const fs = require('fs');
 const { uploadToCloudinary } = require('../../helpers/cloudinaryHelper');
 const createCourse = async (courseData, educatorId, filePath) => {
-    /**
-     * Creates a new course with the provided data and video file path.
-     * @param {Object} courseData - The data for the course to be created.
-     * @param {string} filePath - The path to the video file associated with the course.
-     * @returns {Promise<Object>} - An object containing the success status, message, and created course data or error details.
-     */
     try {
         if (!filePath) {
             return {

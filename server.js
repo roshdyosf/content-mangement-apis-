@@ -6,6 +6,7 @@ const sectionRoutes = require("./routes/section-routes");
 const videoRoutes = require("./routes/video-routes");
 const examRoutes = require("./routes/exam-routes");
 const moderatorRoutes = require("./routes/moderator-router");
+const errorHandler = require("./middleware/errorHandler");
 //const { rateLimit } = require('express-rate-limit');
 
 const app = express();
@@ -55,6 +56,8 @@ app.use("/api/v1/cms/exam", examRoutes);
 app.use("/api/v1/cms/section", sectionRoutes);
 app.use("/api/v1/cms/video", videoRoutes);
 app.use("/api/v1/cms/moderator", moderatorRoutes);
+
+app.use(errorHandler);
 
 app.listen(PORT, "0.0.0.0", () =>
   console.log(`app listening on port: ${PORT}!`)

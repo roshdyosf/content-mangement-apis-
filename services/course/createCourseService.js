@@ -3,7 +3,7 @@ const courseValidation = require('../../validators/courseDataValidation')
 const CourseCreateDTO = require('../../dtos/course/courseCreateDTO')
 const fs = require('fs');
 const { uploadToCloudinary } = require('../../helpers/cloudinaryHelper');
-const createCourse = async (courseData, filePath) => {
+const createCourse = async (courseData, educatorId, filePath) => {
     /**
      * Creates a new course with the provided data and video file path.
      * @param {Object} courseData - The data for the course to be created.
@@ -49,6 +49,7 @@ const createCourse = async (courseData, filePath) => {
 
         const newCourse = new Course({
             ...dtoWithoutSuccess,
+            educatorId: educatorId,
             imageUrl: result.url,
             imagePublicId: result.publicId
         });

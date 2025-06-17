@@ -4,7 +4,6 @@ const courseValidation = (courseData, fieldsToValidate) => {
         title: 'string',
         educator: 'string',
         description: 'string',
-        educatorId: 'string',
         price: 'number',
         rating: 'number',
         level: 'string',

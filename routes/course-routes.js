@@ -63,7 +63,6 @@ router.post(
   "/create",
   requireRole("Educator"),
   uploadMiddleware("image").single("image"),
-  validateId("educatorId", "body"),
   createCourse
 );
 

@@ -14,15 +14,11 @@ RUN npm ci --only=production
 # Copy application source code
 COPY . .
 
-# Create necessary directories (logs and temp)
-RUN mkdir -p logs temp
-
 # Set environment variables
 ENV NODE_ENV=production
 ENV PORT=5008
 
 # Expose the app's port
 EXPOSE 5008
-
-# Start the application
+# Generate Swagger JSON before starting the app
 CMD ["npm", "run", "start"]

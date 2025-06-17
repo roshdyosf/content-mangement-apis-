@@ -1,29 +1,24 @@
-require('dotenv').config()
-const express = require('express')
-const connectToDB = require('./database/db')
-const courseRoutes = require('./routes/course-routes')
-const sectionRoutes = require('./routes/section-routes')
-const videoRoutes = require('./routes/video-routes')
-const examRoutes = require('./routes/exam-routes')
-const moderatorRoutes = require('./routes/moderator-router')
+require("dotenv").config();
+const express = require("express");
+const connectToDB = require("./database/db");
+const courseRoutes = require("./routes/course-routes");
+const sectionRoutes = require("./routes/section-routes");
+const videoRoutes = require("./routes/video-routes");
+const examRoutes = require("./routes/exam-routes");
+const moderatorRoutes = require("./routes/moderator-router");
 //const { rateLimit } = require('express-rate-limit');
 
+const app = express();
 
+const PORT = process.env.PORT;
 
-const app = express()
+connectToDB();
 
-const PORT = process.env.PORT
+app.use(express.json());
 
-connectToDB()
-
-app.use(express.json())
-
-
-
-
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-output.json')
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
+app.use("/api/v1/cms/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Uncomment the following lines to enable rate limiting
 
 // const limiter = rateLimit({
@@ -32,7 +27,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //     message: "Too many requests from this IP, please try again after 15 minutes."
 // });
 // app.use(limiter);
-
 
 // const user =
 // {
@@ -56,10 +50,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // console.log(accessToken);
 
 //cms
-app.use('/api/v1/cms/course', courseRoutes)
-app.use('/api/v1/cms/exam', examRoutes)
-app.use('/api/v1/cms/section', sectionRoutes)
-app.use('/api/v1/cms/video', videoRoutes)
-app.use('/api/v1/cms/moderator', moderatorRoutes)
+app.use("/api/v1/cms/course", courseRoutes);
+app.use("/api/v1/cms/exam", examRoutes);
+app.use("/api/v1/cms/section", sectionRoutes);
+app.use("/api/v1/cms/video", videoRoutes);
+app.use("/api/v1/cms/moderator", moderatorRoutes);
 
-app.listen(PORT, () => console.log(`app listening on port: ${PORT}!`))
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`app listening on port: ${PORT}!`)
+);

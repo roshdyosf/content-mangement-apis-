@@ -8,24 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out the repository
+      - name: Checkout Code
         uses: actions/checkout@v3
-        
-      - name: Login to Docker Hub
+
+      - name: Docker Hub Login
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
-      - name: Set up timestamp
+
+      - name: Generate Timestamp
         run: echo "TIMESTAMP=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-      - name: Build and push with timestamp
+      - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest -t ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:${{ env.TIMESTAMP }} --build-arg DATABASE_URI="${{ secrets.DB_URL }}" .
-          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/content-managment
-      - name: Deploy to EC2
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cms:latest \
+                       -t ${{ secrets.DOCKERHUB_USERNAME }}/cms:${{ env.TIMESTAMP }} .
+          docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/cms
+
+      - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -33,10 +36,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest
-            sudo docker stop $(sudo docker container ls -q --filter "name=content-managment") || true
-            sudo docker container prune --force
-            sudo docker image prune --force
-            sudo docker run -d -p 3001:3000 --name content-managment ${{ secrets.DOCKERHUB_USERNAME }}/content-managment:latest
-            sudo docker logs $(sudo docker container ls -q --filter "name=content-managment") || true
-            exit
+            cd /home/ubuntu/elearning-backend/CMS
+            chmod +x deploy2.sh
+            ./deploy2.sh

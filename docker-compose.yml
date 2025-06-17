@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  api:
     build: .
     ports:
       - "5008:5008"
@@ -24,9 +24,9 @@ services:
     networks:
       - e-learning-network
 
+volumes:
+  mongodb_data:
+
 networks:
   e-learning-network:
     external: true
-
-volumes:
-  mongodb_data:

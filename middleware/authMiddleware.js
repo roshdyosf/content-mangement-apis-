@@ -1,6 +1,5 @@
 const axios = require("axios");
-const { AppError } = require("./errorHandler");
-
+const handleResponse = require('../utils/errorHandler');
 /**
  * Validate the authentication token
  */
@@ -9,15 +8,17 @@ const validateToken = async (req, res, next) => {
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return next(new AppError("Authorization header missing or invalid", 401));
+            return handleResponse(res, {
+                success: false,
+                message: "Authorization header missing or invalid",
+                statusCode: 401
+            });
         }
 
         const token = authHeader.split(" ")[1];
 
-        // Typically, we would validate the token against the user service
         try {
-            const userServiceUrl =
-                process.env.USER_SERVICE_URL || "http://3.70.227.2:5003/api/v1/ums ";
+            const userServiceUrl = process.env.USER_SERVICE_URL || "http://3.70.227.2:5003/api/v1/ums";
             const response = await axios.post(
                 `${userServiceUrl}/auth/validate`,
                 { token },
@@ -29,44 +30,54 @@ const validateToken = async (req, res, next) => {
                     timeout: 5000,
                 }
             );
-            console.log(`Auth service response: ${JSON.stringify(response.data)}`);
+
             if (!response.data.valid) {
-                return next(new AppError("Invalid or expired token", 401));
+                console.error(response);
+                return handleResponse(res, {
+                    success: false,
+                    message: "Invalid or expired token",
+                    statusCode: 401
+                });
             }
-            response.data.user.id = response.data.user.id.toString();
-            // Attach user info to request
-            req.userInfo = response.data.user;
+
+            // Convert id to string and attach user info to request
+            const user = response.data.user;
+            user.id = user.id.toString();
+            req.userInfo = user;
+
+            // Move to next middleware
             next();
 
-        } catch (axiosError) {
-            // Handle network errors or service unavailable scenarios
-            if (!axiosError.response) {
-                console.error(`Auth service unavailable: ${axiosError.message}`);
-                return next(new AppError("Authentication service unavailable", 503));
-            } else if (!axiosError.message.includes("Invalid or expired token")) {
-                // log the device ip for this request
-                console.error(`Auth service error: ${axiosError.message}`);
-                console.error(`Request IP: ${req.ip}`);
-                return next(new AppError("Invalid Token", 401));
+        } catch (error) {
+            console.error('Auth service error:', error.message);
+            console.error('Request IP:', req.ip);
+
+            // Handle different types of axios errors
+            if (error.code === 'ECONNREFUSED' || error.code === 'ECONNABORTED' || !error.response) {
+                return handleResponse(res, {
+                    success: false,
+                    message: "Authentication service is temporarily unavailable",
+                    statusCode: 503
+                });
             }
 
-            // Handle error response from auth service
-            console.error(
-                `Auth validation error: ${axiosError.response.data?.message || axiosError.message
-                }`
-            );
-            return next(
-                new AppError("Authentication failed", axiosError.response.status || 401)
-            );
+            // Handle HTTP errors from auth service
+            const statusCode = error.response?.status || 500;
+            const message = error.response?.data?.message || "Authentication failed";
+
+            return handleResponse(res, {
+                success: false,
+                message,
+                statusCode
+            });
         }
     } catch (error) {
-        if (error instanceof AppError) {
-            next(error);
-        } else {
-            // Network error or internal error
-            console.error(`Auth middleware error: ${error.message}`);
-            next(new AppError("Authentication failed due to server issue", 500));
-        }
+        console.error('Unexpected auth error:', error);
+        return handleResponse(res, {
+            success: false,
+            message: "Authentication failed due to server issue",
+            statusCode: 500
+        });
     }
 };
 
@@ -76,11 +87,19 @@ const requireRole = (roles) => {
         const requiredRoles = Array.isArray(roles) ? roles : [roles];
 
         if (!req.userInfo) {
-            return next(new AppError("User not authenticated", 401));
+            return handleResponse(res, {
+                success: false,
+                message: "User not authenticated",
+                statusCode: 401
+            });
         }
 
         if (!requiredRoles.includes(req.userInfo.role)) {
-            return next(new AppError("Access denied: insufficient permissions", 403));
+            return handleResponse(res, {
+                success: false,
+                message: "Access denied: insufficient permissions",
+                statusCode: 403
+            });
         }
 
         next();
@@ -90,12 +109,13 @@ const requireRole = (roles) => {
 /**
  * Create middleware for testing without actual authentication
  */
-const mockAuthMiddleware = (role = "Educator", id = "edu_123", name = "E mock user") => {
+const mockAuthMiddleware = (role = "Educator", id = "edu_123", firstName = "E mock user", lastName = "e last") => {
     return (req, res, next) => {
         req.userInfo = {
             userId: id,
             email: "mock@example.com",
-            name: name,
+            firstName: firstName,
+            lastName: lastName,
             role: role,
         };
         next();

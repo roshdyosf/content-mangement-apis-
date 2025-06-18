@@ -77,8 +77,9 @@ const updateCourseRating = async (req, res) => {
 };
 
 const enrollmentCountUpdate = async (req, res) => {
-    const courseId = req.body.data.courseId;
-    const action = req.body.data.action;
+    console.log(req.body.courseId);
+    const courseId = req.body.courseId;
+    const action = req.body.action;
     const result = await courseEnrollmentCountUpdate(courseId, action);
     handleResponse(res, result);
 }

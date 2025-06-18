@@ -24,7 +24,7 @@ const enrollmentCountUpdate = async (courseId, action) => {
             };
         }
 
-        await course.save();
+        await course.save({ validateBeforeSave: false });
         console.log(`Enrollment count updated successfully for course ID: ${courseId}. New count: ${course.enrollmentCount}`);
         return {
             success: true,

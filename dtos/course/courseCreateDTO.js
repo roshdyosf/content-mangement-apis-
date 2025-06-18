@@ -1,7 +1,7 @@
 class CourseCreateDTO {
-    constructor({ title, description, price, educator, tags, level }) {
+    constructor({ title, description, price, tags, level }) {
         this.valid = false
-        if (!title || !description || price === undefined || price === null || !educator || !level) {
+        if (!title || !description || price === undefined || price === null || !level) {
             console.error("Invalid course data: Missing required fields.");
             return;
         }
@@ -21,7 +21,6 @@ class CourseCreateDTO {
         this.title = title;
         this.description = description;
         this.price = priceNumber;
-        this.educator = educator;
         this.tags = tags;
         this.level = level;
         this.valid = true;

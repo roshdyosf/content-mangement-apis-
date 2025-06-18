@@ -50,18 +50,9 @@ const getAllCourses = async (req, res) => {
 
 const createCourse = async (req, res) => {
     const courseData = req.body;
-
-    if (!req.userInfo || !req.userInfo.id) {
-        return handleResponse(res, {
-            success: false,
-            message: "Unauthorized: Valid user information is required",
-            statusCode: 401
-        });
-    }
-
-    // Convert the id to string to ensure consistency
-    const educatorId = req.userInfo.id.toString();
-    const result = await createCourseService(courseData, educatorId, req.file.path);
+    const educatorId = req.userInfo.userId || req.userInfo.id
+    const userName = req.userInfo.firstName + ' ' + req.userInfo.lastName;
+    const result = await createCourseService(courseData, educatorId, userName, req.file.path);
     handleResponse(res, result);
 };
 

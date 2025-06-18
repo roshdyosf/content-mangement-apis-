@@ -3,7 +3,7 @@ const courseValidation = require('../../validators/courseDataValidation')
 const CourseCreateDTO = require('../../dtos/course/courseCreateDTO')
 const fs = require('fs');
 const { uploadToCloudinary } = require('../../helpers/cloudinaryHelper');
-const createCourse = async (courseData, educatorId, filePath) => {
+const createCourse = async (courseData, educatorId, userName, filePath) => {
     try {
         if (!filePath) {
             return {
@@ -44,6 +44,7 @@ const createCourse = async (courseData, educatorId, filePath) => {
         const newCourse = new Course({
             ...dtoWithoutSuccess,
             educatorId: educatorId,
+            educator: userName,
             imageUrl: result.url,
             imagePublicId: result.publicId
         });
@@ -63,7 +64,6 @@ const createCourse = async (courseData, educatorId, filePath) => {
             statusCode: 500
         };
     } finally {
-        // Always delete the local file
         try {
             await fs.promises.unlink(filePath);
         } catch (err) {

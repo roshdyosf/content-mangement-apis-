@@ -1,6 +1,8 @@
 const Course = require('../../models/course-model');
 const enrollmentCountUpdate = async (courseId, action) => {
     try {
+        
+        console.log(`Updating enrollment count for course ID: ${courseId} with action: ${action}`);
         const course = await Course.findById(courseId);
         if (!course) {
             return {
@@ -23,6 +25,7 @@ const enrollmentCountUpdate = async (courseId, action) => {
         }
 
         await course.save();
+        console.log(`Enrollment count updated successfully for course ID: ${courseId}. New count: ${course.enrollmentCount}`);
         return {
             success: true,
             message: "Enrollment count updated successfully.",
@@ -31,6 +34,7 @@ const enrollmentCountUpdate = async (courseId, action) => {
         };
     } catch (error) {
         console.error(error);
+        console.log(`Failed to update enrollment count for course ID: ${courseId}. Error: ${error.message}`);
         return {
             success: false,
             message: "Failed to update enrollment count. Please try again.",

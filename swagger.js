@@ -19,7 +19,7 @@ const doc = {
   },
   servers: [
     {
-      url: "http://18.184.52.10:5008/api/v1/cms",
+      url: "http://18.184.52.10:5008",
       description: "Development server",
     },
   ],

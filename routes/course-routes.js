@@ -63,6 +63,13 @@ router.get(
   getCoursesLikeName
 );
 
+router.get(
+  "/get-course/:courseId",
+  validateId("courseId", "params"),
+  logService("getCoursesById"),
+  getCoursesById
+);
+
 if (process.env.NODE_ENV === "development") {
   console.log("Development mode: Using mock authentication middleware");
   router.use(mockAuthMiddleware((role = "Educator")));
@@ -75,12 +82,6 @@ if (process.env.NODE_ENV === "development") {
   router.use(validateToken);
 }
 
-router.get(
-  "/get-course/:courseId",
-  validateId("courseId", "params"),
-  logService("getCoursesById"),
-  getCoursesById
-);
 
 router.post(
   "/create",

@@ -13,6 +13,8 @@ const {
   getCoursesLikeName,
   enrollmentCountUpdate,
   getCoursesById,
+  getAllCoursesForStudent,
+  checkEnrollment
 } = require("../controllers/course-controller");
 
 const educatorIdentityCheck = require("../middleware/educatorIdentityMiddleware");
@@ -122,5 +124,21 @@ router.delete(
   logService("deleteCourse"),
   deleteCourse
 );
+
+
+// check student enrollment status
+router.get(
+  "/enrollment/:courseId",
+  validateId("courseId", "params"),
+ checkEnrollment
+);
+
+router.get(
+  "/enrollments/:limit/:offset",
+  requireRole("Student"),
+  logService("getAllCoursesForStudent"),
+  getAllCoursesForStudent
+)
+
 
 module.exports = router;

@@ -34,22 +34,27 @@ function logService(serviceName) {
 
 
 router.get('/get-all/:sectionId',
+    // #swagger.tags = ['Videos']
     logService("getVideos"),
     validateId('sectionId', "params"), getVideos)
 
 router.get('/get-video/:videoId',
+    // #swagger.tags = ['Videos']
     logService("getSingleVideo"),
     validateId('videoId', "params"), getSingleVideo)
 
 router.post('/add',
+    // #swagger.tags = ['Videos']
     logService("createVideo"),
     requireRole("Educator"), uploadMiddleware('video').single("video"), validateId('sectionId', "body"), validateId('courseId', "body"), createVideo)
 
 router.put('/update',
+    // #swagger.tags = ['Videos']
     logService("updateVideoInfo"),
     requireRole("Educator"), validateId('courseId', "body"), educatorIdentityCheck, validateId('videoId', "body"), updateVideoInfo)
 
 router.delete('/delete/:videoId',
+    // #swagger.tags = ['Videos']
     logService("deleteVideo"),
     requireRole("Educator"), educatorIdentityCheck, validateId('videoId', "params"), deleteVideo)
 

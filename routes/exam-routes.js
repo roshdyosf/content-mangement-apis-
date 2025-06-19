@@ -31,25 +31,31 @@ if (process.env.NODE_ENV === 'development') {
 
 
 router.post('/create',
+    // #swagger.tags = ['Exams']
     logService("createExam"),
     requireRole("Educator"), validateId('educatorId', 'body'), createExam)
 
 router.put('/add-question',
+    // #swagger.tags = ['Exams']
     logService("addQuestion"),
     requireRole("Educator"), educatorIdentityCheck, validateId('examId', 'body'), addQuestion)
 
 router.put('/update-exam',
+    // #swagger.tags = ['Exams']
     requireRole("Educator"), educatorIdentityCheck, validateId('examId', 'body'), updateExam)
 
 router.get('/get-all-exams/:sectionId', 
+    // #swagger.tags = ['Exams']
     logService("getAllExams"),
     validateId('sectionId', 'params'), getAllExams)
 
 router.get('/get-exam/:examId',
+    // #swagger.tags = ['Exams']
     logService("getExamById"),
     validateId('examId', 'params'), getExamById)
 
 router.delete('/delete-exam',
+    // #swagger.tags = ['Exams']
     logService("deleteExam"),
     requireRole("Educator"), educatorIdentityCheck, validateId('examId', 'body'), deleteExam)
 

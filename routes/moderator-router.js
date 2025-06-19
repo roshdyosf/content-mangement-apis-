@@ -37,27 +37,33 @@ if (process.env.NODE_ENV === 'development') {
 
 
 router.put('/approve-course',
+    // #swagger.tags = ['Moderator']
     logService("approveCourse"),
     requireRole("Moderator"), validateApproval, validateId('courseId', 'body'), approveCourse)
 
 router.put('/approve-section',
+    // #swagger.tags = ['Moderator']
     logService("approveSection"),
     requireRole("Moderator"), validateApproval, validateId('sectionId', 'body'), approveSection)
 
 router.put('/approve-video',
+    // #swagger.tags = ['Moderator']
     logService("approveVideo"),
     requireRole("Moderator"), validateApproval, validateId('videoId', 'body'), approveVideo)
 
 
 router.get('/get-unapproved-course',
+    // #swagger.tags = ['Moderator']
     logService("fetchPendingCourses"),
     requireRole("Moderator"), fetchPendingCourses)
 
 router.get('/get-unapproved-section',
+    // #swagger.tags = ['Moderator']
     logService("fetchPendingSections"),
     requireRole("Moderator"), fetchPendingSections)
 
 router.get('/get-unapproved-video',
+    // #swagger.tags = ['Moderator']
     logService("fetchPendingVideos"),
     requireRole("Moderator"), fetchPendingVideos)
 

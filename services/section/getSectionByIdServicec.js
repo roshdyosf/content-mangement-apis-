@@ -4,7 +4,7 @@ const getSectionByIdService = async (SectionId) => {
 
     try {
         // Query for section by id and approved only
-        const section = await Section.findOne({ _id: SectionId, approved: true })
+        const section = await Section.findOne({ _id: SectionId })
             .populate({
                 path: 'videos',
                 select: 'title order approved createdAt updatedAt',

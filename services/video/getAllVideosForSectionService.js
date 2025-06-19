@@ -2,7 +2,7 @@ const Video = require('../../models/video-model')
 
 const getAllVideosForSectionService = async (sectionId) => {
     try {
-        const videos = await Video.find({ sectionId: sectionId, approved: true }).sort({ order: 1 });
+        const videos = await Video.find({ sectionId: sectionId }).sort({ order: 1 });
         if (videos.length === 0) {
             return {
                 success: false,

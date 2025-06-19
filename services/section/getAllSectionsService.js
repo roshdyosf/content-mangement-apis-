@@ -3,7 +3,7 @@ const Section = require('../../models/section-model');
 const getAllSections = async (courseId) => {
     try {
 
-        const sections = await Section.find({ courseId: courseId, approved: true }).sort({ order: 1 });
+        const sections = await Section.find({ courseId: courseId }).sort({ order: 1 });
 
         if (!sections || sections.length === 0) {
             return {

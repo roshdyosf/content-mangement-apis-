@@ -2,7 +2,7 @@ const Course = require("../../models/course-model");
 
 const getCoursesLikeNameService = async (courseName, limit) => {
     try {
-        const courses = await Course.find({ title: { $regex: courseName, $options: "i" }, approved: true })
+        const courses = await Course.find({ title: { $regex: courseName, $options: "i" } })
             .sort({ "rating.average": -1 })
             .limit(limit)
         return {

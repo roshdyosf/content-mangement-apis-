@@ -4,7 +4,7 @@ const getAllCoursesForTag = async (tag, limit, offset) => {
     try {
         let courses;
         if (!tag) {
-            courses = await Course.find({ approved: true })
+            courses = await Course.find()
                 .sort({ "rating.average": -1 })
                 .limit(limit)
                 .skip(offset);

@@ -85,8 +85,10 @@ const updateCourseRating = async (req, res) => {
 const enrollmentCountUpdate = async (req, res) => {
   console.log(req.body.courseId);
   const courseId = req.body.courseId;
+  const userId = req.userInfo.userId || req.userInfo.id;
   const action = req.body.action;
-  const result = await courseEnrollmentCountUpdate(courseId, action);
+
+  const result = await courseEnrollmentCountUpdate(courseId, userId, action);
   handleResponse(res, result);
 };
 
@@ -111,8 +113,6 @@ const checkEnrollment = async (req, res) => {
   const result = await checkEnrollmentService(userId, courseId);
   handleResponse(res, result);
 };
-
-
 
 module.exports = {
   getCoursesForEducator,

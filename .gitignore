@@ -3,3 +3,5 @@
 /swagger-output.json
 
 .vscode
+
+/__tests__

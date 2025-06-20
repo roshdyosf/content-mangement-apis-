@@ -12,9 +12,9 @@ class CourseCreateDTO {
             return;
         }
 
-        // Validate tags as an array of strings
-        if (!Array.isArray(tags) || !tags.every(tag => typeof tag === 'string')) {
-            console.error("Invalid course data: Tags must be an array of strings.");
+        // Validate tags as a non-empty array of strings (one or more tags required)
+        if (!Array.isArray(tags) || tags.length === 0 || !tags.every(tag => typeof tag === 'string')) {
+            console.error("Invalid course data: Tags must be a non-empty array of strings.");
             return;
         }
 

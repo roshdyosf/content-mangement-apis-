@@ -3,12 +3,10 @@ const courseValidation = require('../../validators/courseDataValidation')
 const CourseUpdateDTO = require('../../dtos/course/courseUpdateDTO')
 
 const updateCourseInfo = async (courseId, courseData) => {
-
-
     try {
         // Validate the DTO instance
         const courseUpdateDTO = new CourseUpdateDTO(courseData);
-        const { valid, ...dtoWithoutSuccess } = courseUpdateDTO;
+        const { valid, ...dtoWithoutValid } = courseUpdateDTO;
 
         if (!valid) {
             return {
@@ -17,10 +15,10 @@ const updateCourseInfo = async (courseId, courseData) => {
                 statusCode: 400
             };
         }
-        const fieldsToValidate = Object.keys(dtoWithoutSuccess);
+        const fieldsToValidate = Object.keys(dtoWithoutValid);
 
         // Validate the DTO
-        const validationResult = courseValidation(dtoWithoutSuccess, fieldsToValidate);
+        const validationResult = courseValidation(dtoWithoutValid, fieldsToValidate);
 
         if (!validationResult.valid) {
             return {
@@ -43,7 +41,7 @@ const updateCourseInfo = async (courseId, courseData) => {
 
         const updatedCourse = await Course.findByIdAndUpdate(
             courseId,
-            { ...courseUpdateDTO, approved: false },
+            { ...dtoWithoutValid, approved: false },
             { new: true }
         );
         if (!updatedCourse) {

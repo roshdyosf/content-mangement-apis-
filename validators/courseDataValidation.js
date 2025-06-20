@@ -6,7 +6,6 @@ const courseValidation = (courseData, fieldsToValidate) => {
         price: 'number',
         rating: 'number',
         level: 'string',
-        tags: 'array<string>', // Added tags validation
     };
 
     return genericValidator(courseData, validations, fieldsToValidate);

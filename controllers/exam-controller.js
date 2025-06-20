@@ -9,7 +9,8 @@ const updateExamService = require('../services/exam/updateExamService');
 
 const createExam = async (req, res) => {
     const examData = req.body
-    const result = await createExamService(examData)
+    const educatorId = req.userInfo.userId || req.userInfo.id;
+    const result = await createExamService(examData, educatorId)
     handleResponse(res, result)
 }
 const addQuestion = async (req, res) => {

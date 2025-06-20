@@ -1,14 +1,13 @@
 class ExamCreateDTO {
-    constructor({ title, sectionId, courseId, educatorId }) {
+    constructor({ title, sectionId, courseId }) {
         this.valid = false
-        if (!title || !sectionId || !courseId || !educatorId) {
+        if (!title || !sectionId || !courseId) {
             return;
         }
 
         this.title = title;
         this.sectionId = sectionId;
         this.courseId = courseId;
-        this.educatorId = educatorId;
         this.valid = true;
     }
 }

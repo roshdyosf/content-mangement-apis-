@@ -2,7 +2,7 @@ const Exam = require('../../models/exam-model')
 const Section = require('../../models/section-model')
 const ExamCreateDTO = require('../../dtos/exam/examCreateDTO')
 const examValidation = require('../../validators/examDataValidation')
-const createExamService = async (examData) => {
+const createExamService = async (examData, educatorId) => {
     const examCreateDTO = new ExamCreateDTO(examData)
     const { valid, ...dtoWithoutSuccess } = examCreateDTO
     if (!valid) {
@@ -32,7 +32,7 @@ const createExamService = async (examData) => {
                 statusCode: 404
             };
         }
-        const newExam = new Exam(dtoWithoutSuccess)
+        const newExam = new Exam({ ...dtoWithoutSuccess, educatorId: educatorId })
         const savedExam = await newExam.save()
         // Update the section to include the new exam
         await Section.findByIdAndUpdate(dtoWithoutSuccess.sectionId, { $push: { exams: savedExam._id } });

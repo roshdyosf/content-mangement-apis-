@@ -37,7 +37,7 @@ const isValidField = (value, expectedType) => {
             console.error(`Invalid string value: ${value}`);
             return false; // Empty string
         }
-        if (value.length < 3 || value.length > 100) {
+        if (value.length < 2 || value.length > 100) {
             console.error(`Invalid string length: ${value.length}`);
             return false; // Length constraints
         }

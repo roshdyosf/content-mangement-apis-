@@ -2,7 +2,7 @@ const Course = require('../models/course-model');
 
 const educatorIdentityCheck = async (req, res, next) => {
     try {
-        const educatorId = req.userInfo.userId;
+        const educatorId = req.userInfo.userId || req.userInfo.id;
         // Look for courseId in body, params, or query
         const courseId = req.body.courseId || req.params.courseId || req.query.courseId;
         if (!courseId) {

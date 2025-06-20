@@ -9,7 +9,7 @@ const updateVideoService = async (videoId, videoData, courseId) => {
     if (!valid) {
         return {
             success: false,
-            message: "Invalid video data. At least one field (title, description, order) is required, and order must be a number if provided.",
+            message: "Invalid video data. At least one field (title, order) is required, and order must be a number if provided.",
             statusCode: 400
         };
     }
@@ -38,7 +38,9 @@ const updateVideoService = async (videoId, videoData, courseId) => {
                 statusCode: 404
             };
         }
-        if (courseId !== video.courseId) {
+        if (courseId != video.courseId) {
+            console.log('courseId mismatch:', courseId, video.courseId.toString());
+
             return {
                 success: false,
                 message: 'please don`t hack us.',

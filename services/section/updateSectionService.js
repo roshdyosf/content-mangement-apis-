@@ -11,7 +11,7 @@ const updateSection = async (sectionId, sectionData, courseId) => {
         if (!valid) {
             return {
                 success: false,
-                message: "Invalid section data. At least one field (title, description, order) is required, and order must be a number if provided.",
+                message: "Invalid section data. At least one field (title, order) is required, and order must be a number if provided.",
                 statusCode: 400
             };
         }

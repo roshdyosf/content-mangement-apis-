@@ -11,6 +11,9 @@ const handleResponse = require("../utils/errorHandler");
 
 const courseEnrollmentCountUpdate = require("../services/course/courseInrollmentService");
 
+const saveCourseService = require("../services/course/saveCourseService");
+const unSaveCourseService = require("../services/course/unSaveCourseService");
+const getAllSavedCoursesService = require("../services/course/getAllSavedCourses");
 const getCoursesForEducator = async (req, res) => {
   const educatorId = req.params.educatorId;
   const offset = parseInt(req.params.offset) || 0;
@@ -113,7 +116,23 @@ const checkEnrollment = async (req, res) => {
   const result = await checkEnrollmentService(userId, courseId);
   handleResponse(res, result);
 };
-
+const saveCourse = async (req, res) => {
+  const courseId = req.params.courseId;
+  const studentId = req.userInfo.userId || req.userInfo.id;
+  const result = await saveCourseService(courseId, studentId);
+  handleResponse(res, result);
+}
+const unSaveCourse = async (req, res) => {
+  const courseId = req.params.courseId;
+  const studentId = req.userInfo.userId || req.userInfo.id;
+  const result = await unSaveCourseService(courseId, studentId);
+  handleResponse(res, result);
+}
+const getAllSavedCourses = async (req, res) => {
+  const studentId = req.userInfo.userId || req.userInfo.id;
+  const result = await getAllSavedCoursesService(studentId);
+  handleResponse(res, result);
+}
 module.exports = {
   getCoursesForEducator,
   createCourse,
@@ -127,4 +146,7 @@ module.exports = {
   getCoursesById,
   getAllCoursesForStudent,
   checkEnrollment,
+  saveCourse,
+  unSaveCourse,
+  getAllSavedCourses
 };

@@ -15,6 +15,9 @@ const {
   getCoursesById,
   getAllCoursesForStudent,
   checkEnrollment,
+  saveCourse,
+  unSaveCourse,
+  getAllSavedCourses,
 } = require("../controllers/course-controller");
 
 const educatorIdentityCheck = require("../middleware/educatorIdentityMiddleware");
@@ -87,7 +90,7 @@ router.get(
 if (process.env.NODE_ENV === "development") {
   console.log("Development mode: Using mock authentication middleware");
   // #swagger.security = [{ "BearerAuth": [] }]
-  router.use(mockAuthMiddleware((role = "Educator")));
+  router.use(mockAuthMiddleware((role = "Educator")))
 } else {
   console.log("Production mode: Using real authentication middleware");
   // #swagger.security = [{ "BearerAuth": [] }]
@@ -168,5 +171,24 @@ router.get(
   logService("getAllCoursesForStudent"),
   getAllCoursesForStudent
 );
+
+// #swagger.security = [{ "BearerAuth": [] }]
+router.put("/save/:courseId", // #swagger.tags = ['Student']
+  requireRole("Student"), logService("saveCourse"), saveCourse);
+
+// #swagger.security = [{ "BearerAuth": [] }]
+router.put("/unsave/:courseId", // #swagger.tags = ['Student']
+  requireRole("Student"), logService("saveCourse"), unSaveCourse);
+
+// #swagger.security = [{ "BearerAuth": [] }]
+router.get("/get-saved", // #swagger.tags = ['Student']
+  requireRole("Student"), logService("saveCourse"), getAllSavedCourses);
+
+
+
+
+
+
+
 
 module.exports = router;

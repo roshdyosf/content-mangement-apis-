@@ -5,7 +5,7 @@ const examValidation = (examData, fieldsToValidate) => {
         courseId: 'string',
         sectionId: 'string',
         question: 'string',
-        answer: 'string',
+        answerIndex: 'number',
         choice: 'string',
         examId: 'string'
     };

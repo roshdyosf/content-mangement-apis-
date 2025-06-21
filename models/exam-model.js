@@ -11,7 +11,7 @@ const mcqSchema = new mongoose.Schema({
         required: true,
         trim: true,
     }],
-    answer: {
+    answerIndex: {
         type: String,
         required: true,
         trim: true,

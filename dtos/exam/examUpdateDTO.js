@@ -1,14 +1,14 @@
 class ExamUpdateDTO {
-    constructor({ examId, title, question, qIndex, choice, cIndex, answer }) {
+    constructor({ examId, title, questions }) {
         this.valid = true;
         if (!examId) {
             this.valid = false;
             this.error = 'examId is required';
+            return;
         } else {
             this.examId = examId;
         }
 
-        // Track if at least one field is being updated
         let hasUpdate = false;
 
         if (title !== undefined) {
@@ -16,36 +16,55 @@ class ExamUpdateDTO {
             hasUpdate = true;
         }
 
-        if (question !== undefined) {
-            if (qIndex === undefined || isNaN(Number(qIndex))) {
-                this.valid = false;
-                this.error = 'Valid qIndex is required for question update';
-            } else {
-                this.qIndex = Number(qIndex);
-                this.question = question;
-                hasUpdate = true;
-            }
-        }
-
-        if (choice !== undefined) {
-            if (qIndex === undefined || isNaN(Number(qIndex)) || cIndex === undefined || isNaN(Number(cIndex))) {
-                this.valid = false;
-                this.error = 'Valid qIndex and cIndex are required for choice update';
-            } else {
-                this.qIndex = Number(qIndex);
-                this.cIndex = Number(cIndex);
-                this.choice = choice;
-                hasUpdate = true;
-            }
-        }
-
-        if (answer !== undefined) {
-            if (qIndex === undefined || isNaN(Number(qIndex))) {
-                this.valid = false;
-                this.error = 'Valid qIndex is required for answer update';
-            } else {
-                this.qIndex = Number(qIndex);
-                this.answer = answer;
+        // questions: array of updates [{ qIndex, question, choices, answerIndex }]
+        if (Array.isArray(questions) && questions.length > 0) {
+            this.questions = [];
+            for (const q of questions) {
+                if (q.qIndex === undefined || isNaN(Number(q.qIndex))) {
+                    this.valid = false;
+                    this.error = 'Each question update must have a valid qIndex';
+                    return;
+                }
+                const update = { qIndex: Number(q.qIndex) };
+                if (q.question !== undefined) {
+                    if (typeof q.question !== 'string' || q.question.trim() === '') {
+                        this.valid = false;
+                        this.error = 'Question text must be a non-empty string';
+                        return;
+                    }
+                    update.question = q.question;
+                }
+                if (q.choices !== undefined) {
+                    let choicesArray = [];
+                    if (Array.isArray(q.choices)) {
+                        choicesArray = q.choices.map(c => c.toString().trim());
+                    } else if (typeof q.choices === 'string') {
+                        choicesArray = q.choices.split(',').map(c => c.trim());
+                    } else if (typeof q.choices === 'object' && q.choices !== null) {
+                        choicesArray = Object.values(q.choices).map(c => c.toString().trim());
+                    }
+                    if (choicesArray.length < 2 || !choicesArray.every(c => typeof c === 'string' && c.length > 0)) {
+                        this.valid = false;
+                        this.error = 'Choices must be an array of at least two non-empty strings';
+                        return;
+                    }
+                    update.choices = choicesArray;
+                }
+                if (q.answerIndex !== undefined) {
+                    const answerIndex = Number(q.answerIndex);
+                    if (typeof q.answerIndex !== 'string' || isNaN(answerIndex) || !Number.isInteger(answerIndex)) {
+                        this.valid = false;
+                        this.error = 'Answer index must be a string representing a valid integer';
+                        return;
+                    }
+                    if (update.choices && (answerIndex < 0 || answerIndex >= update.choices.length)) {
+                        this.valid = false;
+                        this.error = 'Answer index must be a valid index of the choices array';
+                        return;
+                    }
+                    update.answerIndex = q.answerIndex;
+                }
+                this.questions.push(update);
                 hasUpdate = true;
             }
         }
@@ -56,4 +75,4 @@ class ExamUpdateDTO {
         }
     }
 }
-module.exports = ExamUpdateDTO
+module.exports = ExamUpdateDTO;

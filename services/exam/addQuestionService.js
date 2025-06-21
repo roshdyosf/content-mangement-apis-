@@ -4,15 +4,15 @@ const examValidation = require("../../validators/examDataValidation")
 const addQuestionService = async (questionData) => {
 
     const questionCreateDTO = new QuestionCreateDTO(questionData)
-    const { valid, examId, question, choices, answer } = questionCreateDTO
+    const { valid, examId, question, choices, answerIndex } = questionCreateDTO
     if (!valid) {
         return {
             success: false,
-            message: "Invalid question data. At least one field (examId, courseId, question, choices, answer) is required, and choices must be a an list of 4 string.",
+            message: "Invalid question data. At least one field (examId, courseId, question, choices, answerIndex) is required, and choices must be a an list of 4 string.",
             statusCode: 400
         };
     }
-    const dtoWithoutSuccess = { examId, question, choices, answer };
+    const dtoWithoutSuccess = { examId, question, choices, answerIndex };
     const fieldsToValidate = Object.keys(dtoWithoutSuccess);
     const validationResult = examValidation(dtoWithoutSuccess, fieldsToValidate);
     if (!validationResult.valid) {
@@ -20,6 +20,15 @@ const addQuestionService = async (questionData) => {
             success: false,
             message: 'Invalid question data.',
             validationResult,
+            statusCode: 400
+        };
+    }
+    // Additional validation for answerIndex and choices
+    if (!Array.isArray(choices) || choices.length !== 4 ||
+        typeof answerIndex !== 'number' || answerIndex < 0 || answerIndex > 3) {
+        return {
+            success: false,
+            message: 'Choices must be an array of 4 strings and answerIndex must be an integer between 0 and 3.',
             statusCode: 400
         };
     }
@@ -32,7 +41,7 @@ const addQuestionService = async (questionData) => {
                 statusCode: 400
             };
         }
-        exam.mcq.push({ question, choices, answer });
+        exam.mcq.push({ question, choices, answerIndex });
         await exam.save()
         return {
             success: true,

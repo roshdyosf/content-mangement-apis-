@@ -1,6 +1,5 @@
 const ExamUpdateDTO = require("../../dtos/exam/examUpdateDTO")
 const Exam = require("../../models/exam-model")
-const examValidation = require("../../validators/examDataValidation")
 
 const updateExamService = async (examUpdatedData, courseId) => {
     try {
@@ -12,16 +11,6 @@ const updateExamService = async (examUpdatedData, courseId) => {
                 message: error || "Invalid exam data.",
                 statusCode: 400
             }
-        }
-        // Validate all provided fields
-        const fieldsToValidate = Object.keys(dto);
-        const validationResult = examValidation(dto, fieldsToValidate);
-        if (!validationResult.valid) {
-            return {
-                success: false,
-                message: validationResult,
-                statusCode: 400
-            };
         }
         const exam = await Exam.findById(dto.examId);
         if (!exam) throw new Error("Exam not found");
@@ -38,40 +27,29 @@ const updateExamService = async (examUpdatedData, courseId) => {
             exam.title = dto.title;
             updated = true;
         }
-        if (dto.question !== undefined && dto.qIndex !== undefined) {
-            if (exam.mcq[dto.qIndex]) {
-                exam.mcq[dto.qIndex].question = dto.question;
-                updated = true;
-            } else {
-                return {
-                    success: false,
-                    message: 'Invalid qIndex',
-                    statusCode: 400
-                };
-            }
-        }
-        if (dto.choice !== undefined && dto.qIndex !== undefined && dto.cIndex !== undefined) {
-            if (exam.mcq[dto.qIndex] && exam.mcq[dto.qIndex].choices[dto.cIndex] !== undefined) {
-                exam.mcq[dto.qIndex].choices[dto.cIndex] = dto.choice;
-                updated = true;
-            } else {
-                return {
-                    success: false,
-                    message: 'Invalid qIndex or cIndex',
-                    statusCode: 400
-                };
-            }
-        }
-        if (dto.answer !== undefined && dto.qIndex !== undefined) {
-            if (exam.mcq[dto.qIndex]) {
-                exam.mcq[dto.qIndex].answer = dto.answer;
-                updated = true;
-            } else {
-                return {
-                    success: false,
-                    message: 'Invalid qIndex',
-                    statusCode: 400
-                };
+        if (Array.isArray(dto.questions) && dto.questions.length > 0) {
+            for (const q of dto.questions) {
+                const idx = q.qIndex;
+                if (exam.mcq[idx]) {
+                    if (q.question !== undefined) {
+                        exam.mcq[idx].question = q.question;
+                        updated = true;
+                    }
+                    if (q.choices !== undefined) {
+                        exam.mcq[idx].choices = q.choices;
+                        updated = true;
+                    }
+                    if (q.answerIndex !== undefined) {
+                        exam.mcq[idx].answerIndex = q.answerIndex;
+                        updated = true;
+                    }
+                } else {
+                    return {
+                        success: false,
+                        message: `Invalid qIndex: ${idx}`,
+                        statusCode: 400
+                    };
+                }
             }
         }
         if (!updated) {

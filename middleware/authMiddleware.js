@@ -7,7 +7,7 @@ const validateToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     const apiKey = req.headers["x-service-key"] || req.headers["X-Service-Key"];
-    if (process.env.INTERNAL_API_KEY == apiKey) { 
+    if (process.env.INTERNAL_API_KEY == apiKey) {
       return next();
     }
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -118,7 +118,7 @@ const requireRole = (roles) => {
  */
 const mockAuthMiddleware = (
   role = "Educator",
-  id = "edu_123",
+  id = "123",
   firstName = "E mock user",
   lastName = "e last"
 ) => {

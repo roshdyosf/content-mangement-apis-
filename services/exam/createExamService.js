@@ -1,30 +1,19 @@
 const Exam = require('../../models/exam-model')
 const Section = require('../../models/section-model')
 const ExamCreateDTO = require('../../dtos/exam/examCreateDTO')
-const examValidation = require('../../validators/examDataValidation')
+
 const createExamService = async (examData, educatorId) => {
     const examCreateDTO = new ExamCreateDTO(examData)
-    const { valid, ...dtoWithoutSuccess } = examCreateDTO
-    if (!valid) {
+    if (!examCreateDTO.valid) {
         return {
             success: false,
-            message: "Invalid course data.",
+            message: examCreateDTO.error || "Invalid exam data.",
             statusCode: 400
         }
     }
-    const fieldsToValidate = Object.keys(dtoWithoutSuccess);
-    const validationResult = examValidation(dtoWithoutSuccess, fieldsToValidate);
-    if (!validationResult.valid) {
-        return {
-            success: false,
-            message: 'Invalid exam data.',
-            validationResult,
-            statusCode: 400
-        };
-    }
     try {
         // Check if section exists before creating the exam
-        const section = await Section.findById(dtoWithoutSuccess.sectionId);
+        const section = await Section.findById(examCreateDTO.sectionId);
         if (!section) {
             return {
                 success: false,
@@ -32,10 +21,18 @@ const createExamService = async (examData, educatorId) => {
                 statusCode: 404
             };
         }
-        const newExam = new Exam({ ...dtoWithoutSuccess, educatorId: educatorId })
+        // Only pick allowed fields
+        const examFields = {
+            title: examCreateDTO.title,
+            sectionId: examCreateDTO.sectionId,
+            courseId: examCreateDTO.courseId,
+            mcq: examCreateDTO.mcq,
+            educatorId: educatorId
+        };
+        const newExam = new Exam(examFields)
         const savedExam = await newExam.save()
         // Update the section to include the new exam
-        await Section.findByIdAndUpdate(dtoWithoutSuccess.sectionId, { $push: { exams: savedExam._id } });
+        await Section.findByIdAndUpdate(examCreateDTO.sectionId, { $push: { exams: savedExam._id } });
         return {
             success: true,
             message: 'Exam created successfully',
